@@ -1,0 +1,62 @@
+{
+  "name": "@immich/restic",
+  "version": "0.0.0",
+  "description": "Starter template for TS libraries",
+  "keywords": [
+    "starter",
+    "library",
+    "typescript"
+  ],
+  "homepage": "https://github.com/bgub/ts-base",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "lint": "eslint \"src/**/*.ts\" --max-warnings 0",
+    "lint:fix": "npm run lint -- --fix",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "test": "vitest run",
+    "test:ui": "vitest --ui"
+  },
+  "author": "Ben Gubler <nebrelbug@gmail.com>",
+  "funding": "https://github.com/bgub/ts-base?sponsor=1",
+  "repository": "github:bgub/ts-base",
+  "bugs": {
+    "url": "https://github.com/bgub/ts-base/issues"
+  },
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^8.2.4",
+    "@types/node": "^22.18.1",
+    "@vitest/coverage-istanbul": "3.2.4",
+    "@vitest/ui": "3.2.4",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-unicorn": "^62.0.0",
+    "prettier-plugin-organize-imports": "^4.3.0",
+    "tar": "^7.5.2",
+    "tsdown": "^0.15.0",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.47.0",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "zod": "^4.1.12"
+  }
+}
