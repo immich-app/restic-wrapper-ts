@@ -1,10 +1,5 @@
-import {
-  baseArgs,
-  commonFilterArgs,
-  RepositoryArgumentBuilder,
-  type DynamicBuilder,
-} from '../utils/args';
 import * as z from 'zod';
+import { baseArgs, commonFilterArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
 
 const statsArgs = z.object({
   ...baseArgs.shape,
@@ -26,8 +21,7 @@ class StatsArgumentBuilder<T> extends RepositoryArgumentBuilder<T, T> {
     return this;
   }
 
-  #mode: 'restore-size' | 'files-by-contents' | 'blobs-per-file' | 'raw-data' =
-    'restore-size';
+  #mode: 'restore-size' | 'files-by-contents' | 'blobs-per-file' | 'raw-data' = 'restore-size';
 
   /**
    * Set counting mode to restore size

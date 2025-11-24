@@ -1,9 +1,5 @@
-import {
-  baseArgs,
-  RepositoryArgumentBuilder,
-  type DynamicBuilder,
-} from '../utils/args';
 import * as z from 'zod';
+import { baseArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
 
 const checkArgs = z.object({
   ...baseArgs.shape,
@@ -53,10 +49,7 @@ class CheckArgumentBuilder extends RepositoryArgumentBuilder<
  * ```
  */
 export function check() {
-  return new CheckArgumentBuilder() as DynamicBuilder<
-    z.infer<typeof checkArgs>,
-    CheckArgumentBuilder
-  >;
+  return new CheckArgumentBuilder() as DynamicBuilder<z.infer<typeof checkArgs>, CheckArgumentBuilder>;
 }
 
 const checkMessage = z.object({

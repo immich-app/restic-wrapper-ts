@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { RepositoryArgumentBuilder, type DynamicBuilder } from './args';
 import { MissingPasswordError, MissingRepositoryError } from '../errors';
+import { RepositoryArgumentBuilder, type DynamicBuilder } from './args';
 
 import * as z from 'zod';
 
@@ -31,32 +31,20 @@ describe('RepositoryArgumentBuilder', () => {
   }
 
   it('fails to validate if repository is missing', () => {
-    expect(() => new DummyArguments().validate()).toThrowError(
-      new MissingRepositoryError()
-    );
+    expect(() => new DummyArguments().validate()).toThrowError(new MissingRepositoryError());
   });
 
   it('fails to validate if password is missing', () => {
-    expect(() =>
-      new DummyArguments().repository('repository').validate()
-    ).toThrowError(new MissingPasswordError());
+    expect(() => new DummyArguments().repository('repository').validate()).toThrowError(new MissingPasswordError());
   });
 
   it('successfully validates with repository and password', () => {
-    new DummyArguments()
-      .repository('repository')
-      .password('password')
-      .validate();
+    new DummyArguments().repository('repository').password('password').validate();
   });
 
   it('generates dynamic arguments', () => {
     expect(
-      (
-        new DummyArguments() as DynamicBuilder<
-          z.infer<typeof dummyArgs>,
-          DummyArguments
-        >
-      )
+      (new DummyArguments() as DynamicBuilder<z.infer<typeof dummyArgs>, DummyArguments>)
         .repository('repository')
         .password('password')
         .string('my string')
@@ -69,10 +57,8 @@ describe('RepositoryArgumentBuilder', () => {
         .date('2025-01-01')
         .date(+new Date('2025-01-01'))
         .skipped()
-        .unsupportedArg(
-          { hello: 'world!' } as never /* hit the else-case for args. */
-        )
-        .toArgs()
+        .unsupportedArg({ hello: 'world!' } as never /* hit the else-case for args. */)
+        .toArgs(),
     ).toMatchInlineSnapshot(`
       [
         "command",

@@ -1,3 +1,4 @@
+import * as z from 'zod';
 import {
   baseArgs,
   commonFilterArgs,
@@ -5,7 +6,6 @@ import {
   RepositoryArgumentBuilder,
   type DynamicBuilder,
 } from '../utils/args';
-import * as z from 'zod';
 
 const snapshotsArgs = z.object({
   ...baseArgs.shape,
@@ -38,9 +38,7 @@ class SnapshotsArgumentBuilder extends RepositoryArgumentBuilder<
     return 'json';
   }
 
-  parse(
-    data: z.infer<typeof snapshotsMessage>
-  ): z.infer<typeof snapshotsMessage> {
+  parse(data: z.infer<typeof snapshotsMessage>): z.infer<typeof snapshotsMessage> {
     return snapshotsMessage.parse(data);
   }
 }
@@ -56,10 +54,7 @@ class SnapshotsArgumentBuilder extends RepositoryArgumentBuilder<
  * ```
  */
 export function snapshots() {
-  return new SnapshotsArgumentBuilder() as DynamicBuilder<
-    z.infer<typeof snapshotsArgs>,
-    SnapshotsArgumentBuilder
-  >;
+  return new SnapshotsArgumentBuilder() as DynamicBuilder<z.infer<typeof snapshotsArgs>, SnapshotsArgumentBuilder>;
 }
 
 export const snapshotSummary = z.object({

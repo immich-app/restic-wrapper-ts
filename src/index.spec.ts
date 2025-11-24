@@ -1,25 +1,14 @@
-import { expect, test } from 'vitest';
-import { createTempDir } from './utils/test';
-import { join } from 'node:path';
-import {
-  backup,
-  cat,
-  check,
-  diff,
-  init,
-  keyList,
-  ls,
-  snapshots,
-  tag,
-  version,
-} from './commands';
 import { writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
+import { expect, test } from 'vitest';
+import { backup, cat, check, diff, init, keyList, ls, snapshots, tag, version } from './commands';
+import { createTempDir } from './utils/test';
 
 test('integration test', { timeout: 20_000 }, async () => {
   await expect(version()).resolves.toEqual(
     expect.objectContaining({
       version: '0.18.0',
-    })
+    }),
   );
 
   const dir = await createTempDir();
@@ -28,19 +17,15 @@ test('integration test', { timeout: 20_000 }, async () => {
 
   await init().repository(repository).password(password).run();
 
-  await expect(
-    keyList().repository(repository).password(password).run()
-  ).resolves.toEqual(
+  await expect(keyList().repository(repository).password(password).run()).resolves.toEqual(
     expect.arrayContaining([
       expect.objectContaining({
         current: true,
       }),
-    ])
+    ]),
   );
 
-  await expect(
-    check().repository(repository).password(password).run()
-  ).resolves.toEqual(
+  await expect(check().repository(repository).password(password).run()).resolves.toEqual(
     expect.arrayContaining([
       expect.objectContaining({
         num_errors: 0,
@@ -48,7 +33,7 @@ test('integration test', { timeout: 20_000 }, async () => {
         suggest_repair_index: false,
         suggest_prune: false,
       }),
-    ])
+    ]),
   );
 
   await writeFile(join(dir, 'test-file'), 'test-file');
@@ -63,26 +48,17 @@ test('integration test', { timeout: 20_000 }, async () => {
   expect(filesNew).toBe(1);
 
   await expect(
-    cat()
-      .repository(repository)
-      .password(password)
-      .target('snapshot', firstSnapshotId)
-      .run()
+    cat().repository(repository).password(password).target('snapshot', firstSnapshotId).run(),
   ).resolves.toEqual(
     expect.objectContaining({
       tags: expect.arrayContaining(['abc', 'def']),
-    })
+    }),
   );
 
-  const tagResult = await tag()
-    .repository(repository)
-    .password(password)
-    .set('new-tag')
-    .run();
-  const {
-    old_snapshot_id: oldSnapshotId,
-    new_snapshot_id: newFirstSnapshotId,
-  } = tagResult.find((result) => result.message_type === 'changed')!;
+  const tagResult = await tag().repository(repository).password(password).set('new-tag').run();
+  const { old_snapshot_id: oldSnapshotId, new_snapshot_id: newFirstSnapshotId } = tagResult.find(
+    (result) => result.message_type === 'changed',
+  )!;
 
   expect(firstSnapshotId).toEqual(oldSnapshotId);
 
@@ -108,27 +84,21 @@ test('integration test', { timeout: 20_000 }, async () => {
     .run();
 
   await expect(
-    diff()
-      .repository(repository)
-      .password(password)
-      .compare(snapshotId, newSnapshotId)
-      .run()
+    diff().repository(repository).password(password).compare(snapshotId, newSnapshotId).run(),
   ).resolves.toEqual(
     expect.arrayContaining([
       expect.objectContaining({
         path: expect.stringContaining('test-file'),
         modifier: 'M',
       }),
-    ])
+    ]),
   );
 
-  await expect(
-    ls().repository(repository).password(password).snapshot(snapshotId).run()
-  ).resolves.toEqual(
+  await expect(ls().repository(repository).password(password).snapshot(snapshotId).run()).resolves.toEqual(
     expect.arrayContaining([
       expect.objectContaining({
         paths: expect.arrayContaining([expect.stringContaining('test-file')]),
       }),
-    ])
+    ]),
   );
 });

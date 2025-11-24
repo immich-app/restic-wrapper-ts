@@ -56,18 +56,6 @@ export default typescriptEslint.config([
       'prettier/prettier': 0,
       'object-shorthand': ['error', 'always'],
 
-      'no-restricted-imports': [
-        'error',
-        {
-          patterns: [
-            {
-              group: ['.*'],
-              message: 'Relative imports are not allowed.',
-            },
-          ],
-        },
-      ],
-
       '@typescript-eslint/no-unused-vars': [
         'warn',
         {

@@ -7,16 +7,12 @@ export class JsonLinesReader<T> extends Writable {
 
   constructor(
     private callback: (data: T) => void,
-    private filter?: (line: string) => boolean
+    private filter?: (line: string) => boolean,
   ) {
     super();
   }
 
-  _write(
-    chunk: Buffer,
-    _encoding: BufferEncoding,
-    callback: (error?: Error | null) => void
-  ): void {
+  _write(chunk: Buffer, _encoding: BufferEncoding, callback: (error?: Error | null) => void): void {
     for (const byte of chunk) {
       if (byte === 10) {
         try {

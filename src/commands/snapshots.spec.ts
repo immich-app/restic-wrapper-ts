@@ -1,9 +1,9 @@
+import { writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { createTempDir, initRepository } from '../utils/test';
-import { snapshots } from './snapshots';
-import { join } from 'node:path';
-import { writeFile } from 'node:fs/promises';
 import { backup } from './backup';
+import { snapshots } from './snapshots';
 
 describe('init', () => {
   let dir: string;
@@ -24,14 +24,12 @@ describe('init', () => {
   });
 
   it('lists snapshots', async () => {
-    await expect(
-      snapshots().repository(join(dir, 'repository')).password('password').run()
-    ).resolves.toEqual(
+    await expect(snapshots().repository(join(dir, 'repository')).password('password').run()).resolves.toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           id: snapshotId,
         }),
-      ])
+      ]),
     );
   });
 });

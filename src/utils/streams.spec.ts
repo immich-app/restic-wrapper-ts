@@ -26,9 +26,7 @@ describe('JsonLinesReader', () => {
 
     const cb = vi.fn();
 
-    await expect(
-      pipeline([Readable.from(data()), new JsonLinesReader(cb)])
-    ).rejects.toThrowError();
+    await expect(pipeline([Readable.from(data()), new JsonLinesReader(cb)])).rejects.toThrowError();
 
     expect(cb).toHaveBeenNthCalledWith(1, { hello: 1 });
     expect(cb).toHaveBeenCalledTimes(1);
@@ -41,9 +39,7 @@ describe('JsonLinesReader', () => {
 
     const cb = vi.fn();
 
-    await expect(
-      pipeline([Readable.from(data()), new JsonLinesReader(cb)])
-    ).rejects.toThrowError();
+    await expect(pipeline([Readable.from(data()), new JsonLinesReader(cb)])).rejects.toThrowError();
 
     expect(cb).toHaveBeenNthCalledWith(1, { hello: 1 });
     expect(cb).toHaveBeenCalledTimes(1);

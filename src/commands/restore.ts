@@ -1,11 +1,6 @@
-import { MissingSnapshotError } from '../errors';
-import {
-  baseArgs,
-  commonFilterArgs,
-  RepositoryArgumentBuilder,
-  type DynamicBuilder,
-} from '../utils/args';
 import * as z from 'zod';
+import { MissingSnapshotError } from '../errors';
+import { baseArgs, commonFilterArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
 
 const restoreArgs = z.object({
   ...baseArgs.shape,
@@ -130,10 +125,7 @@ class RestoreArgumentBuilder extends RepositoryArgumentBuilder<
  * ```
  */
 export function restore() {
-  return new RestoreArgumentBuilder() as DynamicBuilder<
-    z.infer<typeof restoreArgs>,
-    RestoreArgumentBuilder
-  >;
+  return new RestoreArgumentBuilder() as DynamicBuilder<z.infer<typeof restoreArgs>, RestoreArgumentBuilder>;
 }
 
 const restoreStatusMessage = z.object({
@@ -168,8 +160,4 @@ const restoreSummaryMessage = z.object({
   bytes_skipped: z.number().int().nonnegative().optional(),
 });
 
-const restoreMessage = z.union([
-  restoreStatusMessage,
-  restoreVerboseStatusMessage,
-  restoreSummaryMessage,
-]);
+const restoreMessage = z.union([restoreStatusMessage, restoreVerboseStatusMessage, restoreSummaryMessage]);

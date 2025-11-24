@@ -1,10 +1,5 @@
-import {
-  baseArgs,
-  commonFilterArgs,
-  RepositoryArgumentBuilder,
-  type DynamicBuilder,
-} from '../utils/args';
 import * as z from 'zod';
+import { baseArgs, commonFilterArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
 
 const tagArgs = z.object({
   ...baseArgs.shape,
@@ -23,10 +18,7 @@ const tagArgs = z.object({
   set: z.string().array().default([]),
 });
 
-class TagArgumentBuilder extends RepositoryArgumentBuilder<
-  z.infer<typeof tagMessage>,
-  z.infer<typeof tagMessage>[]
-> {
+class TagArgumentBuilder extends RepositoryArgumentBuilder<z.infer<typeof tagMessage>, z.infer<typeof tagMessage>[]> {
   constructor() {
     super(tagArgs);
   }
@@ -68,10 +60,7 @@ class TagArgumentBuilder extends RepositoryArgumentBuilder<
  * ```
  */
 export function tag() {
-  return new TagArgumentBuilder() as DynamicBuilder<
-    z.infer<typeof tagArgs>,
-    TagArgumentBuilder
-  >;
+  return new TagArgumentBuilder() as DynamicBuilder<z.infer<typeof tagArgs>, TagArgumentBuilder>;
 }
 
 const changedMessage = z.object({

@@ -1,11 +1,6 @@
-import { MissingFilesError } from '../errors';
-import {
-  baseArgs,
-  commonGroupBy,
-  RepositoryArgumentBuilder,
-  type DynamicBuilder,
-} from '../utils/args';
 import * as z from 'zod';
+import { MissingFilesError } from '../errors';
+import { baseArgs, commonGroupBy, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
 
 export const backupArgs = z.object({
   ...baseArgs.shape,
@@ -178,10 +173,7 @@ class BackupArgumentBuilder extends RepositoryArgumentBuilder<
  * ```
  */
 export function backup() {
-  return new BackupArgumentBuilder() as DynamicBuilder<
-    z.infer<typeof backupArgs>,
-    BackupArgumentBuilder
-  >;
+  return new BackupArgumentBuilder() as DynamicBuilder<z.infer<typeof backupArgs>, BackupArgumentBuilder>;
 }
 
 const backupStatusMessage = z.object({
@@ -234,8 +226,4 @@ const backupSummaryMessage = z.object({
   snapshot_id: z.string(),
 });
 
-const backupMessage = z.union([
-  backupStatusMessage,
-  backupVerboseStatusMessage,
-  backupSummaryMessage,
-]);
+const backupMessage = z.union([backupStatusMessage, backupVerboseStatusMessage, backupSummaryMessage]);

@@ -1,6 +1,6 @@
+import { join } from 'node:path';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { createTempDir, initRepository } from '../utils/test';
-import { join } from 'node:path';
 
 import { keyList } from './keyList';
 
@@ -13,10 +13,7 @@ describe('keyList', () => {
   });
 
   it('lists keys', async () => {
-    const keys = await keyList()
-      .repository(join(dir, 'repository'))
-      .password('password')
-      .run();
+    const keys = await keyList().repository(join(dir, 'repository')).password('password').run();
 
     expect(keys.length).toBe(1);
     expect(keys[0].current).toBeTruthy();

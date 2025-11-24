@@ -1,11 +1,11 @@
 import { mkdir, writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { createTempDir, initRepository } from '../utils/test';
-import { join } from 'node:path';
 
+import { MissingSnapshotError } from '../errors';
 import { backup } from './backup';
 import { ls } from './ls';
-import { MissingSnapshotError } from '../errors';
 
 describe('ls', () => {
   let dir: string;
@@ -33,11 +33,7 @@ describe('ls', () => {
 
   it('provides a file listing', async () => {
     await expect(
-      ls()
-        .repository(join(dir, 'repository'))
-        .password('password')
-        .snapshot(snapshotId)
-        .run()
+      ls().repository(join(dir, 'repository')).password('password').snapshot(snapshotId).run(),
     ).resolves.toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -53,7 +49,7 @@ describe('ls', () => {
         expect.objectContaining({
           path: expect.stringContaining('subdir-file'),
         }),
-      ])
+      ]),
     );
   });
 
@@ -73,7 +69,7 @@ describe('ls', () => {
         expect.objectContaining({
           path: expect.stringContaining('subdir'),
         }),
-      ])
+      ]),
     );
 
     expect(listing).not.toEqual(
@@ -84,7 +80,7 @@ describe('ls', () => {
         expect.objectContaining({
           path: expect.stringContaining('subdir-file'),
         }),
-      ])
+      ]),
     );
   });
 
@@ -105,7 +101,7 @@ describe('ls', () => {
         expect.objectContaining({
           path: expect.stringContaining('subdir-file'),
         }),
-      ])
+      ]),
     );
 
     expect(listing).not.toEqual(
@@ -113,13 +109,13 @@ describe('ls', () => {
         expect.objectContaining({
           path: expect.stringContaining('test-file'),
         }),
-      ])
+      ]),
     );
   });
 
   it('throws without snapshot specified', async () => {
-    expect(() =>
-      ls().repository(join(dir, 'repository')).password('password').validate()
-    ).toThrowError(new MissingSnapshotError());
+    expect(() => ls().repository(join(dir, 'repository')).password('password').validate()).toThrowError(
+      new MissingSnapshotError(),
+    );
   });
 });

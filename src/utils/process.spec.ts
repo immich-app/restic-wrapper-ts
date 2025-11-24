@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { restic } from './process';
 import { ResticCommandFailedError } from '../errors';
 import { ArgumentBuilder } from './args';
+import { restic } from './process';
 
 describe('wrapper', () => {
   it('handles runtime errors', async () => {
@@ -17,9 +17,7 @@ describe('wrapper', () => {
     }
 
     await expect(restic(new InvalidCommand())).rejects.toThrowError(
-      new ResticCommandFailedError(
-        'unknown command "invalid-command" for "restic"'
-      )
+      new ResticCommandFailedError('unknown command "invalid-command" for "restic"'),
     );
   });
 
@@ -56,9 +54,7 @@ describe('wrapper', () => {
       }
     }
 
-    await expect(restic(new VersionCommand())).rejects.toThrowError(
-      new Error('dummy error')
-    );
+    await expect(restic(new VersionCommand())).rejects.toThrowError(new Error('dummy error'));
   });
 
   it('emits events', async () => {
@@ -81,7 +77,7 @@ describe('wrapper', () => {
         .once('process', process)
         .on('event', event)
         .on('event', unregistered)
-        .off('event', unregistered)
+        .off('event', unregistered),
     );
 
     expect(process).toBeCalled();

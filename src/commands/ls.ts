@@ -1,12 +1,7 @@
-import {
-  baseArgs,
-  commonFilterArgs,
-  RepositoryArgumentBuilder,
-  type DynamicBuilder,
-} from '../utils/args';
 import * as z from 'zod';
-import { snapshot } from './snapshots';
 import { MissingSnapshotError } from '../errors';
+import { baseArgs, commonFilterArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
+import { snapshot } from './snapshots';
 
 const lsArgs = z.object({
   ...baseArgs.shape,
@@ -44,15 +39,10 @@ const lsArgs = z.object({
   /**
    * Sort output
    */
-  sort: z
-    .enum(['name', 'size', 'time', 'mtime', 'atime', 'ctime', 'extension'])
-    .optional(),
+  sort: z.enum(['name', 'size', 'time', 'mtime', 'atime', 'ctime', 'extension']).optional(),
 });
 
-class LsArgumentBuilder extends RepositoryArgumentBuilder<
-  z.infer<typeof lsMessage>,
-  z.infer<typeof lsMessage>[]
-> {
+class LsArgumentBuilder extends RepositoryArgumentBuilder<z.infer<typeof lsMessage>, z.infer<typeof lsMessage>[]> {
   constructor() {
     super(lsArgs);
   }
@@ -116,10 +106,7 @@ class LsArgumentBuilder extends RepositoryArgumentBuilder<
  * ```
  */
 export function ls() {
-  return new LsArgumentBuilder() as DynamicBuilder<
-    z.infer<typeof lsArgs>,
-    LsArgumentBuilder
-  >;
+  return new LsArgumentBuilder() as DynamicBuilder<z.infer<typeof lsArgs>, LsArgumentBuilder>;
 }
 
 const snapshotMessage = z.object({

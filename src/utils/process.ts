@@ -4,17 +4,15 @@ import {
   ResticCommandFailedError,
   ResticFailedToLockRepositoryError,
   ResticGoRuntimeError,
-  ResticRepositoryDoesNotExistError,
   ResticInterruptedError,
+  ResticRepositoryDoesNotExistError,
   ResticUnknownError,
   ResticWrongPasswordError,
 } from '../errors';
 import type { ArgumentBuilder } from './args';
 import { JsonLinesReader } from './streams';
 
-export function restic<T, Output>(
-  argsBuilder: ArgumentBuilder<T, Output>
-): Promise<Output> {
+export function restic<T, Output>(argsBuilder: ArgumentBuilder<T, Output>): Promise<Output> {
   argsBuilder.validate();
 
   return new Promise((resolve, reject) => {
@@ -65,7 +63,7 @@ export function restic<T, Output>(
           }
         },
         // work-around for `tag` output
-        (line) => argsBuilder.filter(line)
+        (line) => argsBuilder.filter(line),
       );
 
       process.stdout.pipe(jsonLinesReader);
@@ -87,9 +85,7 @@ export function restic<T, Output>(
         /* istanbul ignore next */
         // backup.spec.ts
         case 3:
-          reject(
-            new ResticBackupCommandCouldNotReadSourceDataError(stderr.trimEnd())
-          );
+          reject(new ResticBackupCommandCouldNotReadSourceDataError(stderr.trimEnd()));
           break;
         case 10:
           reject(new ResticRepositoryDoesNotExistError(stderr.trimEnd()));

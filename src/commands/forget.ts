@@ -1,3 +1,4 @@
+import * as z from 'zod';
 import {
   baseArgs,
   commonFilterArgs,
@@ -5,7 +6,6 @@ import {
   RepositoryArgumentBuilder,
   type DynamicBuilder,
 } from '../utils/args';
-import * as z from 'zod';
 import { snapshot } from './snapshots';
 
 const baseForgetArgs = z.object({
@@ -84,10 +84,7 @@ class ForgetArgumentBuilder<T> extends RepositoryArgumentBuilder<T, T> {
 
   snapshot(...snapshots: string[]) {
     this.#snapshots.push(...snapshots);
-    return this as never as DynamicBuilder<
-      z.infer<typeof baseForgetArgs>,
-      ForgetArgumentBuilder<void>
-    >;
+    return this as never as DynamicBuilder<z.infer<typeof baseForgetArgs>, ForgetArgumentBuilder<void>>;
   }
 
   command(): string {
@@ -126,7 +123,7 @@ const keepReasons = z.array(
   z.object({
     snapshot,
     matches: z.string().array(),
-  })
+  }),
 );
 
 const forgetMessage = z.array(
@@ -137,5 +134,5 @@ const forgetMessage = z.array(
     keep: snapshot.array(),
     remove: snapshot.array(),
     reasons: keepReasons,
-  })
+  }),
 );

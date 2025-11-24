@@ -1,7 +1,7 @@
 import { writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { createTempDir, initRepository } from '../utils/test';
-import { join } from 'node:path';
 
 import { backup } from './backup';
 import { forget } from './forget';
@@ -34,35 +34,19 @@ describe('forget', () => {
   });
 
   it('forgets snapshot', async () => {
-    await expect(
-      snapshots().repository(join(dir, 'repository')).password('password').run()
-    ).resolves.toHaveLength(2);
+    await expect(snapshots().repository(join(dir, 'repository')).password('password').run()).resolves.toHaveLength(2);
 
     await expect(
-      forget()
-        .repository(join(dir, 'repository'))
-        .password('password')
-        .snapshot(snapshotId2)
-        .run()
+      forget().repository(join(dir, 'repository')).password('password').snapshot(snapshotId2).run(),
     ).resolves.toBeUndefined();
 
-    await expect(
-      snapshots().repository(join(dir, 'repository')).password('password').run()
-    ).resolves.toHaveLength(1);
+    await expect(snapshots().repository(join(dir, 'repository')).password('password').run()).resolves.toHaveLength(1);
   });
 
   it('keeps last 1', async () => {
-    await expect(
-      snapshots().repository(join(dir, 'repository')).password('password').run()
-    ).resolves.toHaveLength(2);
+    await expect(snapshots().repository(join(dir, 'repository')).password('password').run()).resolves.toHaveLength(2);
 
-    await expect(
-      forget()
-        .repository(join(dir, 'repository'))
-        .password('password')
-        .keepLast(1)
-        .run()
-    ).resolves.toEqual(
+    await expect(forget().repository(join(dir, 'repository')).password('password').keepLast(1).run()).resolves.toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           keep: expect.arrayContaining([
@@ -81,11 +65,9 @@ describe('forget', () => {
             }),
           ]),
         }),
-      ])
+      ]),
     );
 
-    await expect(
-      snapshots().repository(join(dir, 'repository')).password('password').run()
-    ).resolves.toHaveLength(1);
+    await expect(snapshots().repository(join(dir, 'repository')).password('password').run()).resolves.toHaveLength(1);
   });
 });

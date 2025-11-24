@@ -1,9 +1,9 @@
+import { join } from 'node:path';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { createTempDir, initRepository } from '../utils/test';
-import { join } from 'node:path';
 
-import { cat } from './cat';
 import { MissingTargetError } from '../errors';
+import { cat } from './cat';
 
 describe('check', () => {
   let dir: string;
@@ -15,21 +15,17 @@ describe('check', () => {
 
   it('returns config', async () => {
     await expect(
-      cat()
-        .repository(join(dir, 'repository'))
-        .password('password')
-        .target('config')
-        .run()
+      cat().repository(join(dir, 'repository')).password('password').target('config').run(),
     ).resolves.toEqual(
       expect.objectContaining({
         version: 2,
-      })
+      }),
     );
   });
 
   it('throws without a target', async () => {
-    expect(() =>
-      cat().repository(join(dir, 'repository')).password('password').validate()
-    ).toThrowError(new MissingTargetError());
+    expect(() => cat().repository(join(dir, 'repository')).password('password').validate()).toThrowError(
+      new MissingTargetError(),
+    );
   });
 });

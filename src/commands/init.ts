@@ -1,9 +1,5 @@
-import {
-  baseArgs,
-  RepositoryArgumentBuilder,
-  type DynamicBuilder,
-} from '../utils/args';
 import * as z from 'zod';
+import { baseArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
 
 const initArgs = z.object({
   ...baseArgs.shape,
@@ -39,10 +35,7 @@ const initArgs = z.object({
   repositoryVersion: z.enum(['latest', 'stable']).optional(),
 });
 
-class InitArgumentBuilder extends RepositoryArgumentBuilder<
-  z.infer<typeof initMessage>,
-  z.infer<typeof initMessage>
-> {
+class InitArgumentBuilder extends RepositoryArgumentBuilder<z.infer<typeof initMessage>, z.infer<typeof initMessage>> {
   constructor() {
     super(initArgs);
   }
@@ -71,10 +64,7 @@ class InitArgumentBuilder extends RepositoryArgumentBuilder<
  * ```
  */
 export function init() {
-  return new InitArgumentBuilder() as DynamicBuilder<
-    z.infer<typeof initArgs>,
-    InitArgumentBuilder
-  >;
+  return new InitArgumentBuilder() as DynamicBuilder<z.infer<typeof initArgs>, InitArgumentBuilder>;
 }
 
 const initMessage = z.object({

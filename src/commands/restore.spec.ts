@@ -1,10 +1,10 @@
 import { mkdir, rm, stat, writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createTempDir, initRepository } from '../utils/test';
-import { join } from 'node:path';
 
-import { backup } from './backup';
 import { MissingSnapshotError } from '../errors';
+import { backup } from './backup';
 import { restore } from './restore';
 
 describe('restore', () => {
@@ -47,7 +47,7 @@ describe('restore', () => {
     expect(event).toHaveBeenCalledWith(
       expect.objectContaining({
         message_type: 'summary',
-      })
+      }),
     );
 
     await stat(join(dir, 'target', dir.substring(1), 'test-file'));
@@ -55,21 +55,13 @@ describe('restore', () => {
 
   it('throws without snapshot specified', async () => {
     expect(() =>
-      restore()
-        .repository(join(dir, 'repository'))
-        .password('password')
-        .target('target')
-        .validate()
+      restore().repository(join(dir, 'repository')).password('password').target('target').validate(),
     ).toThrowError(new MissingSnapshotError());
   });
 
   it('throws without target specified', async () => {
     expect(() =>
-      restore()
-        .repository(join(dir, 'repository'))
-        .password('password')
-        .snapshot('snapshot')
-        .validate()
+      restore().repository(join(dir, 'repository')).password('password').snapshot('snapshot').validate(),
     ).toThrowError();
   });
 });

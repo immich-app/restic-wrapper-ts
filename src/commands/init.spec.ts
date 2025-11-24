@@ -1,6 +1,6 @@
 import { beforeEach, describe, it } from 'vitest';
-import { init } from './init';
 import { createTempDir } from '../utils/test';
+import { init } from './init';
 
 describe('init', () => {
   let dir: string;

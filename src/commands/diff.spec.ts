@@ -1,11 +1,11 @@
 import { writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { createTempDir, initRepository } from '../utils/test';
-import { join } from 'node:path';
 
+import { MissingCompareError } from '../errors';
 import { backup } from './backup';
 import { diff } from './diff';
-import { MissingCompareError } from '../errors';
 
 describe('diff', () => {
   let dir: string;
@@ -42,11 +42,7 @@ describe('diff', () => {
 
   it('correctly produces a diff', async () => {
     await expect(
-      diff()
-        .repository(join(dir, 'repository'))
-        .password('password')
-        .compare(snapshotA, snapshotB)
-        .run()
+      diff().repository(join(dir, 'repository')).password('password').compare(snapshotA, snapshotB).run(),
     ).resolves.toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -71,13 +67,13 @@ describe('diff', () => {
             files: 1,
           }),
         }),
-      ])
+      ]),
     );
   });
 
   it('throws without snapshots specified', async () => {
-    expect(() =>
-      diff().repository(join(dir, 'repository')).password('password').validate()
-    ).toThrowError(new MissingCompareError());
+    expect(() => diff().repository(join(dir, 'repository')).password('password').validate()).toThrowError(
+      new MissingCompareError(),
+    );
   });
 });

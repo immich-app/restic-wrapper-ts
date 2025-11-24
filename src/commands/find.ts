@@ -1,11 +1,6 @@
-import { MissingMatchError } from '../errors';
-import {
-  baseArgs,
-  commonFilterArgs,
-  RepositoryArgumentBuilder,
-  type DynamicBuilder,
-} from '../utils/args';
 import * as z from 'zod';
+import { MissingMatchError } from '../errors';
+import { baseArgs, commonFilterArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
 
 const findArgs = z.object({
   ...baseArgs.shape,
@@ -50,19 +45,13 @@ class FindArgumentBuilder<T> extends RepositoryArgumentBuilder<T, T> {
   /* istanbul ignore next */
   blob() {
     this.#search = 'blob';
-    return this as never as DynamicBuilder<
-      z.infer<typeof findArgs>,
-      FindArgumentBuilder<z.infer<typeof blobResults>>
-    >;
+    return this as never as DynamicBuilder<z.infer<typeof findArgs>, FindArgumentBuilder<z.infer<typeof blobResults>>>;
   }
 
   /* istanbul ignore next */
   tree() {
     this.#search = 'tree';
-    return this as never as DynamicBuilder<
-      z.infer<typeof findArgs>,
-      FindArgumentBuilder<z.infer<typeof treeResults>>
-    >;
+    return this as never as DynamicBuilder<z.infer<typeof findArgs>, FindArgumentBuilder<z.infer<typeof treeResults>>>;
   }
 
   object() {
@@ -180,7 +169,7 @@ const blobResults = z.array(
     parent_tree: z.string(),
     snapshot: z.string(),
     time: z.string(),
-  })
+  }),
 );
 
 const treeResults = z.array(
@@ -191,5 +180,5 @@ const treeResults = z.array(
     parent_tree: z.string(),
     snapshot: z.string(),
     time: z.string(),
-  })
+  }),
 );

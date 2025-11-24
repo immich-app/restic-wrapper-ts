@@ -1,9 +1,9 @@
-import EventEmitter from 'node:events';
-import { ResticEnvironmentVariable } from '../constants';
 import type { ChildProcess } from 'node:child_process';
+import EventEmitter from 'node:events';
+import * as z from 'zod';
+import { ResticEnvironmentVariable } from '../constants';
 import { MissingPasswordError, MissingRepositoryError } from '../errors';
 import { restic } from './process';
-import * as z from 'zod';
 
 interface Events<T> {
   event: (event: T) => void;
@@ -75,10 +75,10 @@ export type DynamicBuilder<T, C> = C & {
   [K in keyof T]-?: T[K] extends any[]
     ? (...args: Extend<T[K][any]>[]) => DynamicBuilder<T, C>
     : T[K] extends boolean
-    ? (arg?: boolean) => DynamicBuilder<T, C>
-    : undefined extends T[K]
-    ? (arg?: Extend<T[K]>) => DynamicBuilder<T, C>
-    : (arg: Extend<T[K]>) => DynamicBuilder<T, C>;
+      ? (arg?: boolean) => DynamicBuilder<T, C>
+      : undefined extends T[K]
+        ? (arg?: Extend<T[K]>) => DynamicBuilder<T, C>
+        : (arg: Extend<T[K]>) => DynamicBuilder<T, C>;
 };
 
 export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
@@ -95,8 +95,8 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
           validator instanceof z.ZodDefault
             ? validator.def.innerType
             : validator instanceof z.ZodOptional
-            ? validator.def.innerType
-            : validator;
+              ? validator.def.innerType
+              : validator;
 
         if (actualValidator instanceof z.ZodArray) {
           if (!this.#dynamicArgs[key]) {
@@ -104,10 +104,7 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
           }
 
           this.#dynamicArgs[key].push(...validator.parse(args));
-        } else if (
-          typeof args[0] === 'undefined' &&
-          actualValidator instanceof z.ZodBoolean
-        ) {
+        } else if (typeof args[0] === 'undefined' && actualValidator instanceof z.ZodBoolean) {
           this.#dynamicArgs[key] = true;
         } else {
           this.#dynamicArgs[key] = validator.parse(args[0]);
@@ -224,9 +221,7 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
             if (value instanceof Date) {
               args.push(`--${realKey}`, value.toISOString());
             } else {
-              console.warn(
-                `Not sure how to handle ${key} = ${value} of type ${typeof value}`
-              );
+              console.warn(`Not sure how to handle ${key} = ${value} of type ${typeof value}`);
             }
         }
       }
@@ -272,10 +267,7 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
   }
 }
 
-export abstract class RepositoryArgumentBuilder<
-  T,
-  Output
-> extends ArgumentBuilder<T, Output> {
+export abstract class RepositoryArgumentBuilder<T, Output> extends ArgumentBuilder<T, Output> {
   validate(): void {
     super.validate();
 

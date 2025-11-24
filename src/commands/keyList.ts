@@ -1,9 +1,5 @@
-import {
-  baseArgs,
-  RepositoryArgumentBuilder,
-  type DynamicBuilder,
-} from '../utils/args';
 import * as z from 'zod';
+import { baseArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
 
 class KeyListArgumentBuilder extends RepositoryArgumentBuilder<
   z.infer<typeof keyListMessage>,
@@ -36,10 +32,7 @@ class KeyListArgumentBuilder extends RepositoryArgumentBuilder<
  * ```
  */
 export function keyList() {
-  return new KeyListArgumentBuilder() as DynamicBuilder<
-    z.infer<typeof baseArgs>,
-    KeyListArgumentBuilder
-  >;
+  return new KeyListArgumentBuilder() as DynamicBuilder<z.infer<typeof baseArgs>, KeyListArgumentBuilder>;
 }
 
 const keyListMessage = z.array(
@@ -49,5 +42,5 @@ const keyListMessage = z.array(
     userName: z.string(),
     hostName: z.string(),
     created: z.coerce.date(),
-  })
+  }),
 );

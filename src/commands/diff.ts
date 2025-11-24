@@ -1,10 +1,6 @@
-import { MissingCompareError } from '../errors';
-import {
-  baseArgs,
-  RepositoryArgumentBuilder,
-  type DynamicBuilder,
-} from '../utils/args';
 import * as z from 'zod';
+import { MissingCompareError } from '../errors';
+import { baseArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
 
 const diffArgs = z.object({
   ...baseArgs.shape,
@@ -59,10 +55,7 @@ class DiffArgumentBuilder extends RepositoryArgumentBuilder<
  * ```
  */
 export function diff() {
-  return new DiffArgumentBuilder() as DynamicBuilder<
-    z.infer<typeof diffArgs>,
-    DiffArgumentBuilder
-  >;
+  return new DiffArgumentBuilder() as DynamicBuilder<z.infer<typeof diffArgs>, DiffArgumentBuilder>;
 }
 
 const changeMessage = z.object({

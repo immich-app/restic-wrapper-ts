@@ -1,10 +1,7 @@
-import { ArgumentBuilder } from '../utils/args';
 import * as z from 'zod';
+import { ArgumentBuilder } from '../utils/args';
 
-class VersionArgumentBuilder extends ArgumentBuilder<
-  z.infer<typeof versionMessage>,
-  z.infer<typeof versionMessage>
-> {
+class VersionArgumentBuilder extends ArgumentBuilder<z.infer<typeof versionMessage>, z.infer<typeof versionMessage>> {
   command(): string {
     return 'version';
   }

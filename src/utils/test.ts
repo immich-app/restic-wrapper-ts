@@ -1,7 +1,7 @@
+import { createHash } from 'node:crypto';
 import { mkdir, mkdtemp, writeFile } from 'node:fs/promises';
 import { hostname, tmpdir, userInfo } from 'node:os';
 import { join } from 'node:path';
-import { createHash } from 'node:crypto';
 
 import * as tar from 'tar';
 
@@ -30,15 +30,8 @@ export async function createLock(repositoryPath: string) {
       gid: process.getgid?.(),
     },
     null,
-    2
+    2,
   );
 
-  await writeFile(
-    join(
-      repositoryPath,
-      'locks',
-      createHash('sha256').update(data).digest('hex')
-    ),
-    data
-  );
+  await writeFile(join(repositoryPath, 'locks', createHash('sha256').update(data).digest('hex')), data);
 }

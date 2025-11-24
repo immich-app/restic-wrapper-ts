@@ -1,10 +1,10 @@
+import { writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { createTempDir, initRepository } from '../utils/test';
-import { join } from 'node:path';
-import { writeFile } from 'node:fs/promises';
 import { backup } from './backup';
-import { tag } from './tag';
 import { snapshots } from './snapshots';
+import { tag } from './tag';
 
 describe('tag', () => {
   let dir: string;
@@ -35,16 +35,9 @@ describe('tag', () => {
   });
 
   it('updates a specific snapshot', async () => {
-    await tag()
-      .repository(join(dir, 'repository'))
-      .password('password')
-      .set('new-tag')
-      .snapshot(snapshotId)
-      .run();
+    await tag().repository(join(dir, 'repository')).password('password').set('new-tag').snapshot(snapshotId).run();
 
-    await expect(
-      snapshots().repository(join(dir, 'repository')).password('password').run()
-    ).resolves.toEqual(
+    await expect(snapshots().repository(join(dir, 'repository')).password('password').run()).resolves.toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           tags: expect.arrayContaining(['abc', 'def', 'ghi']),
@@ -52,7 +45,7 @@ describe('tag', () => {
         expect.objectContaining({
           tags: ['new-tag'],
         }),
-      ])
+      ]),
     );
   });
 
@@ -71,11 +64,7 @@ describe('tag', () => {
     },
   ])('can $action tag', async ({ action, tags }) => {
     await expect(
-      tag()
-        .repository(join(dir, 'repository'))
-        .password('password')
-        [action as 'set' | 'add' | 'remove']('abc')
-        .run()
+      tag().repository(join(dir, 'repository')).password('password')[action as 'set' | 'add' | 'remove']('abc').run(),
     ).resolves.toEqual(
       action === 'add'
         ? expect.arrayContaining([
@@ -97,12 +86,10 @@ describe('tag', () => {
               message_type: 'summary',
               changed_snapshots: 2,
             }),
-          ])
+          ]),
     );
 
-    await expect(
-      snapshots().repository(join(dir, 'repository')).password('password').run()
-    ).resolves.toEqual(
+    await expect(snapshots().repository(join(dir, 'repository')).password('password').run()).resolves.toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           tags,
@@ -110,7 +97,7 @@ describe('tag', () => {
         expect.objectContaining({
           tags,
         }),
-      ])
+      ]),
     );
   });
 });

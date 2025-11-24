@@ -1,10 +1,6 @@
 import * as z from 'zod';
 import { MissingTargetError } from '../errors';
-import {
-  baseArgs,
-  RepositoryArgumentBuilder,
-  type DynamicBuilder,
-} from '../utils/args';
+import { baseArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
 
 class CatArgumentBuilder extends RepositoryArgumentBuilder<any, any> {
   #target: string | undefined;
@@ -14,23 +10,11 @@ class CatArgumentBuilder extends RepositoryArgumentBuilder<any, any> {
    * The object to read from.
    */
   target(target: 'masterkey' | 'config'): this;
-  target(
-    target: 'pack' | 'blob' | 'snapshot' | 'index' | 'key' | 'lock',
-    id: string
-  ): this;
+  target(target: 'pack' | 'blob' | 'snapshot' | 'index' | 'key' | 'lock', id: string): this;
   target(target: 'tree', path: string): this;
   target(
-    target:
-      | 'masterkey'
-      | 'config'
-      | 'pack'
-      | 'blob'
-      | 'snapshot'
-      | 'index'
-      | 'key'
-      | 'lock'
-      | 'tree',
-    arg2?: string
+    target: 'masterkey' | 'config' | 'pack' | 'blob' | 'snapshot' | 'index' | 'key' | 'lock' | 'tree',
+    arg2?: string,
   ) {
     this.#target = target;
     this.#id = arg2;
@@ -80,8 +64,5 @@ class CatArgumentBuilder extends RepositoryArgumentBuilder<any, any> {
  * ```
  */
 export function cat() {
-  return new CatArgumentBuilder() as DynamicBuilder<
-    z.infer<typeof baseArgs>,
-    CatArgumentBuilder
-  >;
+  return new CatArgumentBuilder() as DynamicBuilder<z.infer<typeof baseArgs>, CatArgumentBuilder>;
 }

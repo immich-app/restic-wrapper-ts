@@ -1,7 +1,7 @@
+import { writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { createTempDir, initRepository } from '../utils/test';
-import { join } from 'node:path';
-import { writeFile } from 'node:fs/promises';
 import { backup } from './backup';
 import { stats } from './stats';
 
@@ -21,40 +21,30 @@ describe('stats', () => {
       .addFile(join(dir, 'test-file'))
       .run();
 
-    await backup()
-      .repository(join(dir, 'repository'))
-      .password('password')
-      .addFile(join(dir, 'test-file'))
-      .run();
+    await backup().repository(join(dir, 'repository')).password('password').addFile(join(dir, 'test-file')).run();
 
     snapshotId = snapshot_id;
   });
 
   it('generates stats', async () => {
-    await expect(
-      stats().repository(join(dir, 'repository')).password('password').run()
-    ).resolves.toEqual(
+    await expect(stats().repository(join(dir, 'repository')).password('password').run()).resolves.toEqual(
       expect.objectContaining({
         total_size: expect.any(Number),
         total_file_count: expect.any(Number),
         snapshots_count: 2,
-      })
+      }),
     );
   });
 
   it('generates stats for a single snapshot', async () => {
     await expect(
-      stats()
-        .repository(join(dir, 'repository'))
-        .password('password')
-        .snapshot(snapshotId)
-        .run()
+      stats().repository(join(dir, 'repository')).password('password').snapshot(snapshotId).run(),
     ).resolves.toEqual(
       expect.objectContaining({
         total_size: expect.any(Number),
         total_file_count: expect.any(Number),
         snapshots_count: 1,
-      })
+      }),
     );
   });
 

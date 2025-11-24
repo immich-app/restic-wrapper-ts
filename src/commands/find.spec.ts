@@ -1,10 +1,10 @@
 import { writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { createTempDir, initRepository } from '../utils/test';
-import { join } from 'node:path';
 
-import { backup } from './backup';
 import { MissingMatchError } from '../errors';
+import { backup } from './backup';
 import { find } from './find';
 
 describe('diff', () => {
@@ -26,12 +26,7 @@ describe('diff', () => {
 
   it('finds objects', async () => {
     await expect(
-      find()
-        .repository(join(dir, 'repository'))
-        .password('password')
-        .match('*.json')
-        .object()
-        .run()
+      find().repository(join(dir, 'repository')).password('password').match('*.json').object().run(),
     ).resolves.toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -43,7 +38,7 @@ describe('diff', () => {
             }),
           ]),
         }),
-      ])
+      ]),
     );
   });
 
@@ -51,8 +46,8 @@ describe('diff', () => {
   it.todo('finds trees');
 
   it('throws without match specified', async () => {
-    expect(() =>
-      find().repository(join(dir, 'repository')).password('password').validate()
-    ).toThrowError(new MissingMatchError());
+    expect(() => find().repository(join(dir, 'repository')).password('password').validate()).toThrowError(
+      new MissingMatchError(),
+    );
   });
 });

@@ -1,7 +1,7 @@
 import { writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import { beforeEach, describe, it } from 'vitest';
 import { createTempDir, initRepository } from '../utils/test';
-import { join } from 'node:path';
 
 import { check } from './check';
 
@@ -17,31 +17,19 @@ describe('check', () => {
   });
 
   it('checks empty repository', async () => {
-    await check()
-      .repository(join(dir, 'repository'))
-      .password('password')
-      .run();
+    await check().repository(join(dir, 'repository')).password('password').run();
   });
 
   it('can load repository path from file', async () => {
-    await check()
-      .repositoryFile(join(dir, 'repository-file'))
-      .password('password')
-      .run();
+    await check().repositoryFile(join(dir, 'repository-file')).password('password').run();
   });
 
   it('can load password from file', async () => {
-    await check()
-      .repository(join(dir, 'repository'))
-      .passwordFile(join(dir, 'password-file'))
-      .run();
+    await check().repository(join(dir, 'repository')).passwordFile(join(dir, 'password-file')).run();
   });
 
   it('can load password from command', async () => {
-    await check()
-      .repository(join(dir, 'repository'))
-      .passwordCommand('/usr/bin/env bash -c "echo password"')
-      .run();
+    await check().repository(join(dir, 'repository')).passwordCommand('/usr/bin/env bash -c "echo password"').run();
   });
 
   it.todo('fails to lock the repository');
