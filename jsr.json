@@ -1,9 +1,0 @@
-{
-  "name": "@immich/restic-wrapper",
-  "version": "0.0.0",
-  "license": "UNLICENSED",
-  "exports": "./src/index.ts",
-  "publish": {
-    "include": ["LICENSE", "README.md", "src/**/*.ts"]
-  }
-}
