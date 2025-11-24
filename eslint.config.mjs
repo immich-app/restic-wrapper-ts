@@ -1,7 +1,6 @@
 import js from '@eslint/js';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import eslintPluginUnicorn from 'eslint-plugin-unicorn';
-import globals from 'globals';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import typescriptEslint from 'typescript-eslint';
@@ -19,10 +18,6 @@ export default typescriptEslint.config([
   },
   {
     languageOptions: {
-      globals: {
-        ...globals.node,
-      },
-
       parser: typescriptEslint.parser,
       ecmaVersion: 5,
       sourceType: 'module',
