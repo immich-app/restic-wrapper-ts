@@ -25,6 +25,13 @@ jobs:
           node-version: '20'
           cache: 'pnpm'
 
+      - name: Download and install Restic 0.18.0
+        run: |
+          curl -L https://github.com/restic/restic/releases/download/v0.18.0/restic_0.18.0_linux_amd64.bz2 -o restic.bz2
+          bzip2 -d restic.bz2
+          chmod +x restic
+          mv restic /usr/local/bin
+
       - run: pnpm install --frozen-lockfile
       - run: pnpm format
       - run: pnpm lint
