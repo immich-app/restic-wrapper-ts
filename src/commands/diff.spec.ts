@@ -71,7 +71,7 @@ describe('diff', () => {
     );
   });
 
-  it('throws without snapshots specified', async () => {
+  it('throws without snapshots specified', () => {
     expect(() => diff().repository(join(dir, 'repository')).password('password').validate()).toThrowError(
       new MissingCompareError(),
     );

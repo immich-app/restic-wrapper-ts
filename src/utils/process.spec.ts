@@ -5,13 +5,16 @@ import { ArgumentBuilder } from './args';
 import { restic } from './process';
 
 describe('wrapper', () => {
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  type Data = {};
+
   it('handles runtime errors', async () => {
-    class InvalidCommand extends ArgumentBuilder<{}> {
+    class InvalidCommand extends ArgumentBuilder<Data, Data> {
       command(): string {
         return 'invalid-command';
       }
 
-      parse(data: {}): {} {
+      parse(data: Data): Data {
         return data;
       }
     }
@@ -22,12 +25,12 @@ describe('wrapper', () => {
   });
 
   it('parses stdout as jsonlines', async () => {
-    class VersionCommand extends ArgumentBuilder<{}> {
+    class VersionCommand extends ArgumentBuilder<Data, Data> {
       command(): string {
         return 'version';
       }
 
-      parse(data: {}): {} {
+      parse(data: Data): Data {
         return data;
       }
     }
@@ -40,12 +43,12 @@ describe('wrapper', () => {
   });
 
   it('handles errors on invalid json output', async () => {
-    class VersionCommand extends ArgumentBuilder<{}> {
+    class VersionCommand extends ArgumentBuilder<Data, Data> {
       command(): string {
         return 'version';
       }
 
-      parse(): {} {
+      parse(): Data {
         throw new Error('dummy error');
       }
 
@@ -58,12 +61,12 @@ describe('wrapper', () => {
   });
 
   it('emits events', async () => {
-    class VersionCommand extends ArgumentBuilder<{}> {
+    class VersionCommand extends ArgumentBuilder<Data, Data> {
       command(): string {
         return 'version';
       }
 
-      parse(data: {}): {} {
+      parse(data: Data): Data {
         return data;
       }
     }

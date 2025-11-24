@@ -96,7 +96,7 @@ class ForgetArgumentBuilder<T> extends RepositoryArgumentBuilder<T, T> {
   }
 
   format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'none' {
-    return this.#snapshots.length ? 'none' : 'json';
+    return this.#snapshots.length > 0 ? 'none' : 'json';
   }
 
   parse(data: T): T {

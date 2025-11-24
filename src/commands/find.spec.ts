@@ -45,7 +45,7 @@ describe('diff', () => {
   it.todo('finds blobs');
   it.todo('finds trees');
 
-  it('throws without match specified', async () => {
+  it('throws without match specified', () => {
     expect(() => find().repository(join(dir, 'repository')).password('password').validate()).toThrowError(
       new MissingMatchError(),
     );

@@ -56,6 +56,8 @@ export default typescriptEslint.config([
       'prettier/prettier': 0,
       'object-shorthand': ['error', 'always'],
 
+      'no-unexpected-multiline': 'off',
+
       '@typescript-eslint/no-unused-vars': [
         'warn',
         {

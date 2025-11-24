@@ -104,7 +104,7 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
           }
 
           this.#dynamicArgs[key].push(...validator.parse(args));
-        } else if (typeof args[0] === 'undefined' && actualValidator instanceof z.ZodBoolean) {
+        } else if (args[0] === undefined && actualValidator instanceof z.ZodBoolean) {
           this.#dynamicArgs[key] = true;
         } else {
           this.#dynamicArgs[key] = validator.parse(args[0]);
@@ -184,8 +184,8 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
 
   abstract command(): string;
   abstract parse(data: T): T;
-  filter(data: string): boolean;
-  filter(): boolean {
+  setFilter(data: string): boolean;
+  setFilter(): boolean {
     return true;
   }
   validate(): void {
@@ -199,30 +199,35 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
     const args = [this.command(), '--json'];
 
     for (const [key, value] of Object.entries(this.#dynamicArgs)) {
-      const realKey = key.replace(/[A-Z]/g, (str) => `-${str.toLowerCase()}`);
+      const realKey = key.replaceAll(/[A-Z]/g, (str) => `-${str.toLowerCase()}`);
       const values = Array.isArray(value) ? value : [value];
 
       for (const value of values) {
         switch (typeof value) {
-          case 'string':
+          case 'string': {
             args.push(`--${realKey}`, value);
             break;
-          case 'boolean':
+          }
+          case 'boolean': {
             if (value) {
               args.push(`--${realKey}`);
             }
             break;
-          case 'number':
+          }
+          case 'number': {
             args.push(`--${realKey}`, (value as number).toString());
             break;
-          case 'undefined':
+          }
+          case 'undefined': {
             break;
-          default:
+          }
+          default: {
             if (value instanceof Date) {
               args.push(`--${realKey}`, value.toISOString());
             } else {
               console.warn(`Not sure how to handle ${key} = ${value} of type ${typeof value}`);
             }
+          }
         }
       }
     }

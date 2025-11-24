@@ -30,7 +30,7 @@ export class JsonLinesReader<T> extends Writable {
   }
 
   flush() {
-    if (this.buffer.length) {
+    if (this.buffer.length > 0) {
       const text = JsonLinesReader.decoder.decode(new Uint8Array(this.buffer));
 
       try {

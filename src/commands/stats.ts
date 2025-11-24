@@ -69,14 +69,18 @@ class StatsArgumentBuilder<T> extends RepositoryArgumentBuilder<T, T> {
 
   parse(data: T): T {
     switch (this.#mode) {
-      case 'restore-size':
+      case 'restore-size': {
         return restoreSizeMessage.parse(data) as T;
-      case 'files-by-contents':
+      }
+      case 'files-by-contents': {
         return filesByContentsMessage.parse(data) as T;
-      case 'blobs-per-file':
+      }
+      case 'blobs-per-file': {
         return blobsPerFileMessage.parse(data) as T;
-      case 'raw-data':
+      }
+      case 'raw-data': {
         return rawDataMessage.parse(data) as T;
+      }
     }
   }
 }

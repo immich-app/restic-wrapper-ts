@@ -50,16 +50,16 @@ describe('restore', () => {
       }),
     );
 
-    await stat(join(dir, 'target', dir.substring(1), 'test-file'));
+    await stat(join(dir, 'target', dir.slice(1), 'test-file'));
   });
 
-  it('throws without snapshot specified', async () => {
+  it('throws without snapshot specified', () => {
     expect(() =>
       restore().repository(join(dir, 'repository')).password('password').target('target').validate(),
     ).toThrowError(new MissingSnapshotError());
   });
 
-  it('throws without target specified', async () => {
+  it('throws without target specified', () => {
     expect(() =>
       restore().repository(join(dir, 'repository')).password('password').snapshot('snapshot').validate(),
     ).toThrowError();

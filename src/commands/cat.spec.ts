@@ -23,7 +23,7 @@ describe('check', () => {
     );
   });
 
-  it('throws without a target', async () => {
+  it('throws without a target', () => {
     expect(() => cat().repository(join(dir, 'repository')).password('password').validate()).toThrowError(
       new MissingTargetError(),
     );

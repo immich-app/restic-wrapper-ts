@@ -5,12 +5,8 @@ import { JsonLinesReader } from './streams';
 
 describe('JsonLinesReader', () => {
   it('reads JSON lines', async () => {
-    async function* data() {
-      yield '{"hello": 1}\n{"world": 2}';
-    }
-
     const cb = vi.fn();
-    await pipeline([Readable.from(data()), new JsonLinesReader(cb)]);
+    await pipeline([Readable.from('{"hello": 1}\n{"world": 2}'), new JsonLinesReader(cb)]);
 
     expect(cb).toHaveBeenNthCalledWith(1, { hello: 1 });
     expect(cb).toHaveBeenNthCalledWith(2, { world: 2 });
@@ -18,6 +14,7 @@ describe('JsonLinesReader', () => {
   });
 
   it('throws errors with invalid JSON (_write)', async () => {
+    // eslint-disable-next-line unicorn/consistent-function-scoping
     async function* data() {
       yield '{"hello": 1}\n{"world":}\n';
       await new Promise((resolve) => setImmediate(resolve));
@@ -33,13 +30,9 @@ describe('JsonLinesReader', () => {
   });
 
   it('throws errors with invalid JSON (_final)', async () => {
-    async function* data() {
-      yield '{"hello": 1}\n{"world":}';
-    }
-
     const cb = vi.fn();
 
-    await expect(pipeline([Readable.from(data()), new JsonLinesReader(cb)])).rejects.toThrowError();
+    await expect(pipeline([Readable.from('{"hello": 1}\n{"world":}'), new JsonLinesReader(cb)])).rejects.toThrowError();
 
     expect(cb).toHaveBeenNthCalledWith(1, { hello: 1 });
     expect(cb).toHaveBeenCalledTimes(1);

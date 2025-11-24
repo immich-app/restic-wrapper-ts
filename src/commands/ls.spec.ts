@@ -113,7 +113,7 @@ describe('ls', () => {
     );
   });
 
-  it('throws without snapshot specified', async () => {
+  it('throws without snapshot specified', () => {
     expect(() => ls().repository(join(dir, 'repository')).password('password').validate()).toThrowError(
       new MissingSnapshotError(),
     );

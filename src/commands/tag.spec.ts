@@ -9,7 +9,6 @@ import { tag } from './tag';
 describe('tag', () => {
   let dir: string;
   let snapshotId: string;
-  let otherSnapshotId: string;
 
   beforeEach(async () => {
     dir = await createTempDir();
@@ -23,7 +22,7 @@ describe('tag', () => {
       .tag('abc,def,ghi')
       .run();
 
-    const { snapshot_id: other_snapshot_id } = await backup()
+    await backup()
       .repository(join(dir, 'repository'))
       .password('password')
       .addFile(join(dir, 'test-file'))
@@ -31,7 +30,6 @@ describe('tag', () => {
       .run();
 
     snapshotId = snapshot_id;
-    otherSnapshotId = other_snapshot_id;
   });
 
   it('updates a specific snapshot', async () => {

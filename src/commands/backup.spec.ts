@@ -53,7 +53,7 @@ describe('backup', () => {
     );
   });
 
-  it('refuses to continue with no files', async () => {
+  it('refuses to continue with no files', () => {
     expect(() => backup().repository(join(dir, 'repository')).password('password').validate()).toThrowError(
       new MissingFilesError(),
     );

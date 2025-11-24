@@ -46,7 +46,7 @@ class TryParseError extends Error {
   constructor(message: string) {
     try {
       super(JSON.parse(message.split('\n').pop()!).message);
-    } catch (err) {
+    } catch {
       super(message);
     }
   }

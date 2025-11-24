@@ -76,13 +76,15 @@ class FindArgumentBuilder<T> extends RepositoryArgumentBuilder<T, T> {
 
     switch (this.#search) {
       /* istanbul ignore next */
-      case 'blob':
+      case 'blob': {
         args.push('--blob');
         break;
+      }
       /* istanbul ignore next */
-      case 'tree':
+      case 'tree': {
         args.push('--tree');
         break;
+      }
     }
 
     return [...super.toArgs(), ...args, ...this.#match];
@@ -95,13 +97,15 @@ class FindArgumentBuilder<T> extends RepositoryArgumentBuilder<T, T> {
   parse(data: T): T {
     switch (this.#search) {
       /* istanbul ignore next */
-      case 'blob':
+      case 'blob': {
         return blobResults.parse(data) as T;
-      /* istanbul ignore next */
-      case 'tree':
+      } /* istanbul ignore next */
+      case 'tree': {
         return treeResults.parse(data) as T;
-      case 'object':
+      }
+      case 'object': {
         return objectResults.parse(data) as T;
+      }
     }
   }
 

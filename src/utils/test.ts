@@ -12,7 +12,7 @@ export async function createTempDir() {
 export async function initRepository(path: string) {
   await mkdir(path);
   await tar.x({
-    file: join(__dirname, 'test-data', 'empty-repo.tar.gz'),
+    file: join(import.meta.dirname, 'test-data', 'empty-repo.tar.gz'),
     cwd: path,
   });
 }

@@ -63,7 +63,7 @@ export function restic<T, Output>(argsBuilder: ArgumentBuilder<T, Output>): Prom
           }
         },
         // work-around for `tag` output
-        (line) => argsBuilder.filter(line),
+        (line) => argsBuilder.setFilter(line),
       );
 
       process.stdout.pipe(jsonLinesReader);
@@ -72,40 +72,49 @@ export function restic<T, Output>(argsBuilder: ArgumentBuilder<T, Output>): Prom
 
     process.on('exit', (code) => {
       switch (code) {
-        case 0:
+        case 0: {
           finish();
           break;
-        case 1:
+        }
+        case 1: {
           reject(new ResticCommandFailedError(stderr.trimEnd()));
           break;
+        }
         /* istanbul ignore next */
-        case 2:
+        case 2: {
           reject(new ResticGoRuntimeError(stderr.trimEnd()));
           break;
+        }
         /* istanbul ignore next */
         // backup.spec.ts
-        case 3:
+        case 3: {
           reject(new ResticBackupCommandCouldNotReadSourceDataError(stderr.trimEnd()));
           break;
-        case 10:
+        }
+        case 10: {
           reject(new ResticRepositoryDoesNotExistError(stderr.trimEnd()));
           break;
+        }
         /* istanbul ignore next */
         // check.spec.ts
-        case 11:
+        case 11: {
           reject(new ResticFailedToLockRepositoryError(stderr.trimEnd()));
           break;
-        case 12:
+        }
+        case 12: {
           reject(new ResticWrongPasswordError(stderr.trimEnd()));
           break;
+        }
         /* istanbul ignore next */
         // check.spec.ts
-        case 130:
+        case 130: {
           reject(new ResticInterruptedError(stderr.trimEnd()));
           break;
+        }
         /* istanbul ignore next */
-        default:
+        default: {
           reject(new ResticUnknownError(stderr.trimEnd()));
+        }
       }
     });
   });
