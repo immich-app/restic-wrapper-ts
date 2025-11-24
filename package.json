@@ -1,5 +1,5 @@
 {
-  "name": "@immich/restic",
+  "name": "@immich/restic-wrapper",
   "version": "0.0.0",
   "description": "Starter template for TS libraries",
   "keywords": [
