@@ -109,7 +109,10 @@ class ForgetArgumentBuilder<T> extends RepositoryArgumentBuilder<T, T> {
  *
  * ```typescript
  * const results = await forget()
- *   .todo();
+ *   .repository(..)
+ *   .password(..)
+ *   .keepLast(5)
+ *   .run();
  * ```
  */
 export function forget() {
