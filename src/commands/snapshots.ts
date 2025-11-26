@@ -30,10 +30,6 @@ class SnapshotsArgumentBuilder extends RepositoryArgumentBuilder<
     return 'snapshots';
   }
 
-  validate(): void {
-    super.validate();
-  }
-
   format(): 'jsonlines' | 'jsonlines-no-log' | 'json' {
     return 'json';
   }
