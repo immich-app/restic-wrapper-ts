@@ -237,7 +237,7 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
 
   toEnv(): Record<string, string> {
     const env: Record<string, string> = {
-      PATH: process.env.PATH!,
+      PATH: process.env.PATH ?? '',
     };
 
     if (this.#repository) {
