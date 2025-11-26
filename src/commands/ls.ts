@@ -97,12 +97,14 @@ class LsArgumentBuilder extends RepositoryArgumentBuilder<z.infer<typeof lsMessa
 }
 
 /**
- * Test repository for errors and report any errors it finds.
+ * List files in a snapshot.
  *
  * ```typescript
  * await ls()
  *   .repository(..)
- *   .password(..);
+ *   .password(..)
+ *   .snapshot(..)
+ *   .run();
  * ```
  */
 export function ls() {
