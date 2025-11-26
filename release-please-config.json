@@ -4,7 +4,7 @@
   "prerelease": true,
   "packages": {
     ".": {
-      "package-name": "@immich/restic-wrapper",
+      "package-name": "@futo-org/restic-wrapper",
       "extra-files": ["jsr.json"],
       "prerelease-type": "alpha"
     }
