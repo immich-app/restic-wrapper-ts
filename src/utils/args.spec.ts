@@ -1,8 +1,27 @@
 import { describe, expect, it } from 'vitest';
 import { MissingPasswordError, MissingRepositoryError } from '../errors';
-import { RepositoryArgumentBuilder, type DynamicBuilder } from './args';
+import { commonFilterArgs, RepositoryArgumentBuilder, type DynamicBuilder } from './args';
 
 import * as z from 'zod';
+
+describe('commonFilterArgs', () => {
+  it('validates absolute paths starting with forward slash', () => {
+    expect(() => commonFilterArgs.shape.path.parse(['/home/user/data'])).not.toThrow();
+    expect(() => commonFilterArgs.shape.path.parse(['/'])).not.toThrow();
+    expect(() => commonFilterArgs.shape.path.parse(['/var/log', '/etc/config'])).not.toThrow();
+  });
+
+  it('validates absolute paths starting with backslash', () => {
+    expect(() => commonFilterArgs.shape.path.parse(['\\Users\\data'])).not.toThrow();
+    expect(() => commonFilterArgs.shape.path.parse(['\\'])).not.toThrow();
+  });
+
+  it('rejects relative paths', () => {
+    expect(() => commonFilterArgs.shape.path.parse(['relative/path'])).toThrow();
+    expect(() => commonFilterArgs.shape.path.parse(['./local'])).toThrow();
+    expect(() => commonFilterArgs.shape.path.parse(['file.txt'])).toThrow();
+  });
+});
 
 describe('RepositoryArgumentBuilder', () => {
   const dummyArgs = z.object({

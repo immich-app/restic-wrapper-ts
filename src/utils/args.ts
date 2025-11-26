@@ -48,7 +48,7 @@ export const commonFilterArgs = z.object({
    */
   path: z
     .string()
-    .regex(/^(\\|\/)$/)
+    .regex(/^(\\|\/)/)
     .array()
     .default([]),
   /**
