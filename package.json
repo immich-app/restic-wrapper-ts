@@ -1,13 +1,14 @@
 {
   "name": "@futo-org/restic-wrapper",
   "version": "0.0.0",
-  "description": "Starter template for TS libraries",
+  "description": "TypeScript wrapper library for the restic backup tool",
   "keywords": [
-    "starter",
-    "library",
-    "typescript"
+    "restic",
+    "backup",
+    "typescript",
+    "wrapper"
   ],
-  "homepage": "https://github.com/bgub/ts-base",
+  "homepage": "https://github.com/immich/restic-wrapper-ts",
   "type": "module",
   "exports": {
     ".": {
@@ -30,11 +31,12 @@
     "test": "vitest run",
     "test:ui": "vitest --ui"
   },
-  "author": "Ben Gubler <nebrelbug@gmail.com>",
-  "funding": "https://github.com/bgub/ts-base?sponsor=1",
-  "repository": "github:bgub/ts-base",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/immich/restic-wrapper-ts.git"
+  },
   "bugs": {
-    "url": "https://github.com/bgub/ts-base/issues"
+    "url": "https://github.com/immich/restic-wrapper-ts/issues"
   },
   "license": "UNLICENSED",
   "engines": {
