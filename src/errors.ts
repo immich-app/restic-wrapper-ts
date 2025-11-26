@@ -8,7 +8,7 @@ export class MissingFilesError extends Error {
 
 export class MissingRepositoryError extends Error {
   constructor() {
-    super('Specify a repository with .repository(..) or .repositoryPath(..)');
+    super('Specify a repository with .repository(..) or .repositoryFile(..)');
   }
 }
 
