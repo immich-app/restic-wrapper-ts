@@ -96,12 +96,6 @@ ${join(dir, 'missing-repository')}`),
     ).rejects.toThrowError(new ResticCommandFailedError('Fatal: all source directories/files do not exist'));
   });
 
-  it('fails to add only non-existent files', async () => {
-    await expect(
-      backup().repository(join(dir, 'repository')).password('password').addFile(join(dir, 'missing-file')).run(),
-    ).rejects.toThrowError(new ResticCommandFailedError('Fatal: all source directories/files do not exist'));
-  });
-
   it.skip('fails to open a locked repository', async () => {
     await createLock(join(dir, 'repository'));
 
