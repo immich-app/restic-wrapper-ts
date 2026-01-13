@@ -1,0 +1,8 @@
+[tools]
+node = "24.11"
+pnpm = "10.22.0"
+restic = "0.18.0"
+
+[tasks.check]
+description = "Run all checks including build"
+depends = ["build", "test", "lint", "format"]

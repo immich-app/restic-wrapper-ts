@@ -21,15 +21,6 @@ jobs:
       - name: Setup Mise
         uses: immich-app/devtools/actions/use-mise@cd24790a7f5f6439ac32cc94f5523cb2de8bfa8c # use-mise-action-v1.1.0
 
-      - name: Download and install Restic 0.18.0
-        run: |
-          curl -L https://github.com/restic/restic/releases/download/v0.18.0/restic_0.18.0_linux_amd64.bz2 -o restic.bz2
-          bzip2 -d restic.bz2
-          chmod +x restic
-          mv restic /usr/local/bin
-
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm format
-      - run: pnpm lint
-      - run: pnpm build
-      - run: pnpm test
+      - run: mise install:frozen
+      - run: mise docker:start
+      - run: mise check

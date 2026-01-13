@@ -12,7 +12,7 @@ describe('commonFilterArgs', () => {
   });
 
   it('validates absolute paths starting with backslash', () => {
-    expect(() => commonFilterArgs.shape.path.parse(['\\Users\\data'])).not.toThrow();
+    expect(() => commonFilterArgs.shape.path.parse([String.raw`\Users\data`])).not.toThrow();
     expect(() => commonFilterArgs.shape.path.parse(['\\'])).not.toThrow();
   });
 
