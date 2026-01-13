@@ -38,7 +38,7 @@
   "bugs": {
     "url": "https://github.com/immich/restic-wrapper-ts/issues"
   },
-  "license": "UNLICENSED",
+  "license": "MIT",
   "engines": {
     "node": ">=20"
   },
