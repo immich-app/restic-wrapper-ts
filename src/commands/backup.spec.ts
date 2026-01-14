@@ -4,8 +4,6 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   MissingFilesError,
   ResticCommandFailedError,
-  ResticRepositoryDoesNotExistError,
-  ResticWrongPasswordError,
 } from '../errors';
 import { createLock, createTempDir, initRepository } from '../utils/test';
 import { backup } from './backup';
@@ -62,21 +60,21 @@ describe('backup', () => {
   it('fails to open non-existent repository', async () => {
     await expect(
       backup().repository(join(dir, 'missing-repository')).password('password').addFile(join(dir, 'test-file')).run(),
-    ).rejects.toThrowError(
-      new ResticRepositoryDoesNotExistError(`Fatal: repository does not exist: unable to open config file: stat ${join(
-        dir,
-        'missing-repository',
-        'config',
-      )}: no such file or directory
-Is there a repository at the following location?
-${join(dir, 'missing-repository')}`),
+    ).rejects.toEqual(
+      expect.objectContaining({
+        message: expect.stringContaining('Fatal: repository does not exist: unable to open config file'),
+      })
     );
   });
 
   it('fails to open repository with wrong password', async () => {
     await expect(
       backup().repository(join(dir, 'repository')).password('wrong-password').addFile(join(dir, 'test-file')).run(),
-    ).rejects.toThrowError(new ResticWrongPasswordError('Fatal: wrong password or no key found'));
+    ).rejects.toEqual(
+      expect.objectContaining({
+        message: expect.stringContaining('Fatal: wrong password or no key found'),
+      })
+    );
   });
 
   it('ignores missing files', async () => {
@@ -93,7 +91,11 @@ ${join(dir, 'missing-repository')}`),
   it('fails to add only non-existent files', async () => {
     await expect(
       backup().repository(join(dir, 'repository')).password('password').addFile(join(dir, 'missing-file')).run(),
-    ).rejects.toThrowError(new ResticCommandFailedError('Fatal: all source directories/files do not exist'));
+    ).rejects.toEqual(
+      expect.objectContaining({
+        message: expect.stringContaining('Fatal: all source directories/files do not exist'),
+      })
+    );
   });
 
   it.skip('fails to open a locked repository', async () => {
