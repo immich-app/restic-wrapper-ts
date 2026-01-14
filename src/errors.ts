@@ -1,4 +1,4 @@
-export type { ZodError } from 'zod';
+import * as z from 'zod';
 
 export class MissingFilesError extends Error {
   constructor() {
@@ -42,13 +42,59 @@ export class MissingCompareError extends Error {
   }
 }
 
+const errorMessage = z.union([
+  z.object({
+    message_type: z.literal('exit_error'),
+    code: z.number().int(),
+    message: z.string(),
+  }),
+  z.object({
+    message_type: z.literal('error'),
+    message: z.string().optional(),
+    error: z
+      .object({
+        message: z.string(),
+      })
+      .optional(),
+    during: z.string().optional(),
+    item: z.string().optional(),
+  }),
+  z.object({
+    message_type: z.literal('raw'),
+    message: z.string(),
+  }),
+]);
+
 class TryParseError extends Error {
+  error: z.infer<typeof errorMessage>[] | string;
+
   constructor(message: string) {
-    try {
-      super(JSON.parse(message.split('\n').pop()!).message);
-    } catch {
-      super(message);
-    }
+    const error = message.split('\n').map((item) => {
+      try {
+        return errorMessage.parse(JSON.parse(item));
+      } catch {
+        return {
+          message_type: 'raw' as const,
+          message: item,
+        };
+      }
+    });
+
+    super(
+      error
+        .map((e) =>
+          e.message_type === 'raw'
+            ? e.message :
+          e.message_type === 'exit_error'
+            ? `Restic exited with code ${e.code}: ${e.message}`
+            : `Restic error${e.during ? ` during ${e.during}` : ''}${
+                e.item ? ` on ${e.item}` : ''
+              }: ${e.error?.message ?? e.message ?? 'unknown error'}`,
+        )
+        .join('\n'),
+    );
+
+    this.error = error;
   }
 }
 
