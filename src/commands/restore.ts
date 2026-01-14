@@ -132,13 +132,13 @@ const restoreStatusMessage = z.object({
   message_type: z.literal('status'),
   seconds_elapsed: z.number().int().nonnegative().optional(),
   percent_done: z.number(),
-  total_files: z.number().int().nonnegative(),
-  files_restored: z.number().int().nonnegative(),
-  files_skipped: z.number().int().nonnegative(),
-  files_deleted: z.number().int().nonnegative(),
-  total_bytes: z.number().int().nonnegative(),
-  bytes_restored: z.number().int().nonnegative(),
-  bytes_skipped: z.number().int().nonnegative(),
+  total_files: z.number().int().nonnegative().optional(),
+  files_restored: z.number().int().nonnegative().optional(),
+  files_skipped: z.number().int().nonnegative().optional(),
+  files_deleted: z.number().int().nonnegative().optional(),
+  total_bytes: z.number().int().nonnegative().optional(),
+  bytes_restored: z.number().int().nonnegative().optional(),
+  bytes_skipped: z.number().int().nonnegative().optional(),
 });
 
 const restoreVerboseStatusMessage = z.object({
@@ -151,12 +151,12 @@ const restoreVerboseStatusMessage = z.object({
 const restoreSummaryMessage = z.object({
   message_type: z.literal('summary'),
   seconds_elapsed: z.number().int().nonnegative().optional(),
-  total_files: z.number().int().nonnegative(),
-  files_restored: z.number().int().nonnegative(),
+  total_files: z.number().int().nonnegative().optional(),
+  files_restored: z.number().int().nonnegative().optional(),
   files_skipped: z.number().int().nonnegative().optional(),
   files_deleted: z.number().int().nonnegative().optional(),
-  total_bytes: z.number().int().nonnegative(),
-  bytes_restored: z.number().int().nonnegative(),
+  total_bytes: z.number().int().nonnegative().optional(),
+  bytes_restored: z.number().int().nonnegative().optional(),
   bytes_skipped: z.number().int().nonnegative().optional(),
 });
 
