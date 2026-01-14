@@ -84,12 +84,12 @@ class TryParseError extends Error {
       error
         .map((e) =>
           e.message_type === 'raw'
-            ? e.message :
-          e.message_type === 'exit_error'
-            ? `Restic exited with code ${e.code}: ${e.message}`
-            : `Restic error${e.during ? ` during ${e.during}` : ''}${
-                e.item ? ` on ${e.item}` : ''
-              }: ${e.error?.message ?? e.message ?? 'unknown error'}`,
+            ? e.message
+            : e.message_type === 'exit_error'
+              ? `Restic exited with code ${e.code}: ${e.message}`
+              : `Restic error${e.during ? ` during ${e.during}` : ''}${
+                  e.item ? ` on ${e.item}` : ''
+                }: ${e.error?.message ?? e.message ?? 'unknown error'}`,
         )
         .join('\n'),
     );

@@ -1,10 +1,7 @@
 import { writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import {
-  MissingFilesError,
-  ResticCommandFailedError,
-} from '../errors';
+import { MissingFilesError, ResticCommandFailedError } from '../errors';
 import { createLock, createTempDir, initRepository } from '../utils/test';
 import { backup } from './backup';
 
@@ -63,7 +60,7 @@ describe('backup', () => {
     ).rejects.toEqual(
       expect.objectContaining({
         message: expect.stringContaining('Fatal: repository does not exist: unable to open config file'),
-      })
+      }),
     );
   });
 
@@ -73,7 +70,7 @@ describe('backup', () => {
     ).rejects.toEqual(
       expect.objectContaining({
         message: expect.stringContaining('Fatal: wrong password or no key found'),
-      })
+      }),
     );
   });
 
@@ -94,7 +91,7 @@ describe('backup', () => {
     ).rejects.toEqual(
       expect.objectContaining({
         message: expect.stringContaining('Fatal: all source directories/files do not exist'),
-      })
+      }),
     );
   });
 
