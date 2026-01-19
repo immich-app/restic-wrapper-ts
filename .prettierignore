@@ -15,3 +15,6 @@ dist
 package-lock.json
 pnpm-lock.yaml
 yarn.lock
+
+.release-please-manifest.json
+CHANGELOG.md
