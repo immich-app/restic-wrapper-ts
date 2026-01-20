@@ -20,7 +20,9 @@ export class MissingRepositoryError extends Error {
 
 export class MissingPasswordError extends Error {
   constructor() {
-    super('Specify a repository password with .password(..), .passwordFile(..), .passwordCommand(..) or .insecureNoPassword()');
+    super(
+      'Specify a repository password with .password(..), .passwordFile(..), .passwordCommand(..) or .insecureNoPassword()',
+    );
   }
 }
 

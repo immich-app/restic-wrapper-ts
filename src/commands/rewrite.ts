@@ -44,7 +44,7 @@ class RewriteArgumentBuilder extends RepositoryArgumentBuilder<string, string> {
   constructor() {
     super(rewriteArgs);
   }
-  
+
   #snapshots: string[] = [];
 
   snapshot(...snapshots: string[]) {
@@ -53,7 +53,7 @@ class RewriteArgumentBuilder extends RepositoryArgumentBuilder<string, string> {
   }
 
   toArgs(): string[] {
-    return [...super.toArgs(), ...this.#snapshots]
+    return [...super.toArgs(), ...this.#snapshots];
   }
 
   command(): string {

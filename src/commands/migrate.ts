@@ -1,11 +1,7 @@
 /* istanbul ignore file @preserve */
 
 import * as z from 'zod';
-import {
-  baseArgs,
-  RepositoryArgumentBuilder,
-  type DynamicBuilder,
-} from '../utils/args';
+import { baseArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
 
 const migrateArgs = z.object({
   ...baseArgs.shape,
@@ -47,7 +43,7 @@ class MigrateArgumentBuilder extends RepositoryArgumentBuilder<string, string> {
 
   /* istanbul ignore next */
   parse(): never {
-    throw "unimplemented"
+    throw 'unimplemented';
   }
 }
 
@@ -64,8 +60,5 @@ class MigrateArgumentBuilder extends RepositoryArgumentBuilder<string, string> {
  * ```
  */
 export function migrate() {
-  return new MigrateArgumentBuilder() as DynamicBuilder<
-    z.infer<typeof migrateArgs>,
-    MigrateArgumentBuilder
-  >;
+  return new MigrateArgumentBuilder() as DynamicBuilder<z.infer<typeof migrateArgs>, MigrateArgumentBuilder>;
 }

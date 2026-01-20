@@ -28,7 +28,7 @@ class KeyRemoveArgumentBuilder extends RepositoryArgumentBuilder<void, void> {
 
   validate(): void {
     super.validate();
-    
+
     if (this.#keyId === undefined) {
       throw new MissingKeyIdError();
     }

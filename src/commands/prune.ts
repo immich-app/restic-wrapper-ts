@@ -12,17 +12,15 @@ export const pruneArgs = z.object({
   dryRun: z.coerce.boolean(),
   /**
    * Try to recover a repository stuck with no free space.
-   * 
+   *
    * Do not use without trying out `.maxRepackSize(0)` first.
-   * 
+   *
    * **⚠️ Read documentation before using!**
    */
   unsafeRecoverNoFreeSpace: z.coerce.boolean(),
 });
 
-class PruneArgumentBuilder extends RepositoryArgumentBuilder<
- string, string
-> {
+class PruneArgumentBuilder extends RepositoryArgumentBuilder<string, string> {
   constructor() {
     super(pruneArgs);
   }

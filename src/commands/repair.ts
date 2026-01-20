@@ -20,7 +20,7 @@ class RepairArgumentBuilder extends RepositoryArgumentBuilder<any, any> {
    * @param packIds Pack IDs
    */
   pack(...packIds: string[]) {
-    this.#targetType = 'packs';    
+    this.#targetType = 'packs';
     this.#targetPacks.push(...packIds);
     return this;
   }

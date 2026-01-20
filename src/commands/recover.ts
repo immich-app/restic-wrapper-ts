@@ -2,9 +2,7 @@
 
 import { baseArgs, RepositoryArgumentBuilder } from '../utils/args';
 
-class RecoverArgumentBuilder extends RepositoryArgumentBuilder<
- string, string
-> {
+class RecoverArgumentBuilder extends RepositoryArgumentBuilder<string, string> {
   constructor() {
     super(baseArgs);
   }

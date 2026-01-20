@@ -21,21 +21,21 @@ describe('copy', () => {
     await writeFile(join(dir, 'test-file'), 'test');
     await writeFile(join(dir, 'other-file'), 'test');
 
-    const { snapshot_id} = await backup()
+    const { snapshot_id } = await backup()
       .repository(join(dir, 'repository'))
       .password('password')
       .addFile(join(dir, 'test-file'))
       .run();
 
-      snapshotId = snapshot_id;
+    snapshotId = snapshot_id;
 
-    const { snapshot_id: other_snapshot_id} = await backup()
+    const { snapshot_id: other_snapshot_id } = await backup()
       .repository(join(dir, 'repository'))
       .password('password')
       .addFile(join(dir, 'other-file'))
       .run();
 
-      otherSnapshotId = other_snapshot_id;
+    otherSnapshotId = other_snapshot_id;
   });
 
   it('copies everything to new repository', async () => {
@@ -67,7 +67,7 @@ describe('copy', () => {
       .snapshot(snapshotId)
       .run();
 
-      const list = await snapshots().repository(join(dir, 'repository2')).password('password').run();
+    const list = await snapshots().repository(join(dir, 'repository2')).password('password').run();
 
     expect(list).toEqual(
       expect.arrayContaining([

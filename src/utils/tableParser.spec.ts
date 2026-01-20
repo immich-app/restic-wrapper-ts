@@ -13,10 +13,10 @@ edea37d68e  0 days ago
 11 cache dirs in /Users/insert/Library/Caches/restic`;
 
     expect(findAndParseTable(input)).toEqual([
-      { 'Repo ID': 'dd5d750a4e', 'Last Used': '11 days ago', 'Old': '' },
-      { 'Repo ID': '9ad9de9d59', 'Last Used': '11 days ago', 'Old': '' },
-      { 'Repo ID': '8814b8013f', 'Last Used': '0 days ago', 'Old': '' },
-      { 'Repo ID': 'edea37d68e', 'Last Used': '0 days ago', 'Old': '' },
+      { 'Repo ID': 'dd5d750a4e', 'Last Used': '11 days ago', Old: '' },
+      { 'Repo ID': '9ad9de9d59', 'Last Used': '11 days ago', Old: '' },
+      { 'Repo ID': '8814b8013f', 'Last Used': '0 days ago', Old: '' },
+      { 'Repo ID': 'edea37d68e', 'Last Used': '0 days ago', Old: '' },
     ]);
   });
 
@@ -32,11 +32,11 @@ edea37d68e  0 days ago
 11 cache dirs in /Users/insert/Library/Caches/restic`;
 
     expect(findAndParseTable(input)).toEqual([
-      { 'Repo ID': 'dd5d750a4e', 'Last Used': '11 days ago', 'Old': 'yes' },
-      { 'Repo ID': '9ad9de9d59', 'Last Used': '11 days ago', 'Old': 'yes' },
-      { 'Repo ID': 'c56e3d03dd', 'Last Used': '6 days ago', 'Old': 'yes' },
-      { 'Repo ID': '8814b8013f', 'Last Used': '0 days ago', 'Old': '' },
-      { 'Repo ID': 'edea37d68e', 'Last Used': '0 days ago', 'Old': '' },
+      { 'Repo ID': 'dd5d750a4e', 'Last Used': '11 days ago', Old: 'yes' },
+      { 'Repo ID': '9ad9de9d59', 'Last Used': '11 days ago', Old: 'yes' },
+      { 'Repo ID': 'c56e3d03dd', 'Last Used': '6 days ago', Old: 'yes' },
+      { 'Repo ID': '8814b8013f', 'Last Used': '0 days ago', Old: '' },
+      { 'Repo ID': 'edea37d68e', 'Last Used': '0 days ago', Old: '' },
     ]);
   });
 
@@ -51,10 +51,10 @@ c92b623c0f  6 days ago          1.016 KiB
 6 cache dirs in /Users/insert/Library/Caches/restic`;
 
     expect(findAndParseTable(input)).toEqual([
-      { 'Repo ID': '67de635220', 'Last Used': '10 days ago', 'Old': '', 'Size': '4.967 MiB' },
-      { 'Repo ID': '26e4bdd39e', 'Last Used': '10 days ago', 'Old': '', 'Size': '4.668 MiB' },
-      { 'Repo ID': 'c92b623c0f', 'Last Used': '6 days ago', 'Old': '', 'Size': '1.016 KiB' },
-      { 'Repo ID': '8814b8013f', 'Last Used': '0 days ago', 'Old': '', 'Size': '399 B' },
+      { 'Repo ID': '67de635220', 'Last Used': '10 days ago', Old: '', Size: '4.967 MiB' },
+      { 'Repo ID': '26e4bdd39e', 'Last Used': '10 days ago', Old: '', Size: '4.668 MiB' },
+      { 'Repo ID': 'c92b623c0f', 'Last Used': '6 days ago', Old: '', Size: '1.016 KiB' },
+      { 'Repo ID': '8814b8013f', 'Last Used': '0 days ago', Old: '', Size: '399 B' },
     ]);
   });
 });

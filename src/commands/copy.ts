@@ -1,19 +1,12 @@
 import * as z from 'zod';
-import {
-  baseArgs,
-  commonFromRepositoryArgs,
-  RepositoryArgumentBuilder,
-  type DynamicBuilder,
-} from '../utils/args';
+import { baseArgs, commonFromRepositoryArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
 
 const copyArgs = z.object({
   ...baseArgs.shape,
   ...commonFromRepositoryArgs.shape,
 });
 
-class CopyArgumentBuilder extends RepositoryArgumentBuilder<
-string, string
-> {
+class CopyArgumentBuilder extends RepositoryArgumentBuilder<string, string> {
   constructor() {
     super(copyArgs);
   }

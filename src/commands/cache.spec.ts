@@ -2,9 +2,9 @@ import { join } from 'node:path';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { createTempDir, initRepository } from '../utils/test';
 
-import { cache } from './cache';
-import { backup } from './backup';
 import { writeFile } from 'node:fs/promises';
+import { backup } from './backup';
+import { cache } from './cache';
 
 describe('cache', () => {
   let dir: string;
@@ -19,54 +19,48 @@ describe('cache', () => {
   });
 
   it('returns cache directories', async () => {
-    await expect(
-      cache().repository(join(dir, 'repository')).password('password').run(),
-    ).resolves.toEqual(
+    await expect(cache().repository(join(dir, 'repository')).password('password').run()).resolves.toEqual(
       expect.objectContaining({
         directories: expect.any(Number),
         table: expect.arrayContaining([
           expect.objectContaining({
-            "Last Used": expect.any(String),
+            'Last Used': expect.any(String),
             Old: false,
             'Repo ID': expect.any(String),
-            'Size': expect.any(String),
-          })
-        ])
+            Size: expect.any(String),
+          }),
+        ]),
       }),
     );
   });
 
   it('can ignore size', async () => {
-    await expect(
-      cache().repository(join(dir, 'repository')).password('password').noSize().run(),
-    ).resolves.toEqual(
+    await expect(cache().repository(join(dir, 'repository')).password('password').noSize().run()).resolves.toEqual(
       expect.objectContaining({
         directories: expect.any(Number),
         table: expect.arrayContaining([
           expect.not.objectContaining({
-            'Size': expect.any(String),
-          })
-        ])
+            Size: expect.any(String),
+          }),
+        ]),
       }),
     );
   });
 
   it('can mark cache dirs as old', async () => {
-    await expect(
-      cache().repository(join(dir, 'repository')).password('password').maxAge(0).run(),
-    ).resolves.toEqual(
+    await expect(cache().repository(join(dir, 'repository')).password('password').maxAge(0).run()).resolves.toEqual(
       expect.objectContaining({
         directories: expect.any(Number),
         table: expect.arrayContaining([
           expect.objectContaining({
-            'Old': true
-          })
-        ])
+            Old: true,
+          }),
+        ]),
       }),
     );
   });
 
-  it('doesn\'t remove anything if too new', async () => {
+  it("doesn't remove anything if too new", async () => {
     await expect(
       cache().repository(join(dir, 'repository')).password('password').maxAge(9999).cleanup().run(),
     ).resolves.toEqual(
@@ -78,16 +72,19 @@ describe('cache', () => {
   });
 
   it('removes cache dirs that are too old', async () => {
-    const { removedDirectories }= await cache().repository(join(dir, 'repository')).password('password').maxAge(0).cleanup().run();
+    const { removedDirectories } = await cache()
+      .repository(join(dir, 'repository'))
+      .password('password')
+      .maxAge(0)
+      .cleanup()
+      .run();
     expect(removedDirectories).toBeGreaterThan(0);
 
-    await expect(
-      cache().repository(join(dir, 'repository')).password('password').run(),
-    ).resolves.toEqual(
+    await expect(cache().repository(join(dir, 'repository')).password('password').run()).resolves.toEqual(
       expect.objectContaining({
         directories: 0,
         table: [],
-      })
+      }),
     );
   });
 });

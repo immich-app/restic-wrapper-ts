@@ -21,7 +21,7 @@ describe('recover', () => {
       .password('password')
       .addFile(join(dir, 'test-file'))
       .run();
-      
+
     await forget().repository(join(dir, 'repository')).password('password').snapshot(snapshot_id).run();
   });
 

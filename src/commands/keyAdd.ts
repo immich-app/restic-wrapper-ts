@@ -1,6 +1,6 @@
 import * as z from 'zod';
-import { baseArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
 import { MissingPasswordError } from '../errors';
+import { baseArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
 
 const keyAddArgs = z.object({
   ...baseArgs.shape,
@@ -14,20 +14,15 @@ const keyAddArgs = z.object({
   user: z.string().optional(),
 });
 
-class KeyAddArgumentBuilder extends RepositoryArgumentBuilder<
-void, void
-> {
+class KeyAddArgumentBuilder extends RepositoryArgumentBuilder<void, void> {
   #command: 'add' | 'passwd';
 
   constructor(command: 'add' | 'passwd' = 'add') {
-    super(keyAddArgs)
+    super(keyAddArgs);
     this.#command = command;
   }
 
-  #password:
-    | string
-    | false
-    | undefined;
+  #password: string | false | undefined;
 
   newInsecureNoPassword() {
     this.#password = false;
@@ -61,12 +56,12 @@ void, void
 
   /* istanbul ignore next */
   parse(): never {
-    throw "unimplemented";
+    throw 'unimplemented';
   }
 
   validate(): void {
     super.validate();
-    
+
     if (this.#password === undefined) {
       throw new MissingPasswordError();
     }

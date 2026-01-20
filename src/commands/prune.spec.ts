@@ -5,8 +5,8 @@ import { createTempDir, initRepository } from '../utils/test';
 import { writeFile } from 'node:fs/promises';
 import { backup } from './backup';
 import { forget } from './forget';
-import { prune } from './prune';
 import { list } from './list';
+import { prune } from './prune';
 
 describe('prune', () => {
   let dir: string;

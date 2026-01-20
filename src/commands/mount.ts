@@ -1,15 +1,10 @@
 /* istanbul ignore file @preserve */
 
-import * as z from 'zod';
-import {
-  baseArgs,
-  commonFilterArgs,
-  RepositoryArgumentBuilder,
-  type DynamicBuilder,
-} from '../utils/args';
-import { spawnRestic } from '../utils/process';
 import type { ChildProcessWithoutNullStreams } from 'node:child_process';
+import * as z from 'zod';
 import { MissingMountpointError } from '../errors';
+import { baseArgs, commonFilterArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
+import { spawnRestic } from '../utils/process';
 
 const mountArgs = z.object({
   ...baseArgs.shape,
@@ -28,7 +23,7 @@ const mountArgs = z.object({
   ownerRoot: z.coerce.boolean(),
   /**
    * Template to use for path strings
-   * 
+   *
    * Use following patterns which will be replaced:
    * ```
    * %i by short snapshot ID
@@ -38,7 +33,7 @@ const mountArgs = z.object({
    * %t by tags
    * %T by timestamp as specified by --time-template
    * ```
-   * 
+   *
    * @default "ids/%i"
    * @default "snapshots/%T"
    * @default "hosts/%h/%T"
@@ -47,10 +42,10 @@ const mountArgs = z.object({
   pathTemplate: z.string().array().default([]),
   /**
    * Template to use for time strings
-   * 
+   *
    * Must be a sample format for exactly the following timestamp:
    * > Mon Jan 2 15:04:05 -0700 MST 2006
-   * 
+   *
    * @see https://godoc.org/time#Time.Format
    * @example 2006-01-02_15-04-05
    * @default 2006-01-02T15:04:05Z07:00
@@ -67,10 +62,7 @@ class MountArgumentBuilder extends RepositoryArgumentBuilder<string, string> {
 
   mountpoint(mountpoint: string) {
     this.#mountpoint = mountpoint;
-    return this as never as DynamicBuilder<
-      z.infer<typeof mountArgs>,
-      MountArgumentBuilder
-    >;
+    return this as never as DynamicBuilder<z.infer<typeof mountArgs>, MountArgumentBuilder>;
   }
 
   toArgs(): string[] {
@@ -87,7 +79,7 @@ class MountArgumentBuilder extends RepositoryArgumentBuilder<string, string> {
 
   /* istanbul ignore next */
   parse(): never {
-    throw "unimplemented"
+    throw 'unimplemented';
   }
 
   validate(): void {
@@ -112,8 +104,5 @@ class MountArgumentBuilder extends RepositoryArgumentBuilder<string, string> {
  * ```
  */
 export function mount() {
-  return new MountArgumentBuilder() as DynamicBuilder<
-    z.infer<typeof mountArgs>,
-    MountArgumentBuilder
-  >;
+  return new MountArgumentBuilder() as DynamicBuilder<z.infer<typeof mountArgs>, MountArgumentBuilder>;
 }

@@ -12,10 +12,12 @@ describe('list', () => {
     await initRepository(join(dir, 'repository'));
   });
 
-  it.each([
-    'blobs', 'packs', 'index', 'snapshots', 'keys', 'locks',
-  ])('lists %s', async (type) => {
-    const items = await list().repository(join(dir, 'repository')).password('password').type(type as any).run();
+  it.each(['blobs', 'packs', 'index', 'snapshots', 'keys', 'locks'])('lists %s', async (type) => {
+    const items = await list()
+      .repository(join(dir, 'repository'))
+      .password('password')
+      .type(type as any)
+      .run();
     expect(Array.isArray(items)).toBe(true);
   });
 });

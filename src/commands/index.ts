@@ -11,8 +11,8 @@ export { init } from './init';
 export { keyAdd } from './keyAdd';
 export { keyList } from './keyList';
 export { keyRemove } from './keyRemove';
-export { ls } from './ls';
 export { list } from './list';
+export { ls } from './ls';
 export { migrate } from './migrate';
 export { mount } from './mount';
 export { prune } from './prune';
@@ -23,5 +23,5 @@ export { rewrite } from './rewrite';
 export { snapshots } from './snapshots';
 export { stats } from './stats';
 export { tag } from './tag';
-export {unlock } from './unlock'
+export { unlock } from './unlock';
 export { version } from './version';

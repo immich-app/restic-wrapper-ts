@@ -1,13 +1,13 @@
+import StreamZip from 'node-stream-zip';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { Readable } from 'node:stream';
-import StreamZip from 'node-stream-zip';
 import * as tar from 'tar';
 import { beforeEach, describe, expect, it } from 'vitest';
+import { MissingFileError, MissingFilesError, MissingSnapshotError } from '../errors';
 import { createTempDir, initRepository } from '../utils/test';
 import { backup } from './backup';
 import { dump } from './dump';
-import { MissingFileError, MissingFilesError, MissingSnapshotError } from '../errors';
 
 describe('dump', () => {
   let dir: string;
@@ -28,14 +28,18 @@ describe('dump', () => {
 
     snapshotId = snapshot_id;
   });
-  
-    it('fails if snapshot is not specified', async () => {
-      await expect(dump().repository(join(dir, 'repository')).password('password').run()).rejects.toThrowError(new MissingSnapshotError());
-    });
-  
-    it('fails if file is not specified', async () => {
-      await expect(dump().repository(join(dir, 'repository')).password('password').snapshot('snapshot').run()).rejects.toThrowError(new MissingFileError());
-    });
+
+  it('fails if snapshot is not specified', async () => {
+    await expect(dump().repository(join(dir, 'repository')).password('password').run()).rejects.toThrowError(
+      new MissingSnapshotError(),
+    );
+  });
+
+  it('fails if file is not specified', async () => {
+    await expect(
+      dump().repository(join(dir, 'repository')).password('password').snapshot('snapshot').run(),
+    ).rejects.toThrowError(new MissingFileError());
+  });
 
   it('dumps file to stdout', async () => {
     const buffer = await dump()
