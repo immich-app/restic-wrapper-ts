@@ -2,7 +2,6 @@ import * as z from 'zod';
 import { baseArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
 import { MissingPasswordError } from '../errors';
 
-
 const keyAddArgs = z.object({
   ...baseArgs.shape,
   /**
@@ -18,8 +17,11 @@ const keyAddArgs = z.object({
 class KeyAddArgumentBuilder extends RepositoryArgumentBuilder<
 void, void
 > {
-  constructor() {
+  #command: 'add' | 'passwd';
+
+  constructor(command: 'add' | 'passwd' = 'add') {
     super(keyAddArgs)
+    this.#command = command;
   }
 
   #password:
@@ -38,7 +40,7 @@ void, void
   }
 
   command(): string {
-    return 'add';
+    return this.#command;
   }
 
   toArgs(): string[] {
@@ -82,4 +84,20 @@ void, void
  */
 export function keyAdd() {
   return new KeyAddArgumentBuilder() as DynamicBuilder<z.infer<typeof keyAddArgs>, KeyAddArgumentBuilder>;
+}
+
+/**
+ * Update current key password and remove old key.
+ *
+ * ```typescript
+ * await keyPasswd()
+ *   .repository(..)
+ *   .password(..)
+ *   .newPasswordFile(..)
+ *   // or
+ *   .newInsecureNoPassword();
+ * ```
+ */
+export function keyPasswd() {
+  return new KeyAddArgumentBuilder('passwd') as DynamicBuilder<z.infer<typeof keyAddArgs>, KeyAddArgumentBuilder>;
 }
