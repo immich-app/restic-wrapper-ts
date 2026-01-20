@@ -1,5 +1,5 @@
 import * as z from 'zod';
-import { MissingFilesError, MissingSnapshotError } from '../errors';
+import { MissingFileError, MissingSnapshotError } from '../errors';
 import { baseArgs, commonFilterArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
 
 const dumpArgs = z.object({
@@ -57,6 +57,7 @@ class DumpArgumentBuilder<T> extends RepositoryArgumentBuilder<T, T> {
     return args;
   }
 
+  /* istanbul ignore next */
   parse(): never {
     throw 'unimplemented';
   }
@@ -69,7 +70,7 @@ class DumpArgumentBuilder<T> extends RepositoryArgumentBuilder<T, T> {
     }
 
     if (!this.#file) {
-      throw new MissingFilesError();
+      throw new MissingFileError();
     }
   }
 }

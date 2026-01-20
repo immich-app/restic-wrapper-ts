@@ -9,6 +9,8 @@ import { snapshots } from './snapshots';
 
 describe('copy', () => {
   let dir: string;
+  let snapshotId: string;
+  let otherSnapshotId: string;
 
   beforeEach(async () => {
     dir = await createTempDir();
@@ -17,15 +19,26 @@ describe('copy', () => {
 
     await writeFile(join(dir, 'pwd'), 'password');
     await writeFile(join(dir, 'test-file'), 'test');
+    await writeFile(join(dir, 'other-file'), 'test');
 
-    await backup()
+    const { snapshot_id} = await backup()
       .repository(join(dir, 'repository'))
       .password('password')
       .addFile(join(dir, 'test-file'))
       .run();
+
+      snapshotId = snapshot_id;
+
+    const { snapshot_id: other_snapshot_id} = await backup()
+      .repository(join(dir, 'repository'))
+      .password('password')
+      .addFile(join(dir, 'other-file'))
+      .run();
+
+      otherSnapshotId = other_snapshot_id;
   });
 
-  it('copies snapshot to new repository', async () => {
+  it('copies everything to new repository', async () => {
     await copy()
       .fromRepo(join(dir, 'repository'))
       .fromPasswordFile(join(dir, 'pwd'))
@@ -37,6 +50,37 @@ describe('copy', () => {
       expect.arrayContaining([
         expect.objectContaining({
           paths: expect.arrayContaining([expect.stringContaining('test-file')]),
+        }),
+        expect.objectContaining({
+          paths: expect.arrayContaining([expect.stringContaining('other-file')]),
+        }),
+      ]),
+    );
+  });
+
+  it('copies only one snapshot to new repository', async () => {
+    await copy()
+      .fromRepo(join(dir, 'repository'))
+      .fromPasswordFile(join(dir, 'pwd'))
+      .repository(join(dir, 'repository2'))
+      .password('password')
+      .snapshot(snapshotId)
+      .run();
+
+      const list = await snapshots().repository(join(dir, 'repository2')).password('password').run();
+
+    expect(list).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          paths: expect.arrayContaining([expect.stringContaining('test-file')]),
+        }),
+      ]),
+    );
+
+    expect(list).toEqual(
+      expect.not.arrayContaining([
+        expect.objectContaining({
+          paths: expect.arrayContaining([expect.stringContaining('other-file')]),
         }),
       ]),
     );

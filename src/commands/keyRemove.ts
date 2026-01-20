@@ -21,6 +21,7 @@ class KeyRemoveArgumentBuilder extends RepositoryArgumentBuilder<void, void> {
     return 'none';
   }
 
+  /* istanbul ignore next */
   parse(): never {
     throw 'unimplemented';
   }

@@ -7,6 +7,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { createTempDir, initRepository } from '../utils/test';
 import { backup } from './backup';
 import { dump } from './dump';
+import { MissingFileError, MissingFilesError, MissingSnapshotError } from '../errors';
 
 describe('dump', () => {
   let dir: string;
@@ -27,6 +28,14 @@ describe('dump', () => {
 
     snapshotId = snapshot_id;
   });
+  
+    it('fails if snapshot is not specified', async () => {
+      await expect(dump().repository(join(dir, 'repository')).password('password').run()).rejects.toThrowError(new MissingSnapshotError());
+    });
+  
+    it('fails if file is not specified', async () => {
+      await expect(dump().repository(join(dir, 'repository')).password('password').snapshot('snapshot').run()).rejects.toThrowError(new MissingFileError());
+    });
 
   it('dumps file to stdout', async () => {
     const buffer = await dump()
@@ -40,7 +49,7 @@ describe('dump', () => {
   });
 
   it('dumps file to file', async () => {
-    expect(
+    await expect(
       dump()
         .repository(join(dir, 'repository'))
         .password('password')

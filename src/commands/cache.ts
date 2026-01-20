@@ -76,6 +76,7 @@ class CacheArgumentBuilder<T> extends RepositoryArgumentBuilder<T, T> {
         table: findAndParseTable(data as string),
       }) as T;
     } catch {
+  /* istanbul ignore next */
       return cacheListingMessage.parse({
         raw: data as string,
       }) as T;

@@ -1,4 +1,4 @@
-/* istanbul ignore file */
+/* istanbul ignore file @preserve */
 
 import * as z from 'zod';
 import {
@@ -45,6 +45,7 @@ class MigrateArgumentBuilder extends RepositoryArgumentBuilder<string, string> {
     return 'string';
   }
 
+  /* istanbul ignore next */
   parse(): never {
     throw "unimplemented"
   }

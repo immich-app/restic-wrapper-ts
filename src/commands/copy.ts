@@ -37,6 +37,7 @@ string, string
     return 'none';
   }
 
+  /* istanbul ignore next */
   parse(): never {
     throw 'unimplemented';
   }

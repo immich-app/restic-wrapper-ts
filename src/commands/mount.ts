@@ -1,4 +1,4 @@
-/* istanbul ignore file */
+/* istanbul ignore file @preserve */
 
 import * as z from 'zod';
 import {
@@ -85,6 +85,7 @@ class MountArgumentBuilder extends RepositoryArgumentBuilder<string, string> {
     return 'none';
   }
 
+  /* istanbul ignore next */
   parse(): never {
     throw "unimplemented"
   }

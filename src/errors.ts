@@ -6,6 +6,12 @@ export class MissingFilesError extends Error {
   }
 }
 
+export class MissingFileError extends Error {
+  constructor() {
+    super('Specify file to dump with .file(..)');
+  }
+}
+
 export class MissingRepositoryError extends Error {
   constructor() {
     super('Specify a repository with .repository(..) or .repositoryFile(..)');
