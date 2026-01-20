@@ -19,7 +19,9 @@ export { prune } from './prune';
 export { recover } from './recover';
 export { repair } from './repair';
 export { restore } from './restore';
+export { rewrite } from './rewrite';
 export { snapshots } from './snapshots';
 export { stats } from './stats';
 export { tag } from './tag';
+export {unlock } from './unlock'
 export { version } from './version';

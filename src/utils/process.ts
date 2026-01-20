@@ -22,10 +22,6 @@ export function restic<T, Output>(argsBuilder: ArgumentBuilder<T, Output>): Prom
   argsBuilder.validate();
 
   return new Promise((resolve, reject) => {
-    console.debug('restic', argsBuilder.toArgs(), {
-      env: argsBuilder.toEnv(),
-    });
-
     const process = spawn('restic', argsBuilder.toArgs(), {
       env: argsBuilder.toEnv(),
     });

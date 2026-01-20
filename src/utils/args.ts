@@ -354,7 +354,7 @@ export abstract class RepositoryArgumentBuilder<T, Output> extends ArgumentBuild
       throw new MissingRepositoryError();
     }
 
-    if (this.hasPassword === undefined) {
+    if (!this.hasPassword) {
       throw new MissingPasswordError();
     }
   }
