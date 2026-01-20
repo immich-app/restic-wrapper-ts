@@ -92,7 +92,7 @@ class RestoreArgumentBuilder extends RepositoryArgumentBuilder<
     return 'restore';
   }
 
-  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' {
+  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'none' {
     return 'jsonlines-no-log';
   }
 

@@ -38,6 +38,13 @@ export function restic<T, Output>(argsBuilder: ArgumentBuilder<T, Output>): Prom
     if (argsBuilder.format() === 'none') {
       data = undefined;
       process.stdout.on('close', finish);
+    } else if (argsBuilder.format() === 'string') {
+      let stdout = '';
+      process.stdout.on('data', (data) => (stdout += data));
+      process.stdout.on('close', () => {
+        data = argsBuilder.parse(stdout as T);
+        finish();
+      });
     } else if (argsBuilder.format() === 'json') {
       let stdout = '';
       process.stdout.on('data', (data) => (stdout += data));

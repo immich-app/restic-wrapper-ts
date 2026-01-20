@@ -33,7 +33,7 @@ class CatArgumentBuilder extends RepositoryArgumentBuilder<any, any> {
     }
   }
 
-  format(): 'jsonlines' | 'json' {
+  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'none' {
     return 'json';
   }
 

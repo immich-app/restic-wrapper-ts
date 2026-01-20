@@ -191,7 +191,7 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
   validate(): void {
     this.#zodArgs.parse(this.#dynamicArgs);
   }
-  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'none' {
+  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'none' {
     return 'jsonlines';
   }
 
@@ -238,6 +238,7 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
   toEnv(): Record<string, string> {
     const env: Record<string, string> = {
       PATH: process.env.PATH ?? '',
+      HOME: process.env.HOME ?? ''
     };
 
     if (this.#repository) {

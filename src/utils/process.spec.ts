@@ -52,7 +52,7 @@ describe('wrapper', () => {
         throw new Error('dummy error');
       }
 
-      format(): 'jsonlines' | 'json' {
+      format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'none' {
         return 'json';
       }
     }

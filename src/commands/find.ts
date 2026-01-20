@@ -90,7 +90,7 @@ class FindArgumentBuilder<T> extends RepositoryArgumentBuilder<T, T> {
     return [...super.toArgs(), ...args, ...this.#match];
   }
 
-  format(): 'jsonlines' | 'json' {
+  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'none' {
     return 'json';
   }
 

@@ -44,7 +44,7 @@ class InitArgumentBuilder extends RepositoryArgumentBuilder<z.infer<typeof initM
     return 'init';
   }
 
-  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' {
+  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'none' {
     // only a single message is sent to output
     return 'json';
   }
