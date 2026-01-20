@@ -12,6 +12,8 @@ export { keyAdd } from './keyAdd';
 export { keyList } from './keyList';
 export { keyRemove } from './keyRemove';
 export { ls } from './ls';
+export { migrate } from './migrate';
+export { mount } from './mount';
 export { restore } from './restore';
 export { snapshots } from './snapshots';
 export { stats } from './stats';

@@ -1,4 +1,4 @@
-import { spawn } from 'node:child_process';
+import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
 import {
   ResticBackupCommandCouldNotReadSourceDataError,
   ResticCommandFailedError,
@@ -11,6 +11,12 @@ import {
 } from '../errors';
 import type { ArgumentBuilder } from './args';
 import { JsonLinesReader } from './streams';
+
+export function spawnRestic<T, Output>(argsBuilder: ArgumentBuilder<T, Output>): ChildProcessWithoutNullStreams {
+  return spawn('restic', argsBuilder.toArgs(), {
+    env: argsBuilder.toEnv(),
+  });
+}
 
 export function restic<T, Output>(argsBuilder: ArgumentBuilder<T, Output>): Promise<Output> {
   argsBuilder.validate();

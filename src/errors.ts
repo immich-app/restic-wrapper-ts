@@ -36,6 +36,12 @@ export class MissingTargetError extends Error {
   }
 }
 
+export class MissingMountpointError extends Error {
+  constructor() {
+    super('Specify a target with .mountpoint(..)');
+  }
+}
+
 export class MissingMatchError extends Error {
   constructor() {
     super('Specify what to match with .match(..)');
