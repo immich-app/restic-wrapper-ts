@@ -9,7 +9,6 @@ import { snapshots } from './snapshots';
 
 describe('copy', () => {
   let dir: string;
-  let snapshotId: string;
 
   beforeEach(async () => {
     dir = await createTempDir();
@@ -19,12 +18,11 @@ describe('copy', () => {
     await writeFile(join(dir, 'pwd'), 'password');
     await writeFile(join(dir, 'test-file'), 'test');
 
-    const { snapshot_id } = await backup()
+    await backup()
       .repository(join(dir, 'repository'))
       .password('password')
       .addFile(join(dir, 'test-file'))
       .run();
-    snapshotId = snapshot_id;
   });
 
   it('copies snapshot to new repository', async () => {
