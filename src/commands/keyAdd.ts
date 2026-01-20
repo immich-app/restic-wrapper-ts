@@ -64,6 +64,8 @@ void, void
   }
 
   validate(): void {
+    super.validate();
+    
     if (this.#password === undefined) {
       throw new MissingPasswordError();
     }

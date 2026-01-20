@@ -38,6 +38,8 @@ class DiffArgumentBuilder extends RepositoryArgumentBuilder<
   }
 
   validate(): void {
+    super.validate();
+    
     if (!this.#snapshotIds) {
       throw new MissingCompareError();
     }

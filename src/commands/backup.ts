@@ -170,6 +170,7 @@ class BackupArgumentBuilder extends RepositoryArgumentBuilder<
  *   .password(..)
  *   .addFile('my.json')
  *   .addFile('path/to/folder')
+ *   .run();
  * ```
  */
 export function backup() {

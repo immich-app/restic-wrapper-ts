@@ -36,9 +36,21 @@ export class MissingTargetError extends Error {
   }
 }
 
+export class MissingTypeError extends Error {
+  constructor() {
+    super('Specify a type with .type(..)');
+  }
+}
+
+export class MissingRepairTypeError extends Error {
+  constructor() {
+    super('Specify something to repair with .index(), .pack(..) or .snapshots()');
+  }
+}
+
 export class MissingMountpointError extends Error {
   constructor() {
-    super('Specify a target with .mountpoint(..)');
+    super('Specify a mount point with .mountpoint(..)');
   }
 }
 

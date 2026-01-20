@@ -95,6 +95,43 @@ export const commonGroupBy = z.object({
     .optional(),
 });
 
+export const commonRepackArgs = z.object({
+  /**
+   * Tolerate given limit of unused data
+   */
+  maxUnused: z.string().optional(),
+  /**
+   * Stop after repacking this much data in total
+   *
+   * Allowed suffixes: k/K, m/M, g/G, t/T
+   */
+  maxRepackSize: z
+    .string()
+    .regex(/^\d+(?:\.\d+)?[kKmMgGtT]$/)
+    .optional(),
+  /**
+   * Only repack packs which are cacheable
+   */
+  repackCacheableOnly: z.coerce.boolean(),
+  /**
+   * Repack pack files below 80% of target pack size
+   */
+  repackSmall: z.coerce.boolean(),
+  /**
+   * Repack all uncompressed data
+   */
+  repackUncompressed: z.coerce.boolean(),
+  /**
+   * Pack below-limit packfiles
+   *
+   * Allowed suffixes: k/K, m/M
+   */
+  repackSmallerThan: z
+    .string()
+    .regex(/^\d+(?:\.\d+)?[kKmM]$/)
+    .optional(),
+});
+
 type Extend<T> = T extends Date ? T | string | number : T;
 
 export type DynamicBuilder<T, C> = C & {

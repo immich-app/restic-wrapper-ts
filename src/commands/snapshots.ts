@@ -81,8 +81,8 @@ export const snapshot = z.object({
   gid: z.number().int().nonnegative(),
   excludes: z.string().array().optional(),
   tags: z.string().array().optional(),
-  program_version: z.string(),
-  summary: snapshotSummary,
+  program_version: z.string().optional(),
+  summary: snapshotSummary.optional(),
   id: z.string(),
   /**
    * @deprecated
