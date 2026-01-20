@@ -3,6 +3,7 @@ import {
   baseArgs,
   commonFromRepositoryArgs,
   RepositoryArgumentBuilder,
+  type DynamicBuilder,
 } from '../utils/args';
 
 const copyArgs = z.object({
@@ -54,5 +55,5 @@ string, string
  * ```
  */
 export function copy() {
-  return new CopyArgumentBuilder()
+  return new CopyArgumentBuilder() as DynamicBuilder<z.infer<typeof copyArgs>, CopyArgumentBuilder>;
 }

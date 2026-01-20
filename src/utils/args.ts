@@ -16,7 +16,6 @@ export const baseArgs = z.object({
   cleanupCache: z.coerce.boolean(),
   compression: z.enum(['auto', 'off', 'max']).optional(),
   httpUserAgent: z.string().optional(),
-  insecureNoPassword: z.coerce.boolean(),
   insecureTls: z.coerce.boolean(),
   keyHint: z.string().optional(),
   limitDownload: z.number().optional(),
@@ -147,6 +146,7 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
         type: ResticEnvironmentVariable;
         value: string;
       }
+    | false
     | undefined;
 
   get hasPassword() {
@@ -177,6 +177,11 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
       value: path,
     };
 
+    return this;
+  }
+
+  public insecureNoPassword() {
+    this.#password = false;
     return this;
   }
 
@@ -224,6 +229,10 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
 
   toArgs(): string[] {
     const args = [this.command(), '--json'];
+
+    if (this.#password === false) {
+      args.push('--insecure-no-password');
+    }
 
     for (const [key, value] of Object.entries(this.#dynamicArgs)) {
       const realKey = key.replaceAll(/[A-Z]/g, (str) => `-${str.toLowerCase()}`);
@@ -308,7 +317,7 @@ export abstract class RepositoryArgumentBuilder<T, Output> extends ArgumentBuild
       throw new MissingRepositoryError();
     }
 
-    if (!this.hasPassword) {
+    if (this.hasPassword === undefined) {
       throw new MissingPasswordError();
     }
   }

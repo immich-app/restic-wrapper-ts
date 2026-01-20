@@ -1,0 +1,85 @@
+import * as z from 'zod';
+import { baseArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
+import { MissingPasswordError } from '../errors';
+
+
+const keyAddArgs = z.object({
+  ...baseArgs.shape,
+  /**
+   * Hostname for the new key
+   */
+  host: z.string().optional(),
+  /**
+   * Username for the new key
+   */
+  user: z.string().optional(),
+});
+
+class KeyAddArgumentBuilder extends RepositoryArgumentBuilder<
+void, void
+> {
+  constructor() {
+    super(keyAddArgs)
+  }
+
+  #password:
+    | string
+    | false
+    | undefined;
+
+  newInsecureNoPassword() {
+    this.#password = false;
+    return this;
+  }
+
+  newPasswordFile(path: string) {
+    this.#password = path;
+    return this;
+  }
+
+  command(): string {
+    return 'add';
+  }
+
+  toArgs(): string[] {
+    const args = ['key', ...super.toArgs()];
+
+    if (this.#password === false) {
+      args.push('--new-insecure-no-password');
+    } else if (this.#password) {
+      args.push('--new-password-file', this.#password);
+    }
+
+    return args;
+  }
+
+  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'binary' | 'none' {
+    return 'none';
+  }
+
+  parse(): never {
+    throw "unimplemented";
+  }
+
+  validate(): void {
+    if (this.#password === undefined) {
+      throw new MissingPasswordError();
+    }
+  }
+}
+
+/**
+ * Create and validate new key.
+ *
+ * ```typescript
+ * await keyAdd()
+ *   .repository(..)
+ *   .password(..)
+ *   .newPasswordFile(..)
+ *   // or
+ *   .newInsecureNoPassword();
+ * ```
+ */
+export function keyAdd() {
+  return new KeyAddArgumentBuilder() as DynamicBuilder<z.infer<typeof keyAddArgs>, KeyAddArgumentBuilder>;
+}
