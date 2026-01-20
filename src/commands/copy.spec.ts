@@ -10,7 +10,6 @@ import { snapshots } from './snapshots';
 describe('copy', () => {
   let dir: string;
   let snapshotId: string;
-  let otherSnapshotId: string;
 
   beforeEach(async () => {
     dir = await createTempDir();
@@ -29,13 +28,7 @@ describe('copy', () => {
 
     snapshotId = snapshot_id;
 
-    const { snapshot_id: other_snapshot_id } = await backup()
-      .repository(join(dir, 'repository'))
-      .password('password')
-      .addFile(join(dir, 'other-file'))
-      .run();
-
-    otherSnapshotId = other_snapshot_id;
+    await backup().repository(join(dir, 'repository')).password('password').addFile(join(dir, 'other-file')).run();
   });
 
   it('copies everything to new repository', async () => {

@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { Readable } from 'node:stream';
 import * as tar from 'tar';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { MissingFileError, MissingFilesError, MissingSnapshotError } from '../errors';
+import { MissingFileError, MissingSnapshotError } from '../errors';
 import { createTempDir, initRepository } from '../utils/test';
 import { backup } from './backup';
 import { dump } from './dump';

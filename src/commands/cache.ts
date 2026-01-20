@@ -54,7 +54,7 @@ class CacheArgumentBuilder<T> extends RepositoryArgumentBuilder<T, T> {
     if (this.#cleanup) {
       return cacheCleanupMessage.parse({
         raw: data as string,
-        removedDirectories: (data as string).match(/no old cache dirs found/)
+        removedDirectories: /no old cache dirs found/.test(data as string)
           ? 0
           : /remove (\d)+ old cache directories/.exec(data as string)?.[1],
       }) as T;

@@ -3,20 +3,22 @@ export function parseTable(header: string, data: string[]): Record<string, strin
   const keys = headerCols.map((key) => key.trim());
 
   return data.map((line) => {
-    let idx = 0;
+    const entry: Record<string, string> = {};
 
-    return headerCols.reduce(
-      (dict, col, index) => {
-        const value = line.slice(idx, index === headerCols.length - 1 ? line.length : idx + col.length);
-        idx += col.length;
+    let stringPointer = 0;
+    for (let index = 0; index < headerCols.length; index++) {
+      const col = headerCols[index];
 
-        return {
-          ...dict,
-          [keys[index]]: value.trim(),
-        };
-      },
-      {} as Record<string, string>,
-    );
+      const value = line.slice(
+        stringPointer,
+        index === headerCols.length - 1 ? line.length : stringPointer + col.length,
+      );
+      stringPointer += col.length;
+
+      entry[keys[index]] = value.trim();
+    }
+
+    return entry;
   });
 }
 

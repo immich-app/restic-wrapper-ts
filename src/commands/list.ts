@@ -36,7 +36,7 @@ class ListArgumentBuilder extends RepositoryArgumentBuilder<string[], string[]> 
   }
 
   parse(data: string[]): string[] {
-    return (data as unknown as string).split('\n').filter((str) => str);
+    return (data as unknown as string).split('\n').filter(Boolean);
   }
 }
 
