@@ -8,7 +8,7 @@
     "typescript",
     "wrapper"
   ],
-  "homepage": "https://github.com/immich/restic-wrapper-ts",
+  "homepage": "https://github.com/immich-app/restic-wrapper-ts",
   "type": "module",
   "exports": {
     ".": {
@@ -33,10 +33,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/immich/restic-wrapper-ts.git"
+    "url": "https://github.com/immich-app/restic-wrapper-ts.git"
   },
   "bugs": {
-    "url": "https://github.com/immich/restic-wrapper-ts/issues"
+    "url": "https://github.com/immich-app/restic-wrapper-ts/issues"
   },
   "license": "MIT",
   "engines": {
