@@ -6,7 +6,7 @@ class VersionArgumentBuilder extends ArgumentBuilder<z.infer<typeof versionMessa
     return 'version';
   }
 
-  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'none' {
+  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'binary' | 'none' {
     return 'json';
   }
 

@@ -30,7 +30,7 @@ class SnapshotsArgumentBuilder extends RepositoryArgumentBuilder<
     return 'snapshots';
   }
 
-  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'none' {
+  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'binary' | 'none' {
     return 'json';
   }
 

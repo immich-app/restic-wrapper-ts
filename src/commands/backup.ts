@@ -140,7 +140,7 @@ class BackupArgumentBuilder extends RepositoryArgumentBuilder<
     return 'backup';
   }
 
-  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'none' {
+  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'binary' | 'none' {
     return 'jsonlines-no-log';
   }
 

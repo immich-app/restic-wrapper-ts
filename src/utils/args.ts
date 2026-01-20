@@ -38,6 +38,33 @@ export const baseArgs = z.object({
   verbose: z.coerce.boolean(),
 });
 
+export const commonFromRepositoryArgs = z.object({
+  /**
+   * Use an empty password for source repository
+   */
+  fromInsecureNoPassword: z.coerce.boolean(),
+  /**
+   * Key ID of key to try decrypting the source repository first
+   */
+  fromKeyHint: z.string().optional(),
+  /**
+   * Shell command to obtain source repository password from
+   */
+  fromPasswordCommand: z.string().optional(),
+  /**
+   * File to read the source repository password from
+   */
+  fromPasswordFile: z.string().optional(),
+  /**
+   * Source repository to copy chunker parameters/read from
+   */
+  fromRepo: z.string().optional(),
+  /**
+   * File from which to read the source repository location to copy chunker parameters/read from
+   */
+  fromRepositoryFile: z.string().optional(),
+});
+
 export const commonFilterArgs = z.object({
   /**
    * Only consider snapshots for these host(s)
@@ -191,7 +218,7 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
   validate(): void {
     this.#zodArgs.parse(this.#dynamicArgs);
   }
-  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'none' {
+  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'binary' | 'none' {
     return 'jsonlines';
   }
 
@@ -238,7 +265,7 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
   toEnv(): Record<string, string> {
     const env: Record<string, string> = {
       PATH: process.env.PATH ?? '',
-      HOME: process.env.HOME ?? ''
+      HOME: process.env.HOME ?? '',
     };
 
     if (this.#repository) {

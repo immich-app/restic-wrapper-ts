@@ -4,6 +4,7 @@ import { createTempDir, initRepository } from '../utils/test';
 
 import { cache } from './cache';
 import { backup } from './backup';
+import { writeFile } from 'node:fs/promises';
 
 describe('cache', () => {
   let dir: string;
@@ -13,7 +14,8 @@ describe('cache', () => {
     await initRepository(join(dir, 'repository'));
 
     // ensure there is some cache info present
-    await backup().repository(join(dir, 'repository')).password('password').addFile(dir).run();
+    await writeFile(join(dir, 'test-file'), 'test');
+    await backup().repository(join(dir, 'repository')).password('password').addFile(join(dir, 'test-file')).run();
   });
 
   it('returns cache directories', async () => {

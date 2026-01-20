@@ -36,7 +36,7 @@ class CacheArgumentBuilder<T> extends RepositoryArgumentBuilder<T, T> {
     return 'cache';
   }
 
-  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'none' {
+  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'binary' | 'none' {
     return 'string';
   }
 
@@ -88,7 +88,7 @@ class CacheArgumentBuilder<T> extends RepositoryArgumentBuilder<T, T> {
 }
 
 /**
- * Operate on local cache directories
+ * Operate on local cache directories.
  *
  * ```typescript
  * await cache()

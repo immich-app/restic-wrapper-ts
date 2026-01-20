@@ -63,7 +63,7 @@ class StatsArgumentBuilder<T> extends RepositoryArgumentBuilder<T, T> {
     return [...super.toArgs(), '--mode', this.#mode, ...this.#snapshots];
   }
 
-  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'none' {
+  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'binary' | 'none' {
     return 'json';
   }
 

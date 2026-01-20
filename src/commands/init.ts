@@ -1,32 +1,13 @@
 import * as z from 'zod';
-import { baseArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
+import { baseArgs, commonFromRepositoryArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
 
 const initArgs = z.object({
   ...baseArgs.shape,
+  ...commonFromRepositoryArgs.shape,
   /**
    * Copy chunker parameters from secondary repository
    */
   copyChunkerParams: z.coerce.boolean(),
-  /**
-   * Use an empty password for source repository
-   */
-  fromInsecureNoPassword: z.coerce.boolean(),
-  /**
-   * Shell command to obtain source repository password from
-   */
-  fromPasswordCommand: z.string().optional(),
-  /**
-   * File to read the source repository password from
-   */
-  fromPasswordFile: z.string().optional(),
-  /**
-   * Source repository to copy chunker parameters from
-   */
-  fromRepo: z.string().optional(),
-  /**
-   * File from which to read the source repository location to copy chunker parameters from
-   */
-  fromRepositoryFile: z.string().optional(),
   /**
    * Repository format version to use
    *
@@ -44,7 +25,7 @@ class InitArgumentBuilder extends RepositoryArgumentBuilder<z.infer<typeof initM
     return 'init';
   }
 
-  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'none' {
+  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'binary' | 'none' {
     // only a single message is sent to output
     return 'json';
   }

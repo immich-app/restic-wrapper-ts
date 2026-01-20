@@ -16,6 +16,10 @@ export function restic<T, Output>(argsBuilder: ArgumentBuilder<T, Output>): Prom
   argsBuilder.validate();
 
   return new Promise((resolve, reject) => {
+    console.debug('restic', argsBuilder.toArgs(), {
+      env: argsBuilder.toEnv(),
+    });
+
     const process = spawn('restic', argsBuilder.toArgs(), {
       env: argsBuilder.toEnv(),
     });
@@ -43,6 +47,13 @@ export function restic<T, Output>(argsBuilder: ArgumentBuilder<T, Output>): Prom
       process.stdout.on('data', (data) => (stdout += data));
       process.stdout.on('close', () => {
         data = argsBuilder.parse(stdout as T);
+        finish();
+      });
+    } else if (argsBuilder.format() === 'binary') {
+      const chunks: Buffer[] = [];
+      process.stdout.on('data', (chunk) => chunks.push(chunk));
+      process.stdout.on('close', () => {
+        data = Buffer.concat(chunks) as T;
         finish();
       });
     } else if (argsBuilder.format() === 'json') {
