@@ -1,11 +1,16 @@
 export { backup } from './backup';
+export { cache } from './cache';
 export { cat } from './cat';
 export { check } from './check';
+export { copy } from './copy';
 export { diff } from './diff';
+export { dump } from './dump';
 export { find } from './find';
 export { forget } from './forget';
 export { init } from './init';
+export { keyAdd } from './keyAdd';
 export { keyList } from './keyList';
+export { keyRemove } from './keyRemove';
 export { ls } from './ls';
 export { restore } from './restore';
 export { snapshots } from './snapshots';

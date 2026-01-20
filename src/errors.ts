@@ -18,6 +18,12 @@ export class MissingPasswordError extends Error {
   }
 }
 
+export class MissingKeyIdError extends Error {
+  constructor() {
+    super('Specify key ID with .keyId(..)');
+  }
+}
+
 export class MissingSnapshotError extends Error {
   constructor() {
     super('Specify a snapshot with .snapshot(..)');
