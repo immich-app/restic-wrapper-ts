@@ -3,6 +3,7 @@ import {
   baseArgs,
   commonFilterArgs,
   commonGroupBy,
+  commonRepackArgs,
   RepositoryArgumentBuilder,
   type DynamicBuilder,
 } from '../utils/args';
@@ -10,6 +11,7 @@ import { snapshot } from './snapshots';
 
 const baseForgetArgs = z.object({
   ...baseArgs.shape,
+  ...commonRepackArgs.shape,
   // compact: N/A
   /**
    * Do not delete anything
@@ -19,40 +21,6 @@ const baseForgetArgs = z.object({
    * Automatically run prune if snapshots are removed
    */
   prune: z.coerce.boolean(),
-  /**
-   * Tolerate given limit of unused data
-   */
-  maxUnused: z.string().optional(),
-  /**
-   * Stop after repacking this much data in total
-   *
-   * Allowed suffixes: k/K, m/M, g/G, t/T
-   */
-  maxRepackSize: z
-    .string()
-    .regex(/^\d+(?:\.\d+)?[kKmMgGtT]$/)
-    .optional(),
-  /**
-   * Only repack packs which are cacheable
-   */
-  repackCacheableOnly: z.coerce.boolean(),
-  /**
-   * Repack pack files below 80% of target pack size
-   */
-  repackSmall: z.coerce.boolean(),
-  /**
-   * Repack all uncompressed data
-   */
-  repackUncompressed: z.coerce.boolean(),
-  /**
-   * Pack below-limit packfiles
-   *
-   * Allowed suffixes: k/K, m/M
-   */
-  repackSmallerThan: z
-    .string()
-    .regex(/^\d+(?:\.\d+)?[kKmM]$/)
-    .optional(),
 });
 
 const allForgetArgs = z.object({
@@ -95,7 +63,7 @@ class ForgetArgumentBuilder<T> extends RepositoryArgumentBuilder<T, T> {
     return [...super.toArgs(), ...this.#snapshots];
   }
 
-  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'none' {
+  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'binary' | 'none' {
     return this.#snapshots.length > 0 ? 'none' : 'json';
   }
 

@@ -1,4 +1,4 @@
-import { spawn } from 'node:child_process';
+import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
 import {
   ResticBackupCommandCouldNotReadSourceDataError,
   ResticCommandFailedError,
@@ -11,6 +11,12 @@ import {
 } from '../errors';
 import type { ArgumentBuilder } from './args';
 import { JsonLinesReader } from './streams';
+
+export function spawnRestic<T, Output>(argsBuilder: ArgumentBuilder<T, Output>): ChildProcessWithoutNullStreams {
+  return spawn('restic', argsBuilder.toArgs(), {
+    env: argsBuilder.toEnv(),
+  });
+}
 
 export function restic<T, Output>(argsBuilder: ArgumentBuilder<T, Output>): Promise<Output> {
   argsBuilder.validate();
@@ -38,6 +44,20 @@ export function restic<T, Output>(argsBuilder: ArgumentBuilder<T, Output>): Prom
     if (argsBuilder.format() === 'none') {
       data = undefined;
       process.stdout.on('close', finish);
+    } else if (argsBuilder.format() === 'string') {
+      let stdout = '';
+      process.stdout.on('data', (data) => (stdout += data));
+      process.stdout.on('close', () => {
+        data = argsBuilder.parse(stdout as T);
+        finish();
+      });
+    } else if (argsBuilder.format() === 'binary') {
+      const chunks: Buffer[] = [];
+      process.stdout.on('data', (chunk) => chunks.push(chunk));
+      process.stdout.on('close', () => {
+        data = Buffer.concat(chunks) as T;
+        finish();
+      });
     } else if (argsBuilder.format() === 'json') {
       let stdout = '';
       process.stdout.on('data', (data) => (stdout += data));
