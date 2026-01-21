@@ -7,7 +7,7 @@ import { MissingMatchError } from '../errors';
 import { backup } from './backup';
 import { find } from './find';
 
-describe('diff', () => {
+describe('find', () => {
   let dir: string;
   let snapshotId: string;
 
