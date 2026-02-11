@@ -1,6 +1,6 @@
 {
   "name": "@futo-org/restic-wrapper",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "TypeScript wrapper library for the restic backup tool",
   "keywords": [
     "restic",
@@ -58,9 +58,10 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-unicorn": "^62.0.0",
+    "node-stream-zip": "^1.15.0",
     "prettier": "^3.6.2",
     "prettier-plugin-organize-imports": "^4.3.0",
-    "tar": "^7.5.2",
+    "tar": "^7.5.4",
     "tsdown": "^0.15.0",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.47.0",
