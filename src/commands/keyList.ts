@@ -13,7 +13,7 @@ class KeyListArgumentBuilder extends RepositoryArgumentBuilder<
     return ['key', ...super.toArgs()];
   }
 
-  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' {
+  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'binary' | 'none' {
     return 'json';
   }
 

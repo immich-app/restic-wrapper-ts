@@ -6,6 +6,12 @@ export class MissingFilesError extends Error {
   }
 }
 
+export class MissingFileError extends Error {
+  constructor() {
+    super('Specify file to dump with .file(..)');
+  }
+}
+
 export class MissingRepositoryError extends Error {
   constructor() {
     super('Specify a repository with .repository(..) or .repositoryFile(..)');
@@ -14,7 +20,15 @@ export class MissingRepositoryError extends Error {
 
 export class MissingPasswordError extends Error {
   constructor() {
-    super('Specify a repository password with .password(..), .passwordFile(..), or .passwordCommand(..)');
+    super(
+      'Specify a repository password with .password(..), .passwordFile(..), .passwordCommand(..) or .insecureNoPassword()',
+    );
+  }
+}
+
+export class MissingKeyIdError extends Error {
+  constructor() {
+    super('Specify key ID with .keyId(..)');
   }
 }
 
@@ -27,6 +41,24 @@ export class MissingSnapshotError extends Error {
 export class MissingTargetError extends Error {
   constructor() {
     super('Specify a target with .target(..)');
+  }
+}
+
+export class MissingTypeError extends Error {
+  constructor() {
+    super('Specify a type with .type(..)');
+  }
+}
+
+export class MissingRepairTypeError extends Error {
+  constructor() {
+    super('Specify something to repair with .index(), .pack(..) or .snapshots()');
+  }
+}
+
+export class MissingMountpointError extends Error {
+  constructor() {
+    super('Specify a mount point with .mountpoint(..)');
   }
 }
 

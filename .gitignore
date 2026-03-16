@@ -10,6 +10,9 @@ compiled
 .rpt2_cache
 docs
 
+# generated from tests
+pack-*
+
 dist
 
 package-lock.json
