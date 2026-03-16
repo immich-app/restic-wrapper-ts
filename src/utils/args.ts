@@ -16,7 +16,6 @@ export const baseArgs = z.object({
   cleanupCache: z.coerce.boolean(),
   compression: z.enum(['auto', 'off', 'max']).optional(),
   httpUserAgent: z.string().optional(),
-  insecureNoPassword: z.coerce.boolean(),
   insecureTls: z.coerce.boolean(),
   keyHint: z.string().optional(),
   limitDownload: z.number().optional(),
@@ -36,6 +35,33 @@ export const baseArgs = z.object({
    * be verbose
    */
   verbose: z.coerce.boolean(),
+});
+
+export const commonFromRepositoryArgs = z.object({
+  /**
+   * Use an empty password for source repository
+   */
+  fromInsecureNoPassword: z.coerce.boolean(),
+  /**
+   * Key ID of key to try decrypting the source repository first
+   */
+  fromKeyHint: z.string().optional(),
+  /**
+   * Shell command to obtain source repository password from
+   */
+  fromPasswordCommand: z.string().optional(),
+  /**
+   * File to read the source repository password from
+   */
+  fromPasswordFile: z.string().optional(),
+  /**
+   * Source repository to copy chunker parameters/read from
+   */
+  fromRepo: z.string().optional(),
+  /**
+   * File from which to read the source repository location to copy chunker parameters/read from
+   */
+  fromRepositoryFile: z.string().optional(),
 });
 
 export const commonFilterArgs = z.object({
@@ -66,6 +92,43 @@ export const commonGroupBy = z.object({
   groupBy: z
     .string()
     .regex(/^(?:host|paths|tags)(?:,(?:host|paths|tags))*$|^$/)
+    .optional(),
+});
+
+export const commonRepackArgs = z.object({
+  /**
+   * Tolerate given limit of unused data
+   */
+  maxUnused: z.string().optional(),
+  /**
+   * Stop after repacking this much data in total
+   *
+   * Allowed suffixes: k/K, m/M, g/G, t/T
+   */
+  maxRepackSize: z
+    .string()
+    .regex(/^\d+(?:\.\d+)?[kKmMgGtT]$/)
+    .optional(),
+  /**
+   * Only repack packs which are cacheable
+   */
+  repackCacheableOnly: z.coerce.boolean(),
+  /**
+   * Repack pack files below 80% of target pack size
+   */
+  repackSmall: z.coerce.boolean(),
+  /**
+   * Repack all uncompressed data
+   */
+  repackUncompressed: z.coerce.boolean(),
+  /**
+   * Pack below-limit packfiles
+   *
+   * Allowed suffixes: k/K, m/M
+   */
+  repackSmallerThan: z
+    .string()
+    .regex(/^\d+(?:\.\d+)?[kKmM]$/)
     .optional(),
 });
 
@@ -120,6 +183,7 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
         type: ResticEnvironmentVariable;
         value: string;
       }
+    | false
     | undefined;
 
   get hasPassword() {
@@ -150,6 +214,11 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
       value: path,
     };
 
+    return this;
+  }
+
+  public insecureNoPassword() {
+    this.#password = false;
     return this;
   }
 
@@ -191,12 +260,16 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
   validate(): void {
     this.#zodArgs.parse(this.#dynamicArgs);
   }
-  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'none' {
+  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'binary' | 'none' {
     return 'jsonlines';
   }
 
   toArgs(): string[] {
     const args = [this.command(), '--json'];
+
+    if (this.#password === false) {
+      args.push('--insecure-no-password');
+    }
 
     for (const [key, value] of Object.entries(this.#dynamicArgs)) {
       const realKey = key.replaceAll(/[A-Z]/g, (str) => `-${str.toLowerCase()}`);
@@ -238,6 +311,7 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
   toEnv(): Record<string, string> {
     const env: Record<string, string> = {
       PATH: process.env.PATH ?? '',
+      HOME: process.env.HOME ?? '',
     };
 
     if (this.#repository) {

@@ -3,7 +3,7 @@ node = "25.4.0"
 pnpm = "10.29.2"
 restic = "0.18.0"
 
-gh = "2.86.0"
+gh = "2.88.1"
 "github:git-town/git-town" = "22.5.0"
 
 [tasks.check]

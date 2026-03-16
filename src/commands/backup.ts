@@ -140,7 +140,7 @@ class BackupArgumentBuilder extends RepositoryArgumentBuilder<
     return 'backup';
   }
 
-  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' {
+  format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'binary' | 'none' {
     return 'jsonlines-no-log';
   }
 
@@ -170,6 +170,7 @@ class BackupArgumentBuilder extends RepositoryArgumentBuilder<
  *   .password(..)
  *   .addFile('my.json')
  *   .addFile('path/to/folder')
+ *   .run();
  * ```
  */
 export function backup() {
