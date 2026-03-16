@@ -1,3 +1,6 @@
+# temporary workaround until CI mise is upgraded to 2026.2.13 or later
+settings.aqua.github_attestations = false
+
 [tools]
 node = "25.4.0"
 pnpm = "10.29.2"
