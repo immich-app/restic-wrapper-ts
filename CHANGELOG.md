@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.1.1...restic-wrapper-v1.1.2) (2026-04-02)
+
+
+### Bug Fixes
+
+* more optional schema fields ([#14](https://github.com/immich-app/restic-wrapper-ts/issues/14)) ([c19f5cd](https://github.com/immich-app/restic-wrapper-ts/commit/c19f5cdc107014726fd37d0f28060c9eaaf1504a))
+
 ## [1.1.1](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.1.0...restic-wrapper-v1.1.1) (2026-02-12)
 
 
