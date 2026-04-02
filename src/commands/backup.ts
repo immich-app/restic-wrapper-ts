@@ -184,8 +184,8 @@ const backupStatusMessage = z.object({
   seconds_remaining: z.number().int().nonnegative().optional(),
 
   percent_done: z.number(),
-  total_files: z.number().int().nonnegative(),
-  total_bytes: z.number().int().nonnegative(),
+  total_files: z.number().int().nonnegative().optional(),
+  total_bytes: z.number().int().nonnegative().optional(),
 
   files_done: z.number().int().nonnegative().optional(),
   bytes_done: z.number().int().nonnegative().optional(),
@@ -224,7 +224,7 @@ const backupSummaryMessage = z.object({
   backup_start: z.coerce.date(),
   backup_end: z.coerce.date(),
   total_duration: z.number(),
-  snapshot_id: z.string(),
+  snapshot_id: z.string().optional(),
 });
 
 const backupMessage = z.union([backupStatusMessage, backupVerboseStatusMessage, backupSummaryMessage]);
