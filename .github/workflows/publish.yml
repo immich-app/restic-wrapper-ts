@@ -21,7 +21,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Mise
-        uses: immich-app/devtools/actions/use-mise@cd24790a7f5f6439ac32cc94f5523cb2de8bfa8c # use-mise-action-v1.1.0
+        uses: immich-app/devtools/actions/use-mise@9e8a3f926a478b3c82b3ef70e2598e6350b76052 # use-mise-action-v1.1.2
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
