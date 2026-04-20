@@ -126,7 +126,7 @@ describe('backup', () => {
     const sourceDir = join(dir, 'source');
     await mkdir(sourceDir);
     await Promise.all(
-      Array.from({ length: 2_000 }, (_, i) => writeFile(join(sourceDir, `file-${i}.txt`), `content ${i}`)),
+      Array.from({ length: 2000 }, (_, i) => writeFile(join(sourceDir, `file-${i}.txt`), `content ${i}`)),
     );
 
     const ac = new AbortController();
