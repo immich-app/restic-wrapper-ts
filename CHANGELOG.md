@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.1.2...restic-wrapper-v1.2.0) (2026-04-20)
+
+
+### Features
+
+* abort signals ([#16](https://github.com/immich-app/restic-wrapper-ts/issues/16)) ([3bdb4de](https://github.com/immich-app/restic-wrapper-ts/commit/3bdb4de96070d735835e9b38bef974e8dfe9de6e))
+
 ## [1.1.2](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.1.1...restic-wrapper-v1.1.2) (2026-04-02)
 
 
