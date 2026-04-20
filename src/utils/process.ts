@@ -15,6 +15,7 @@ import { JsonLinesReader } from './streams';
 export function spawnRestic<T, Output>(argsBuilder: ArgumentBuilder<T, Output>): ChildProcessWithoutNullStreams {
   return spawn('restic', argsBuilder.toArgs(), {
     env: argsBuilder.toEnv(),
+    signal: argsBuilder.abortSignal,
   });
 }
 
@@ -24,9 +25,10 @@ export function restic<T, Output>(argsBuilder: ArgumentBuilder<T, Output>): Prom
   return new Promise((resolve, reject) => {
     const process = spawn('restic', argsBuilder.toArgs(), {
       env: argsBuilder.toEnv(),
+      signal: argsBuilder.abortSignal,
     });
 
-    process.on('error', reject);
+    process.on('error', (error) => reject(argsBuilder.abortSignal?.aborted ? argsBuilder.abortSignal.reason : error));
     argsBuilder.emit('process', process);
 
     let stderr = '';
@@ -91,6 +93,11 @@ export function restic<T, Output>(argsBuilder: ArgumentBuilder<T, Output>): Prom
     }
 
     process.on('exit', (code) => {
+      if (argsBuilder.abortSignal?.aborted) {
+        reject(argsBuilder.abortSignal.reason);
+        return;
+      }
+
       switch (code) {
         case 0: {
           finish();
