@@ -251,6 +251,17 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
     return this;
   }
 
+  #signal: AbortSignal | undefined;
+
+  get abortSignal() {
+    return this.#signal;
+  }
+
+  signal(signal: AbortSignal | undefined) {
+    this.#signal = signal;
+    return this;
+  }
+
   abstract command(): string;
   abstract parse(data: T): T;
   setFilter(data: string): boolean;

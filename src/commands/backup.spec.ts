@@ -1,4 +1,4 @@
-import { writeFile } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { MissingFilesError, ResticCommandFailedError } from '../errors';
@@ -106,4 +106,40 @@ describe('backup', () => {
   });
 
   it.todo('fails to read source data');
+
+  it('rejects immediately when the signal is already aborted', async () => {
+    const reason = new Error('pre-aborted');
+    const ac = new AbortController();
+    ac.abort(reason);
+
+    await expect(
+      backup()
+        .repository(join(dir, 'repository'))
+        .password('password')
+        .signal(ac.signal)
+        .addFile(join(dir, 'test-file'))
+        .run(),
+    ).rejects.toBe(reason);
+  });
+
+  it('aborts a running backup with the signal reason', async () => {
+    const sourceDir = join(dir, 'source');
+    await mkdir(sourceDir);
+    await Promise.all(
+      Array.from({ length: 2_000 }, (_, i) => writeFile(join(sourceDir, `file-${i}.txt`), `content ${i}`)),
+    );
+
+    const ac = new AbortController();
+    const reason = new Error('user-canceled');
+
+    await expect(
+      backup()
+        .repository(join(dir, 'repository'))
+        .password('password')
+        .signal(ac.signal)
+        .addFile(sourceDir)
+        .on('event', () => ac.abort(reason))
+        .run(),
+    ).rejects.toBe(reason);
+  });
 });
