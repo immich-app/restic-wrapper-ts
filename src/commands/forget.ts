@@ -90,20 +90,22 @@ export function forget() {
   >;
 }
 
-const keepReasons = z.array(
-  z.object({
-    snapshot,
-    matches: z.string().array(),
-  }),
-);
+const keepReasons = z
+  .array(
+    z.object({
+      snapshot,
+      matches: z.string().array().nullable(),
+    }),
+  )
+  .nullable();
 
 const forgetMessage = z.array(
   z.object({
     tags: z.string().array().nullable(),
     host: z.string(),
-    paths: z.string().array(),
-    keep: snapshot.array(),
-    remove: snapshot.array(),
+    paths: z.string().array().nullable(),
+    keep: snapshot.array().nullable(),
+    remove: snapshot.array().nullable(),
     reasons: keepReasons,
   }),
 );
