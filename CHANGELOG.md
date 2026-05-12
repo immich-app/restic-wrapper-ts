@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.2.0...restic-wrapper-v1.2.1) (2026-05-12)
+
+
+### Bug Fixes
+
+* missing nullable on  `forgetMessage` fields ([#18](https://github.com/immich-app/restic-wrapper-ts/issues/18)) ([4be4fff](https://github.com/immich-app/restic-wrapper-ts/commit/4be4fffe368cd42f1bca1d0f402e21a5c4857757))
+
 ## [1.2.0](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.1.2...restic-wrapper-v1.2.0) (2026-04-20)
 
 
