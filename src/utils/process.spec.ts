@@ -1,8 +1,11 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { ResticCommandFailedError } from '../errors';
+import { join } from 'node:path';
+import { check, keyAdd } from '../commands';
+import { ResticCommandFailedError, ResticFailedToLockRepositoryError, ResticWrongPasswordError } from '../errors';
 import { ArgumentBuilder } from './args';
-import { restic } from './process';
+import { restic, spawnRestic } from './process';
+import { createLock, createTempDir, initRepository } from './test';
 
 describe('wrapper', () => {
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -59,6 +62,35 @@ describe('wrapper', () => {
 
     await expect(restic(new VersionCommand())).rejects.toThrowError(new Error('dummy error'));
   });
+
+  it('surfaces wrong password or no key found error', async () => {
+    const dir = await createTempDir();
+    await initRepository(join(dir, 'repository'));
+    await expect(check().repository(join(dir, 'repository')).password('incorrect').run()).rejects.toThrowError(
+      ResticWrongPasswordError,
+    );
+  });
+
+  it(
+    'surfaces exclusive lock error',
+    {
+      // this test is flaky as we are relying on a process race to create the lock
+      retry: 3,
+    },
+    async () => {
+      const dir = await createTempDir();
+      await initRepository(join(dir, 'repository'));
+
+      // create an exclusive lock -- should run long enough to hold over next operation
+      const lockOperation = keyAdd().repository(join(dir, 'repository')).newInsecureNoPassword().password('password');
+      const process = spawnRestic(lockOperation);
+      await new Promise((resolve) => process.once('spawn', resolve));
+
+      await expect(check().repository(join(dir, 'repository')).password('password').run()).rejects.toThrowError(
+        ResticFailedToLockRepositoryError,
+      );
+    },
+  );
 
   it('emits events', async () => {
     class VersionCommand extends ArgumentBuilder<Data, Data> {
