@@ -95,16 +95,6 @@ describe('backup', () => {
     );
   });
 
-  it.skip('fails to open a locked repository', async () => {
-    await createLock(join(dir, 'repository'));
-
-    await expect(
-      backup().repository(join(dir, 'repository')).password('password').addFile(join(dir, 'test-file')).run(),
-    ).rejects.toThrowError(
-      new ResticCommandFailedError('unable to create lock in backend: ciphertext verification failed'),
-    );
-  });
-
   it.todo('fails to read source data');
 
   it('rejects immediately when the signal is already aborted', async () => {
