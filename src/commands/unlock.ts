@@ -1,5 +1,5 @@
 import * as z from 'zod';
-import { baseArgs, RepositoryArgumentBuilder } from '../utils/args';
+import { baseArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
 
 const unlockArgs = z.object({
   ...baseArgs.shape,
@@ -39,5 +39,5 @@ class UnlockArgumentBuilder extends RepositoryArgumentBuilder<void, void> {
  * ```
  */
 export function unlock() {
-  return new UnlockArgumentBuilder();
+  return new UnlockArgumentBuilder() as DynamicBuilder<z.infer<typeof unlockArgs>, UnlockArgumentBuilder>;
 }
