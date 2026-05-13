@@ -19,6 +19,8 @@ const baseForgetArgs = z.object({
   dryRun: z.coerce.boolean(),
   /**
    * Automatically run prune if snapshots are removed
+   *
+   * Output is ignored - use prune() if output is desired
    */
   prune: z.coerce.boolean(),
 });
@@ -64,11 +66,15 @@ class ForgetArgumentBuilder<T> extends RepositoryArgumentBuilder<T, T> {
   }
 
   format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'binary' | 'none' {
-    return this.#snapshots.length > 0 ? 'none' : 'json';
+    return this.#snapshots.length > 0 ? 'none' : 'jsonlines-no-log';
   }
 
   parse(data: T): T {
     return forgetMessage.parse(data) as T;
+  }
+
+  setFilter(data: string): boolean {
+    return data.startsWith('[{');
   }
 }
 
