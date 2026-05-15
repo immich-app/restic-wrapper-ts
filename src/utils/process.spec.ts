@@ -1,11 +1,14 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vitest } from 'vitest';
 
+import { execFile } from 'node:child_process';
+import { open, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
+import { promisify } from 'node:util';
 import { check, keyAdd } from '../commands';
 import { ResticCommandFailedError, ResticFailedToLockRepositoryError, ResticWrongPasswordError } from '../errors';
 import { ArgumentBuilder } from './args';
 import { restic, spawnRestic } from './process';
-import { createLock, createTempDir, initRepository } from './test';
+import { createTempDir, initRepository } from './test';
 
 describe('wrapper', () => {
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -71,26 +74,32 @@ describe('wrapper', () => {
     );
   });
 
-  it(
-    'surfaces exclusive lock error',
-    {
-      // this test is flaky as we are relying on a process race to create the lock
-      retry: 3,
-    },
-    async () => {
-      const dir = await createTempDir();
-      await initRepository(join(dir, 'repository'));
+  it('surfaces exclusive lock error', async () => {
+    const dir = await createTempDir();
+    const repository = join(dir, 'repository');
+    await initRepository(repository);
 
-      // create an exclusive lock -- should run long enough to hold over next operation
-      const lockOperation = keyAdd().repository(join(dir, 'repository')).newInsecureNoPassword().password('password');
-      const process = spawnRestic(lockOperation);
-      await new Promise((resolve) => process.once('spawn', resolve));
+    // block the keyAdd process from cleaning up lock until we need it cleaned up
+    const fifo = join(dir, 'newPassword');
+    await promisify(execFile)('mkfifo', [fifo]);
+    const handle = await open(fifo, 'r+');
 
-      await expect(check().repository(join(dir, 'repository')).password('password').run()).rejects.toThrowError(
+    const lockOperation = keyAdd().repository(repository).newPasswordFile(fifo).password('password');
+    spawnRestic(lockOperation);
+
+    try {
+      await vitest.waitFor(async () => {
+        const locks = await readdir(join(repository, 'locks'));
+        expect(locks.length).toBeGreaterThan(0);
+      });
+
+      await expect(check().repository(repository).password('password').run()).rejects.toThrowError(
         ResticFailedToLockRepositoryError,
       );
-    },
-  );
+    } finally {
+      await handle.close();
+    }
+  });
 
   it('emits events', async () => {
     class VersionCommand extends ArgumentBuilder<Data, Data> {
