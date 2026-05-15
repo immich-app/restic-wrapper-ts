@@ -112,9 +112,9 @@ describe('wrapper', () => {
       }
     }
 
-    const process = vi.fn();
-    const event = vi.fn();
-    const unregistered = vi.fn();
+    const process = vitest.fn();
+    const event = vitest.fn();
+    const unregistered = vitest.fn();
 
     await restic(
       new VersionCommand()
