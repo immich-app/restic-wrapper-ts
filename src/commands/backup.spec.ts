@@ -1,8 +1,8 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { MissingFilesError, ResticCommandFailedError } from '../errors';
-import { createLock, createTempDir, initRepository } from '../utils/test';
+import { MissingFilesError } from '../errors';
+import { createTempDir, initRepository } from '../utils/test';
 import { backup } from './backup';
 
 describe('backup', () => {
