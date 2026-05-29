@@ -1,8 +1,14 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vitest } from 'vitest';
 
-import { ResticCommandFailedError } from '../errors';
+import { execFile } from 'node:child_process';
+import { open, readdir } from 'node:fs/promises';
+import { join } from 'node:path';
+import { promisify } from 'node:util';
+import { check, keyAdd } from '../commands';
+import { ResticCommandFailedError, ResticFailedToLockRepositoryError, ResticWrongPasswordError } from '../errors';
 import { ArgumentBuilder } from './args';
-import { restic } from './process';
+import { restic, spawnRestic } from './process';
+import { createTempDir, initRepository } from './test';
 
 describe('wrapper', () => {
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -60,6 +66,41 @@ describe('wrapper', () => {
     await expect(restic(new VersionCommand())).rejects.toThrowError(new Error('dummy error'));
   });
 
+  it('surfaces wrong password or no key found error', async () => {
+    const dir = await createTempDir();
+    await initRepository(join(dir, 'repository'));
+    await expect(check().repository(join(dir, 'repository')).password('incorrect').run()).rejects.toThrowError(
+      ResticWrongPasswordError,
+    );
+  });
+
+  it('surfaces exclusive lock error', async () => {
+    const dir = await createTempDir();
+    const repository = join(dir, 'repository');
+    await initRepository(repository);
+
+    // block the keyAdd process from cleaning up lock until we need it cleaned up
+    const fifo = join(dir, 'newPassword');
+    await promisify(execFile)('mkfifo', [fifo]);
+    const handle = await open(fifo, 'r+');
+
+    const lockOperation = keyAdd().repository(repository).newPasswordFile(fifo).password('password');
+    spawnRestic(lockOperation);
+
+    try {
+      await vitest.waitFor(async () => {
+        const locks = await readdir(join(repository, 'locks'));
+        expect(locks.length).toBeGreaterThan(0);
+      });
+
+      await expect(check().repository(repository).password('password').run()).rejects.toThrowError(
+        ResticFailedToLockRepositoryError,
+      );
+    } finally {
+      await handle.close();
+    }
+  });
+
   it('emits events', async () => {
     class VersionCommand extends ArgumentBuilder<Data, Data> {
       command(): string {
@@ -71,9 +112,9 @@ describe('wrapper', () => {
       }
     }
 
-    const process = vi.fn();
-    const event = vi.fn();
-    const unregistered = vi.fn();
+    const process = vitest.fn();
+    const event = vitest.fn();
+    const unregistered = vitest.fn();
 
     await restic(
       new VersionCommand()

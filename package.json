@@ -31,7 +31,7 @@
     "build": "tsdown",
     "dev": "tsdown --watch",
     "lint": "eslint \"src/**/*.ts\" --max-warnings 0",
-    "lint:fix": "pnpm run lint -- --fix",
+    "lint:fix": "pnpm run lint --fix",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "test": "vitest run",

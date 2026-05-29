@@ -1,8 +1,8 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { MissingFilesError, ResticCommandFailedError } from '../errors';
-import { createLock, createTempDir, initRepository } from '../utils/test';
+import { MissingFilesError } from '../errors';
+import { createTempDir, initRepository } from '../utils/test';
 import { backup } from './backup';
 
 describe('backup', () => {
@@ -92,16 +92,6 @@ describe('backup', () => {
       expect.objectContaining({
         message: expect.stringContaining('Fatal: all source directories/files do not exist'),
       }),
-    );
-  });
-
-  it.skip('fails to open a locked repository', async () => {
-    await createLock(join(dir, 'repository'));
-
-    await expect(
-      backup().repository(join(dir, 'repository')).password('password').addFile(join(dir, 'test-file')).run(),
-    ).rejects.toThrowError(
-      new ResticCommandFailedError('unable to create lock in backend: ciphertext verification failed'),
     );
   });
 

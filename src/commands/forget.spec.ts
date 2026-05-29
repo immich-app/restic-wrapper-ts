@@ -61,6 +61,23 @@ describe('forget', () => {
     await expect(snapshots().repository(join(dir, 'repository')).password('password').run()).resolves.toHaveLength(2);
   });
 
+  it('forgets and prunes', async () => {
+    await expect(snapshots().repository(join(dir, 'repository')).password('password').run()).resolves.toHaveLength(2);
+
+    await expect(
+      forget().repository(join(dir, 'repository')).password('password').keepLast(1).prune(true).run(),
+    ).resolves.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          keep: expect.arrayContaining([expect.objectContaining({ id: snapshotId2 })]),
+          remove: expect.arrayContaining([expect.objectContaining({ id: snapshotId1 })]),
+        }),
+      ]),
+    );
+
+    await expect(snapshots().repository(join(dir, 'repository')).password('password').run()).resolves.toHaveLength(1);
+  });
+
   it('keeps last 1', async () => {
     await expect(snapshots().repository(join(dir, 'repository')).password('password').run()).resolves.toHaveLength(2);
 
