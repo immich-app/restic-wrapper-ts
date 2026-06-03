@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.2.1...restic-wrapper-v1.2.2) (2026-06-03)
+
+
+### Bug Fixes
+
+* various things (typing for `unlock`, prune output in forget) ([#20](https://github.com/immich-app/restic-wrapper-ts/issues/20)) ([9341d6e](https://github.com/immich-app/restic-wrapper-ts/commit/9341d6ee3bc0e2d24d45cfcc575643256bbc6682))
+
 ## [1.2.1](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.2.0...restic-wrapper-v1.2.1) (2026-05-12)
 
 
