@@ -65,8 +65,10 @@ const restoreArgs = z.object({
   sparse: z.coerce.boolean(),
   /**
    * Directory to extract data to
+   *
+   * If unset, restic will restore files in-place
    */
-  target: z.string().array().min(1),
+  target: z.string().optional(),
   /**
    * Verify restored files content
    */

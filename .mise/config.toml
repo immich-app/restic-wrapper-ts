@@ -1,7 +1,13 @@
+# temporary workaround until CI mise is upgraded to 2026.2.13 or later
+settings.aqua.github_attestations = false
+
 [tools]
-node = "24.11"
-pnpm = "10.22.0"
+node = "25.4.0"
+pnpm = "10.29.2"
 restic = "0.18.0"
+
+gh = "2.88.1"
+"github:git-town/git-town" = "22.5.0"
 
 [tasks.check]
 description = "Run all checks including build"
