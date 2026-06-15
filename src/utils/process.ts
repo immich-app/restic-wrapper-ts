@@ -19,59 +19,52 @@ export function spawnRestic<T, Output>(argsBuilder: ArgumentBuilder<T, Output>):
   });
 }
 
-export function restic<T, Output>(argsBuilder: ArgumentBuilder<T, Output>): Promise<Output> {
+export async function restic<T, Output>(argsBuilder: ArgumentBuilder<T, Output>): Promise<Output> {
   argsBuilder.validate();
 
-  return new Promise((resolve, reject) => {
-    const process = spawn('restic', argsBuilder.toArgs(), {
-      env: argsBuilder.toEnv(),
-      signal: argsBuilder.abortSignal,
-    });
+  const process = spawn('restic', argsBuilder.toArgs(), {
+    env: argsBuilder.toEnv(),
+    signal: argsBuilder.abortSignal,
+  });
 
-    process.on('error', (error) => reject(argsBuilder.abortSignal?.aborted ? argsBuilder.abortSignal.reason : error));
-    argsBuilder.emit('process', process);
+  argsBuilder.emit('process', process);
 
-    let stderr = '';
-    process.stderr.on('data', (data) => (stderr += data));
+  const [_, output] = await Promise.all([
+    processExit(argsBuilder.abortSignal, process),
+    processOutput(argsBuilder, process),
+  ]);
 
-    let finished = 0;
-    function finish() {
-      if (++finished === 2) {
-        resolve(data as Output);
-      }
-    }
+  return output() as Output;
+}
 
+function processOutput<T, Output>(argsBuilder: ArgumentBuilder<T, Output>, process: ChildProcessWithoutNullStreams) {
+  return new Promise<() => T | T[] | undefined>((resolve) => {
     let data: T | T[] | undefined = [];
 
     if (argsBuilder.format() === 'none') {
       data = undefined;
-      process.stdout.on('close', finish);
+      process.stdout.on('close', () => resolve(() => void 0));
     } else if (argsBuilder.format() === 'string') {
       let stdout = '';
       process.stdout.on('data', (data) => (stdout += data));
-      process.stdout.on('close', () => {
-        data = argsBuilder.parse(stdout as T);
-        finish();
-      });
+      process.stdout.on('close', () => resolve(() => argsBuilder.parse(stdout as T)));
     } else if (argsBuilder.format() === 'binary') {
       const chunks: Buffer[] = [];
       process.stdout.on('data', (chunk) => chunks.push(chunk));
-      process.stdout.on('close', () => {
-        data = Buffer.concat(chunks) as T;
-        finish();
-      });
+      process.stdout.on('close', () => resolve(() => Buffer.concat(chunks) as T));
     } else if (argsBuilder.format() === 'json') {
       let stdout = '';
       process.stdout.on('data', (data) => (stdout += data));
-      process.stdout.on('close', () => {
-        try {
-          data = argsBuilder.parse(JSON.parse(stdout));
-          finish();
-        } catch (error) {
-          console.error('Failing output:', stdout);
-          reject(error);
-        }
-      });
+      process.stdout.on('close', () =>
+        resolve(() => {
+          try {
+            return argsBuilder.parse(JSON.parse(stdout));
+          } catch (error) {
+            console.error('Failing output:', stdout);
+            throw error;
+          }
+        }),
+      );
     } else {
       const jsonLinesReader = new JsonLinesReader<T>(
         (line) => {
@@ -89,18 +82,27 @@ export function restic<T, Output>(argsBuilder: ArgumentBuilder<T, Output>): Prom
       );
 
       process.stdout.pipe(jsonLinesReader);
-      jsonLinesReader.on('close', finish);
+      jsonLinesReader.on('close', () => resolve(() => data));
     }
+  });
+}
+
+function processExit(abortSignal: AbortSignal | undefined, process: ChildProcessWithoutNullStreams) {
+  let stderr = '';
+  process.stderr.on('data', (data) => (stderr += data));
+
+  return new Promise<void>((resolve, reject) => {
+    process.on('error', (error) => reject(abortSignal?.aborted ? abortSignal.reason : error));
 
     process.on('exit', (code) => {
-      if (argsBuilder.abortSignal?.aborted) {
-        reject(argsBuilder.abortSignal.reason);
+      if (abortSignal?.aborted) {
+        reject(abortSignal.reason);
         return;
       }
 
       switch (code) {
         case 0: {
-          finish();
+          resolve();
           break;
         }
         case 1: {
