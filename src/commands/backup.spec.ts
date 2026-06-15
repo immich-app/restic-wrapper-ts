@@ -74,15 +74,21 @@ describe('backup', () => {
     );
   });
 
-  it('ignores missing files', async () => {
-    const { total_files_processed } = await backup()
-      .repository(join(dir, 'repository'))
-      .password('password')
-      .addFile(join(dir, 'test-file'))
-      .addFile(join(dir, 'missing-file'))
-      .run();
-
-    expect(total_files_processed).toBe(1);
+  it('fails when a source file could not be read', async () => {
+    await expect(
+      backup()
+        .repository(join(dir, 'repository'))
+        .password('password')
+        .addFile(join(dir, 'test-file'))
+        .addFile(join(dir, 'missing-file'))
+        .run(),
+    ).rejects.toEqual(
+      expect.objectContaining({
+        message: expect.stringContaining(
+          'Restic exited with code 3: Warning: at least one source file could not be read',
+        ),
+      }),
+    );
   });
 
   it('fails to add only non-existent files', async () => {
