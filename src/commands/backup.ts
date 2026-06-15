@@ -20,6 +20,12 @@ export const backupArgs = z.object({
    */
   excludeCaches: z.coerce.boolean(),
   /**
+   * Exclude online-only cloud files (such as OneDrive, iCloud Drive)
+   *
+   * Only available on Windows and macOS; restic rejects this flag on other platforms.
+   */
+  excludeCloudFiles: z.coerce.boolean(),
+  /**
    * Exclude by patterns provided in file(s)
    */
   excludeFile: z.string().array().default([]),

@@ -34,10 +34,6 @@ class TagArgumentBuilder extends RepositoryArgumentBuilder<z.infer<typeof tagMes
     return 'tag';
   }
 
-  setFilter(line: string): boolean {
-    return line !== 'create exclusive lock for repository';
-  }
-
   toArgs(): string[] {
     return [...super.toArgs(), ...this.#snapshots];
   }

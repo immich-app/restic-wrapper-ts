@@ -21,11 +21,27 @@ export const rewriteArgs = z.object({
   /**
    * Exclude pattern(s) but ignore case in patterns
    */
-  iexcludePattern: z.coerce.string().array().default([]),
+  iexclude: z.coerce.string().array().default([]),
   /**
    * Read exclude patterns from given file(s) but ignore case in patterns
    */
   iexcludeFile: z.coerce.string().array().default([]),
+  /**
+   * Include pattern(s)
+   */
+  include: z.string().array().default([]),
+  /**
+   * Read include patterns from given file(s)
+   */
+  includeFile: z.string().array().default([]),
+  /**
+   * Include pattern(s) but ignore case in patterns
+   */
+  iinclude: z.coerce.string().array().default([]),
+  /**
+   * Read include patterns from given file(s) but ignore case in patterns
+   */
+  iincludeFile: z.coerce.string().array().default([]),
   /**
    * Replace hostname
    */

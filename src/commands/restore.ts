@@ -28,7 +28,7 @@ const restoreArgs = z.object({
   /**
    * Exclude pattern(s) but ignore case in patterns
    */
-  iexcludePattern: z.coerce.string().array().default([]),
+  iexclude: z.coerce.string().array().default([]),
   /**
    * Read exclude patterns from given file(s) but ignore case in patterns
    */
@@ -36,7 +36,7 @@ const restoreArgs = z.object({
   /**
    * Include pattern(s) but ignore case in patterns
    */
-  iincludePattern: z.coerce.string().array().default([]),
+  iinclude: z.coerce.string().array().default([]),
   /**
    * Read include patterns from given file(s) but ignore case in patterns
    */
@@ -53,6 +53,10 @@ const restoreArgs = z.object({
    * Include xattr by pattern(s)
    */
   includeXattr: z.string().array().default([]),
+  /**
+   * Restore file ownership by user name and group name (except POSIX ACLs)
+   */
+  ownershipByName: z.coerce.boolean(),
   /**
    * Overwrite behaviour
    *

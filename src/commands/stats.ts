@@ -64,7 +64,11 @@ class StatsArgumentBuilder<T> extends RepositoryArgumentBuilder<T, T> {
   }
 
   format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'binary' | 'none' {
-    return 'json';
+    return 'jsonlines-no-log';
+  }
+
+  setFilter(line: string): boolean {
+    return !/^\[[\d:]+\]/.test(line);
   }
 
   parse(data: T): T {
