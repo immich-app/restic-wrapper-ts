@@ -114,7 +114,6 @@ function processExit(abortSignal: AbortSignal | undefined, process: ChildProcess
           reject(new ResticGoRuntimeError(stderr.trimEnd()));
           break;
         }
-        /* istanbul ignore next */
         // backup.spec.ts
         case 3: {
           reject(new ResticBackupCommandCouldNotReadSourceDataError(stderr.trimEnd()));
