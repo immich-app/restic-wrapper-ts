@@ -7,7 +7,7 @@ import { createTempDir } from './utils/test';
 test('integration test', { timeout: 20_000 }, async () => {
   await expect(version()).resolves.toEqual(
     expect.objectContaining({
-      version: '0.18.0',
+      version: '0.19.0',
     }),
   );
 
