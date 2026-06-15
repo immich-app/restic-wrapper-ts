@@ -21,7 +21,7 @@ export const rewriteArgs = z.object({
   /**
    * Exclude pattern(s) but ignore case in patterns
    */
-  iexcludePattern: z.coerce.string().array().default([]),
+  iexclude: z.coerce.string().array().default([]),
   /**
    * Read exclude patterns from given file(s) but ignore case in patterns
    */
