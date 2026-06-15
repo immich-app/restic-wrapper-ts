@@ -54,6 +54,10 @@ const restoreArgs = z.object({
    */
   includeXattr: z.string().array().default([]),
   /**
+   * Restore file ownership by user name and group name (except POSIX ACLs)
+   */
+  ownershipByName: z.coerce.boolean(),
+  /**
    * Overwrite behaviour
    *
    * @default always

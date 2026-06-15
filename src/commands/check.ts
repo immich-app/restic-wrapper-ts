@@ -1,8 +1,9 @@
 import * as z from 'zod';
-import { baseArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
+import { baseArgs, commonFilterArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
 
 const checkArgs = z.object({
   ...baseArgs.shape,
+  ...commonFilterArgs.shape,
   /**
    * Read all data blobs
    */
@@ -29,8 +30,22 @@ class CheckArgumentBuilder extends RepositoryArgumentBuilder<
     super(checkArgs);
   }
 
+  #snapshots: string[] = [];
+
+  /**
+   * Restrict the check to the given snapshot(s)
+   */
+  snapshot(...snapshots: string[]) {
+    this.#snapshots.push(...snapshots);
+    return this;
+  }
+
   command(): string {
     return 'check';
+  }
+
+  toArgs(): string[] {
+    return [...super.toArgs(), ...this.#snapshots];
   }
 
   parse(data: z.infer<typeof checkMessage>): z.infer<typeof checkMessage> {
