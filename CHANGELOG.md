@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.3.0](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.2.1...restic-wrapper-v1.3.0) (2026-06-15)
+
+
+### Features
+
+* restic 0.19.0 support ([#26](https://github.com/immich-app/restic-wrapper-ts/issues/26)) ([5723523](https://github.com/immich-app/restic-wrapper-ts/commit/5723523148c7e91d16caabe5963ac7224cb5b86a))
+
+
+### Bug Fixes
+
+* don't mask real errors with JSON parse error ([#25](https://github.com/immich-app/restic-wrapper-ts/issues/25)) ([24d4714](https://github.com/immich-app/restic-wrapper-ts/commit/24d4714be7ca3967dae3aad4b4bf1f4707f615f2))
+* various things (typing for `unlock`, prune output in forget) ([#20](https://github.com/immich-app/restic-wrapper-ts/issues/20)) ([9341d6e](https://github.com/immich-app/restic-wrapper-ts/commit/9341d6ee3bc0e2d24d45cfcc575643256bbc6682))
+
 ## [1.2.1](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.2.0...restic-wrapper-v1.2.1) (2026-05-12)
 
 
