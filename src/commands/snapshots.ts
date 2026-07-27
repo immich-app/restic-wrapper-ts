@@ -26,8 +26,22 @@ class SnapshotsArgumentBuilder extends RepositoryArgumentBuilder<
     super(snapshotsArgs);
   }
 
+  #snapshots: string[] = [];
+
+  /**
+   * Only show snapshots by ID
+   */
+  snapshot(...snapshots: string[]) {
+    this.#snapshots.push(...snapshots);
+    return this;
+  }
+
   command(): string {
     return 'snapshots';
+  }
+
+  toArgs(): string[] {
+    return [...super.toArgs(), ...this.#snapshots];
   }
 
   format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'binary' | 'none' {

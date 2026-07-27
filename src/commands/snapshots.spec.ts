@@ -32,4 +32,14 @@ describe('init', () => {
       ]),
     );
   });
+
+  it('lists only the requested snapshot', async () => {
+    await expect(
+      snapshots().repository(join(dir, 'repository')).password('password').snapshot(snapshotId).run(),
+    ).resolves.toEqual([
+      expect.objectContaining({
+        id: snapshotId,
+      }),
+    ]);
+  });
 });
