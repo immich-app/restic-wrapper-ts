@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.3.0...restic-wrapper-v1.3.1) (2026-07-27)
+
+
+### Bug Fixes
+
+* include positional argument for snapshots command ([#28](https://github.com/immich-app/restic-wrapper-ts/issues/28)) ([e2f98b7](https://github.com/immich-app/restic-wrapper-ts/commit/e2f98b769613afa9325eb38dff9f74edf2eabbf8))
+
 ## [1.3.0](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.2.1...restic-wrapper-v1.3.0) (2026-06-15)
 
 
