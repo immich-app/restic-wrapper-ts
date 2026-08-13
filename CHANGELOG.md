@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.3.1...restic-wrapper-v1.4.0) (2026-08-13)
+
+
+### Features
+
+* restic 0.19.1 support ([#32](https://github.com/immich-app/restic-wrapper-ts/issues/32)) ([9c31967](https://github.com/immich-app/restic-wrapper-ts/commit/9c319671a5dd0865c1a02729eead4936776ef54d))
+
 ## [1.3.1](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.3.0...restic-wrapper-v1.3.1) (2026-07-27)
 
 
