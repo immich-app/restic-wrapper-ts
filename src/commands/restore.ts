@@ -8,11 +8,11 @@ const restoreArgs = z.object({
   /**
    * Delete files from target directory if they do not exist in snapshot
    */
-  delete: z.coerce.boolean(),
+  delete: z.coerce.boolean().default(false),
   /**
    * Do not write any data
    */
-  dryRun: z.coerce.boolean(),
+  dryRun: z.coerce.boolean().default(false),
   /**
    * Exclude pattern(s)
    */
@@ -56,7 +56,7 @@ const restoreArgs = z.object({
   /**
    * Restore file ownership by user name and group name (except POSIX ACLs)
    */
-  ownershipByName: z.coerce.boolean(),
+  ownershipByName: z.coerce.boolean().default(false),
   /**
    * Overwrite behaviour
    *
@@ -66,7 +66,7 @@ const restoreArgs = z.object({
   /**
    * Restore files as sparse
    */
-  sparse: z.coerce.boolean(),
+  sparse: z.coerce.boolean().default(false),
   /**
    * Directory to extract data to
    */
@@ -74,7 +74,7 @@ const restoreArgs = z.object({
   /**
    * Verify restored files content
    */
-  verify: z.coerce.boolean(),
+  verify: z.coerce.boolean().default(false),
 });
 
 class RestoreArgumentBuilder extends RepositoryArgumentBuilder<

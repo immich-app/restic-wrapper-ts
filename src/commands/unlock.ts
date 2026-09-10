@@ -6,7 +6,7 @@ const unlockArgs = z.object({
   /**
    * Remove all locks, even non-stale ones
    */
-  removeAll: z.coerce.boolean(),
+  removeAll: z.coerce.boolean().default(false),
 });
 
 class UnlockArgumentBuilder extends RepositoryArgumentBuilder<void, void> {

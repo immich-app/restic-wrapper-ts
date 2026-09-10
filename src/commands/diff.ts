@@ -7,7 +7,7 @@ const diffArgs = z.object({
   /**
    * Print changes in metadata
    */
-  metadata: z.coerce.boolean(),
+  metadata: z.coerce.boolean().default(false),
 });
 
 class DiffArgumentBuilder extends RepositoryArgumentBuilder<

@@ -9,7 +9,7 @@ export const pruneArgs = z.object({
   /**
    * Do not modify the repository, just print what would be done
    */
-  dryRun: z.coerce.boolean(),
+  dryRun: z.coerce.boolean().default(false),
   /**
    * Try to recover a repository stuck with no free space.
    *
@@ -17,7 +17,7 @@ export const pruneArgs = z.object({
    *
    * **⚠️ Read documentation before using!**
    */
-  unsafeRecoverNoFreeSpace: z.coerce.boolean(),
+  unsafeRecoverNoFreeSpace: z.coerce.boolean().default(false),
 });
 
 class PruneArgumentBuilder extends RepositoryArgumentBuilder<string, string> {

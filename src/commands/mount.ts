@@ -12,15 +12,15 @@ const mountArgs = z.object({
   /**
    * Allow other users to access the data in the mounted directory
    */
-  allowOther: z.coerce.boolean(),
+  allowOther: z.coerce.boolean().default(false),
   /**
    * For 'allow-other', ignore Unix permissions and allow users to read all snapshot files
    */
-  noDefaultPermissions: z.coerce.boolean(),
+  noDefaultPermissions: z.coerce.boolean().default(false),
   /**
    * Use 'root' as the owner of files and directories
    */
-  ownerRoot: z.coerce.boolean(),
+  ownerRoot: z.coerce.boolean().default(false),
   /**
    * Template to use for path strings
    *
