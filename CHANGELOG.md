@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.4.0...restic-wrapper-v1.4.1) (2026-09-10)
+
+
+### Bug Fixes
+
+* zod 4.4.3 - explicit defaults for coerce.boolean ([#34](https://github.com/immich-app/restic-wrapper-ts/issues/34)) ([b20a5e3](https://github.com/immich-app/restic-wrapper-ts/commit/b20a5e3aa4ea982fbd805a855f921a8fd87da565))
+
 ## [1.4.0](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.3.1...restic-wrapper-v1.4.0) (2026-08-13)
 
 
