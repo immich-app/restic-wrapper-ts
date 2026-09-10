@@ -9,7 +9,7 @@ const findArgs = z.object({
   /**
    * Ignore case for pattern
    */
-  ignoreCase: z.coerce.boolean(),
+  ignoreCase: z.coerce.boolean().default(false),
   // long: N/A
   /**
    * Newest modification date/time
@@ -23,11 +23,11 @@ const findArgs = z.object({
   /**
    * Reverse sort order oldest to newest
    */
-  reverse: z.coerce.boolean(),
+  reverse: z.coerce.boolean().default(false),
   /**
    * Display the pack-ID the blobs belong to
    */
-  showPackId: z.coerce.boolean(),
+  showPackId: z.coerce.boolean().default(false),
   /**
    * Snapshot(s) to search in
    */

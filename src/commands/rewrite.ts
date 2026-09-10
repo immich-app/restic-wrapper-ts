@@ -17,7 +17,7 @@ export const rewriteArgs = z.object({
   /**
    * Remove original snapshots after creating new ones
    */
-  forget: z.coerce.boolean(),
+  forget: z.coerce.boolean().default(false),
   /**
    * Exclude pattern(s) but ignore case in patterns
    */
@@ -53,7 +53,7 @@ export const rewriteArgs = z.object({
   /**
    * Create snapshot summary record if it does not exist
    */
-  snapshotSummary: z.coerce.boolean(),
+  snapshotSummary: z.coerce.boolean().default(false),
 });
 
 class RewriteArgumentBuilder extends RepositoryArgumentBuilder<string, string> {

@@ -16,13 +16,13 @@ const baseForgetArgs = z.object({
   /**
    * Do not delete anything
    */
-  dryRun: z.coerce.boolean(),
+  dryRun: z.coerce.boolean().default(false),
   /**
    * Automatically run prune if snapshots are removed
    *
    * Output is ignored - use prune() if output is desired
    */
-  prune: z.coerce.boolean(),
+  prune: z.coerce.boolean().default(false),
 });
 
 const allForgetArgs = z.object({
@@ -42,7 +42,7 @@ const allForgetArgs = z.object({
   keepWithinMonthly: z.string().optional(),
   keepWithinYearly: z.string().optional(),
   keepTag: z.string().array().default([]),
-  unsafeAllowRemoveAll: z.coerce.boolean(),
+  unsafeAllowRemoveAll: z.coerce.boolean().default(false),
 });
 
 class ForgetArgumentBuilder<T> extends RepositoryArgumentBuilder<T, T> {

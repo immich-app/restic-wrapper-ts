@@ -8,7 +8,7 @@ const migrateArgs = z.object({
   /**
    * Force migration to run even if it's already been performed.
    */
-  force: z.coerce.boolean().optional(),
+  force: z.coerce.boolean().default(false).optional(),
 });
 
 class MigrateArgumentBuilder extends RepositoryArgumentBuilder<string, string> {

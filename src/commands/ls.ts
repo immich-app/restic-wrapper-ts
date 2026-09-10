@@ -31,11 +31,11 @@ const lsArgs = z.object({
   /**
    * Include files in subfolders of listed directories
    */
-  recursive: z.coerce.boolean(),
+  recursive: z.coerce.boolean().default(false),
   /**
    * Reverse the sorted output
    */
-  reverse: z.coerce.boolean(),
+  reverse: z.coerce.boolean().default(false),
   /**
    * Sort output
    */

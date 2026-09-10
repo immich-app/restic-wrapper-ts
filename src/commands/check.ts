@@ -7,7 +7,7 @@ const checkArgs = z.object({
   /**
    * Read all data blobs
    */
-  readData: z.coerce.boolean(),
+  readData: z.coerce.boolean().default(false),
   /**
    * Read a subset of data packs
    *
@@ -19,7 +19,7 @@ const checkArgs = z.object({
   /**
    * Use existing cache (only read uncached from repository)
    */
-  withCache: z.coerce.boolean(),
+  withCache: z.coerce.boolean().default(false),
 });
 
 class CheckArgumentBuilder extends RepositoryArgumentBuilder<
@@ -71,6 +71,6 @@ const checkMessage = z.object({
   message_type: z.literal('summary'),
   num_errors: z.number().int().nonnegative(),
   broken_packs: z.string().array().nullable(),
-  suggest_repair_index: z.coerce.boolean(),
-  suggest_prune: z.coerce.boolean(),
+  suggest_repair_index: z.coerce.boolean().default(false),
+  suggest_prune: z.coerce.boolean().default(false),
 });
