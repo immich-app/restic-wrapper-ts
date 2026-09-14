@@ -30,6 +30,7 @@ in pkgs.mkShell {
     export NIX_LD="${pkgs.stdenv.cc.libc}/lib/ld-linux-x86-64.so.2"
     export NIX_LD_LIBRARY_PATH="${nix-ld-libs}/lib"
 
+    export MISE_NODE_COMPILE=false
     eval "$(${pkgs.mise}/bin/mise activate bash)"
   '';
 }

@@ -5,6 +5,9 @@ on:
   release:
     types: [published]
 
+env:
+  MISE_NODE_COMPILE: false
+
 jobs:
   publish:
     name: Publish
