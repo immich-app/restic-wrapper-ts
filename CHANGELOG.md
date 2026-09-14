@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.2](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.4.1...restic-wrapper-v1.4.2) (2026-09-14)
+
+
+### Bug Fixes
+
+* exported file names for ESM ([#36](https://github.com/immich-app/restic-wrapper-ts/issues/36)) ([afa7488](https://github.com/immich-app/restic-wrapper-ts/commit/afa7488b17b452709cdbc9725fcfd05f083c79e8))
+* update mise & tools ([#39](https://github.com/immich-app/restic-wrapper-ts/issues/39)) ([a47624b](https://github.com/immich-app/restic-wrapper-ts/commit/a47624b08dc084db464b1273bfc88c7739a5f6ad))
+
 ## [1.4.1](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.4.0...restic-wrapper-v1.4.1) (2026-09-10)
 
 
