@@ -26,8 +26,22 @@ class SnapshotsArgumentBuilder extends RepositoryArgumentBuilder<
     super(snapshotsArgs);
   }
 
+  #snapshots: string[] = [];
+
+  /**
+   * Only show snapshots by ID
+   */
+  snapshot(...snapshots: string[]) {
+    this.#snapshots.push(...snapshots);
+    return this;
+  }
+
   command(): string {
     return 'snapshots';
+  }
+
+  toArgs(): string[] {
+    return [...super.toArgs(), ...this.#snapshots];
   }
 
   format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'binary' | 'none' {
@@ -75,10 +89,10 @@ export const snapshot = z.object({
   parent: z.string().optional(),
   tree: z.string(),
   paths: z.string().array(),
-  hostname: z.string(),
-  username: z.string(),
-  uid: z.number().int().nonnegative(),
-  gid: z.number().int().nonnegative(),
+  hostname: z.string().optional(),
+  username: z.string().optional(),
+  uid: z.number().int().nonnegative().optional(),
+  gid: z.number().int().nonnegative().optional(),
   excludes: z.string().array().optional(),
   tags: z.string().array().optional(),
   program_version: z.string().optional(),

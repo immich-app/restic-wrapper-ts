@@ -13,16 +13,16 @@ interface Events<T> {
 export const baseArgs = z.object({
   cacert: z.string().optional(),
   cacheDir: z.string().optional(),
-  cleanupCache: z.coerce.boolean(),
+  cleanupCache: z.coerce.boolean().default(false),
   compression: z.enum(['auto', 'off', 'max']).optional(),
   httpUserAgent: z.string().optional(),
-  insecureTls: z.coerce.boolean(),
+  insecureTls: z.coerce.boolean().default(false),
   keyHint: z.string().optional(),
   limitDownload: z.number().optional(),
   limitUpload: z.number().optional(),
-  noCache: z.coerce.boolean(),
-  noExtraVerify: z.coerce.boolean(),
-  noLock: z.coerce.boolean(),
+  noCache: z.coerce.boolean().default(false),
+  noExtraVerify: z.coerce.boolean().default(false),
+  noLock: z.coerce.boolean().default(false),
   option: z
     .string()
     .regex(/^.+=.+$/)
@@ -34,14 +34,14 @@ export const baseArgs = z.object({
   /**
    * be verbose
    */
-  verbose: z.coerce.boolean(),
+  verbose: z.coerce.boolean().default(false),
 });
 
 export const commonFromRepositoryArgs = z.object({
   /**
    * Use an empty password for source repository
    */
-  fromInsecureNoPassword: z.coerce.boolean(),
+  fromInsecureNoPassword: z.coerce.boolean().default(false),
   /**
    * Key ID of key to try decrypting the source repository first
    */
@@ -112,15 +112,15 @@ export const commonRepackArgs = z.object({
   /**
    * Only repack packs which are cacheable
    */
-  repackCacheableOnly: z.coerce.boolean(),
+  repackCacheableOnly: z.coerce.boolean().default(false),
   /**
    * Repack pack files below 80% of target pack size
    */
-  repackSmall: z.coerce.boolean(),
+  repackSmall: z.coerce.boolean().default(false),
   /**
    * Repack all uncompressed data
    */
-  repackUncompressed: z.coerce.boolean(),
+  repackUncompressed: z.coerce.boolean().default(false),
   /**
    * Pack below-limit packfiles
    *
@@ -248,6 +248,17 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
       value: path,
     };
 
+    return this;
+  }
+
+  #signal: AbortSignal | undefined;
+
+  get abortSignal() {
+    return this.#signal;
+  }
+
+  signal(signal: AbortSignal | undefined) {
+    this.#signal = signal;
     return this;
   }
 

@@ -8,11 +8,11 @@ const restoreArgs = z.object({
   /**
    * Delete files from target directory if they do not exist in snapshot
    */
-  delete: z.coerce.boolean(),
+  delete: z.coerce.boolean().default(false),
   /**
    * Do not write any data
    */
-  dryRun: z.coerce.boolean(),
+  dryRun: z.coerce.boolean().default(false),
   /**
    * Exclude pattern(s)
    */
@@ -28,7 +28,7 @@ const restoreArgs = z.object({
   /**
    * Exclude pattern(s) but ignore case in patterns
    */
-  iexcludePattern: z.coerce.string().array().default([]),
+  iexclude: z.coerce.string().array().default([]),
   /**
    * Read exclude patterns from given file(s) but ignore case in patterns
    */
@@ -36,7 +36,7 @@ const restoreArgs = z.object({
   /**
    * Include pattern(s) but ignore case in patterns
    */
-  iincludePattern: z.coerce.string().array().default([]),
+  iinclude: z.coerce.string().array().default([]),
   /**
    * Read include patterns from given file(s) but ignore case in patterns
    */
@@ -54,6 +54,10 @@ const restoreArgs = z.object({
    */
   includeXattr: z.string().array().default([]),
   /**
+   * Restore file ownership by user name and group name (except POSIX ACLs)
+   */
+  ownershipByName: z.coerce.boolean().default(false),
+  /**
    * Overwrite behaviour
    *
    * @default always
@@ -62,7 +66,7 @@ const restoreArgs = z.object({
   /**
    * Restore files as sparse
    */
-  sparse: z.coerce.boolean(),
+  sparse: z.coerce.boolean().default(false),
   /**
    * Directory to extract data to
    */
@@ -70,7 +74,7 @@ const restoreArgs = z.object({
   /**
    * Verify restored files content
    */
-  verify: z.coerce.boolean(),
+  verify: z.coerce.boolean().default(false),
 });
 
 class RestoreArgumentBuilder extends RepositoryArgumentBuilder<

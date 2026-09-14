@@ -1,5 +1,60 @@
 # Changelog
 
+## [1.4.1](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.4.0...restic-wrapper-v1.4.1) (2026-09-10)
+
+
+### Bug Fixes
+
+* zod 4.4.3 - explicit defaults for coerce.boolean ([#34](https://github.com/immich-app/restic-wrapper-ts/issues/34)) ([b20a5e3](https://github.com/immich-app/restic-wrapper-ts/commit/b20a5e3aa4ea982fbd805a855f921a8fd87da565))
+
+## [1.4.0](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.3.1...restic-wrapper-v1.4.0) (2026-08-13)
+
+
+### Features
+
+* restic 0.19.1 support ([#32](https://github.com/immich-app/restic-wrapper-ts/issues/32)) ([9c31967](https://github.com/immich-app/restic-wrapper-ts/commit/9c319671a5dd0865c1a02729eead4936776ef54d))
+
+## [1.3.1](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.3.0...restic-wrapper-v1.3.1) (2026-07-27)
+
+
+### Bug Fixes
+
+* include positional argument for snapshots command ([#28](https://github.com/immich-app/restic-wrapper-ts/issues/28)) ([e2f98b7](https://github.com/immich-app/restic-wrapper-ts/commit/e2f98b769613afa9325eb38dff9f74edf2eabbf8))
+
+## [1.3.0](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.2.1...restic-wrapper-v1.3.0) (2026-06-15)
+
+
+### Features
+
+* restic 0.19.0 support ([#26](https://github.com/immich-app/restic-wrapper-ts/issues/26)) ([5723523](https://github.com/immich-app/restic-wrapper-ts/commit/5723523148c7e91d16caabe5963ac7224cb5b86a))
+
+
+### Bug Fixes
+
+* don't mask real errors with JSON parse error ([#25](https://github.com/immich-app/restic-wrapper-ts/issues/25)) ([24d4714](https://github.com/immich-app/restic-wrapper-ts/commit/24d4714be7ca3967dae3aad4b4bf1f4707f615f2))
+* various things (typing for `unlock`, prune output in forget) ([#20](https://github.com/immich-app/restic-wrapper-ts/issues/20)) ([9341d6e](https://github.com/immich-app/restic-wrapper-ts/commit/9341d6ee3bc0e2d24d45cfcc575643256bbc6682))
+
+## [1.2.1](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.2.0...restic-wrapper-v1.2.1) (2026-05-12)
+
+
+### Bug Fixes
+
+* missing nullable on  `forgetMessage` fields ([#18](https://github.com/immich-app/restic-wrapper-ts/issues/18)) ([4be4fff](https://github.com/immich-app/restic-wrapper-ts/commit/4be4fffe368cd42f1bca1d0f402e21a5c4857757))
+
+## [1.2.0](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.1.2...restic-wrapper-v1.2.0) (2026-04-20)
+
+
+### Features
+
+* abort signals ([#16](https://github.com/immich-app/restic-wrapper-ts/issues/16)) ([3bdb4de](https://github.com/immich-app/restic-wrapper-ts/commit/3bdb4de96070d735835e9b38bef974e8dfe9de6e))
+
+## [1.1.2](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.1.1...restic-wrapper-v1.1.2) (2026-04-02)
+
+
+### Bug Fixes
+
+* more optional schema fields ([#14](https://github.com/immich-app/restic-wrapper-ts/issues/14)) ([c19f5cd](https://github.com/immich-app/restic-wrapper-ts/commit/c19f5cdc107014726fd37d0f28060c9eaaf1504a))
+
 ## [1.1.1](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.1.0...restic-wrapper-v1.1.1) (2026-02-12)
 
 

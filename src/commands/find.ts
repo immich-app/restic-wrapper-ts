@@ -9,7 +9,7 @@ const findArgs = z.object({
   /**
    * Ignore case for pattern
    */
-  ignoreCase: z.coerce.boolean(),
+  ignoreCase: z.coerce.boolean().default(false),
   // long: N/A
   /**
    * Newest modification date/time
@@ -23,11 +23,11 @@ const findArgs = z.object({
   /**
    * Reverse sort order oldest to newest
    */
-  reverse: z.coerce.boolean(),
+  reverse: z.coerce.boolean().default(false),
   /**
    * Display the pack-ID the blobs belong to
    */
-  showPackId: z.coerce.boolean(),
+  showPackId: z.coerce.boolean().default(false),
   /**
    * Snapshot(s) to search in
    */
@@ -138,23 +138,23 @@ export function find() {
 }
 
 const match = z.object({
-  path: z.string(),
-  permissions: z.string(),
+  path: z.string().optional(),
+  permissions: z.string().optional(),
   name: z.string().optional(),
   type: z.string(),
-  atime: z.coerce.date(),
-  mtime: z.coerce.date(),
-  ctime: z.coerce.date(),
-  user: z.string(),
-  group: z.string(),
-  inode: z.number().int().nonnegative(),
-  mode: z.number().int().nonnegative(),
-  device_id: z.number().int().nonnegative(),
-  links: z.number().int().nonnegative(),
+  atime: z.coerce.date().optional(),
+  mtime: z.coerce.date().optional(),
+  ctime: z.coerce.date().optional(),
+  user: z.string().optional(),
+  group: z.string().optional(),
+  inode: z.number().int().nonnegative().optional(),
+  mode: z.number().int().nonnegative().optional(),
+  device_id: z.number().int().nonnegative().optional(),
+  links: z.number().int().nonnegative().optional(),
   link_target: z.string().optional(),
   uid: z.number().int().nonnegative(),
   gid: z.number().int().nonnegative(),
-  size: z.number().int().nonnegative(),
+  size: z.number().int().nonnegative().optional(),
 });
 
 const objectResults = z

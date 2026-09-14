@@ -1,6 +1,6 @@
 {
   "name": "@futo-org/restic-wrapper",
-  "version": "1.1.1",
+  "version": "1.4.1",
   "description": "TypeScript wrapper library for the restic backup tool",
   "keywords": [
     "restic",
@@ -13,8 +13,8 @@
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
       },
       "require": {
         "types": "./dist/index.d.cts",
@@ -22,7 +22,7 @@
       }
     }
   },
-  "types": "./dist/index.d.ts",
+  "types": "./dist/index.d.mts",
   "sideEffects": false,
   "files": [
     "dist"
@@ -31,7 +31,7 @@
     "build": "tsdown",
     "dev": "tsdown --watch",
     "lint": "eslint \"src/**/*.ts\" --max-warnings 0",
-    "lint:fix": "pnpm run lint -- --fix",
+    "lint:fix": "pnpm run lint --fix",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "test": "vitest run",
@@ -62,7 +62,7 @@
     "prettier": "^3.6.2",
     "prettier-plugin-organize-imports": "^4.3.0",
     "tar": "^7.5.4",
-    "tsdown": "^0.15.0",
+    "tsdown": "^0.23.0",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.47.0",
     "vitest": "^3.2.4"

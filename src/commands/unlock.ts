@@ -1,12 +1,12 @@
 import * as z from 'zod';
-import { baseArgs, RepositoryArgumentBuilder } from '../utils/args';
+import { baseArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
 
 const unlockArgs = z.object({
   ...baseArgs.shape,
   /**
    * Remove all locks, even non-stale ones
    */
-  removeAll: z.coerce.boolean(),
+  removeAll: z.coerce.boolean().default(false),
 });
 
 class UnlockArgumentBuilder extends RepositoryArgumentBuilder<void, void> {
@@ -39,5 +39,5 @@ class UnlockArgumentBuilder extends RepositoryArgumentBuilder<void, void> {
  * ```
  */
 export function unlock() {
-  return new UnlockArgumentBuilder();
+  return new UnlockArgumentBuilder() as DynamicBuilder<z.infer<typeof unlockArgs>, UnlockArgumentBuilder>;
 }

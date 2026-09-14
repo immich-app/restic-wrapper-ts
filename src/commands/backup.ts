@@ -8,7 +8,7 @@ export const backupArgs = z.object({
   /**
    * Do not upload or write any data
    */
-  dryRun: z.coerce.boolean(),
+  dryRun: z.coerce.boolean().default(false),
   /**
    * Exclude by pattern(s)
    */
@@ -18,7 +18,13 @@ export const backupArgs = z.object({
    *
    * @see https://bford.info/cachedir/
    */
-  excludeCaches: z.coerce.boolean(),
+  excludeCaches: z.coerce.boolean().default(false),
+  /**
+   * Exclude online-only cloud files (such as OneDrive, iCloud Drive)
+   *
+   * Only available on Windows and macOS; restic rejects this flag on other platforms.
+   */
+  excludeCloudFiles: z.coerce.boolean().default(false),
   /**
    * Exclude by patterns provided in file(s)
    */
@@ -54,7 +60,7 @@ export const backupArgs = z.object({
    *
    * (overrides 'parent' flag)
    */
-  force: z.coerce.boolean(),
+  force: z.coerce.boolean().default(false),
   /**
    * Set the hostname for the snapshot
    */
@@ -70,19 +76,19 @@ export const backupArgs = z.object({
   /**
    * Ignore ctime changes when checking for modified files
    */
-  ignoreCtime: z.coerce.boolean(),
+  ignoreCtime: z.coerce.boolean().default(false),
   /**
    * Ignore inode number and ctime changes when checking for modified files
    */
-  ignoreInode: z.coerce.boolean(),
+  ignoreInode: z.coerce.boolean().default(false),
   /**
    * Do not run scanner to estimate size of backup
    */
-  noScan: z.coerce.boolean(),
+  noScan: z.coerce.boolean().default(false),
   /**
    * Do not cross filesystem boundaries
    */
-  oneFileSystem: z.coerce.boolean(),
+  oneFileSystem: z.coerce.boolean().default(false),
   /**
    * Use this parent snapshot
    *
@@ -98,7 +104,7 @@ export const backupArgs = z.object({
   /**
    * Skip snapshot creation if identical to parent snapshot
    */
-  skipIfUnchanged: z.coerce.boolean(),
+  skipIfUnchanged: z.coerce.boolean().default(false),
   // stdin: unimplemented
   // stdin-filename: unimplemented
   // stdin-from-command: unimplemented
@@ -115,7 +121,7 @@ export const backupArgs = z.object({
   /**
    * Store the atime for all files and directories
    */
-  withAtime: z.coerce.boolean(),
+  withAtime: z.coerce.boolean().default(false),
 });
 
 class BackupArgumentBuilder extends RepositoryArgumentBuilder<
@@ -184,8 +190,8 @@ const backupStatusMessage = z.object({
   seconds_remaining: z.number().int().nonnegative().optional(),
 
   percent_done: z.number(),
-  total_files: z.number().int().nonnegative(),
-  total_bytes: z.number().int().nonnegative(),
+  total_files: z.number().int().nonnegative().optional(),
+  total_bytes: z.number().int().nonnegative().optional(),
 
   files_done: z.number().int().nonnegative().optional(),
   bytes_done: z.number().int().nonnegative().optional(),
@@ -208,7 +214,7 @@ const backupVerboseStatusMessage = z.object({
 
 const backupSummaryMessage = z.object({
   message_type: z.literal('summary'),
-  dry_run: z.coerce.boolean(),
+  dry_run: z.coerce.boolean().default(false),
   files_new: z.number().int().nonnegative(),
   files_changed: z.number().int().nonnegative(),
   files_unmodified: z.number().int().nonnegative(),
@@ -224,7 +230,7 @@ const backupSummaryMessage = z.object({
   backup_start: z.coerce.date(),
   backup_end: z.coerce.date(),
   total_duration: z.number(),
-  snapshot_id: z.string(),
+  snapshot_id: z.string().optional(),
 });
 
 const backupMessage = z.union([backupStatusMessage, backupVerboseStatusMessage, backupSummaryMessage]);

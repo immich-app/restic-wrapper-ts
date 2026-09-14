@@ -31,11 +31,11 @@ const lsArgs = z.object({
   /**
    * Include files in subfolders of listed directories
    */
-  recursive: z.coerce.boolean(),
+  recursive: z.coerce.boolean().default(false),
   /**
    * Reverse the sorted output
    */
-  reverse: z.coerce.boolean(),
+  reverse: z.coerce.boolean().default(false),
   /**
    * Sort output
    */
@@ -132,12 +132,12 @@ const nodeMessage = z.object({
    * @deprecated missing in output
    */
   size: z.number().int().nonnegative().optional(),
-  mode: z.number().int().nonnegative(),
-  permissions: z.string(),
-  atime: z.coerce.date(),
-  mtime: z.coerce.date(),
-  ctime: z.coerce.date(),
-  inode: z.number().int().nonnegative(),
+  mode: z.number().int().nonnegative().optional(),
+  permissions: z.string().optional(),
+  atime: z.coerce.date().optional(),
+  mtime: z.coerce.date().optional(),
+  ctime: z.coerce.date().optional(),
+  inode: z.number().int().nonnegative().optional(),
 });
 
 const lsMessage = z.union([snapshotMessage, nodeMessage]);

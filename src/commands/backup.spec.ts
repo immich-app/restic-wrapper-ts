@@ -1,8 +1,8 @@
-import { writeFile } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { MissingFilesError, ResticCommandFailedError } from '../errors';
-import { createLock, createTempDir, initRepository } from '../utils/test';
+import { MissingFilesError } from '../errors';
+import { createTempDir, initRepository } from '../utils/test';
 import { backup } from './backup';
 
 describe('backup', () => {
@@ -74,15 +74,21 @@ describe('backup', () => {
     );
   });
 
-  it('ignores missing files', async () => {
-    const { total_files_processed } = await backup()
-      .repository(join(dir, 'repository'))
-      .password('password')
-      .addFile(join(dir, 'test-file'))
-      .addFile(join(dir, 'missing-file'))
-      .run();
-
-    expect(total_files_processed).toBe(1);
+  it('fails when a source file could not be read', async () => {
+    await expect(
+      backup()
+        .repository(join(dir, 'repository'))
+        .password('password')
+        .addFile(join(dir, 'test-file'))
+        .addFile(join(dir, 'missing-file'))
+        .run(),
+    ).rejects.toEqual(
+      expect.objectContaining({
+        message: expect.stringContaining(
+          'Restic exited with code 3: Warning: at least one source file could not be read',
+        ),
+      }),
+    );
   });
 
   it('fails to add only non-existent files', async () => {
@@ -95,15 +101,41 @@ describe('backup', () => {
     );
   });
 
-  it.skip('fails to open a locked repository', async () => {
-    await createLock(join(dir, 'repository'));
+  it.todo('fails to read source data');
+
+  it('rejects immediately when the signal is already aborted', async () => {
+    const reason = new Error('pre-aborted');
+    const ac = new AbortController();
+    ac.abort(reason);
 
     await expect(
-      backup().repository(join(dir, 'repository')).password('password').addFile(join(dir, 'test-file')).run(),
-    ).rejects.toThrowError(
-      new ResticCommandFailedError('unable to create lock in backend: ciphertext verification failed'),
-    );
+      backup()
+        .repository(join(dir, 'repository'))
+        .password('password')
+        .signal(ac.signal)
+        .addFile(join(dir, 'test-file'))
+        .run(),
+    ).rejects.toBe(reason);
   });
 
-  it.todo('fails to read source data');
+  it('aborts a running backup with the signal reason', async () => {
+    const sourceDir = join(dir, 'source');
+    await mkdir(sourceDir);
+    await Promise.all(
+      Array.from({ length: 2000 }, (_, i) => writeFile(join(sourceDir, `file-${i}.txt`), `content ${i}`)),
+    );
+
+    const ac = new AbortController();
+    const reason = new Error('user-canceled');
+
+    await expect(
+      backup()
+        .repository(join(dir, 'repository'))
+        .password('password')
+        .signal(ac.signal)
+        .addFile(sourceDir)
+        .on('event', () => ac.abort(reason))
+        .run(),
+    ).rejects.toBe(reason);
+  });
 });

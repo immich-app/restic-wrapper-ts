@@ -16,11 +16,13 @@ const baseForgetArgs = z.object({
   /**
    * Do not delete anything
    */
-  dryRun: z.coerce.boolean(),
+  dryRun: z.coerce.boolean().default(false),
   /**
    * Automatically run prune if snapshots are removed
+   *
+   * Output is ignored - use prune() if output is desired
    */
-  prune: z.coerce.boolean(),
+  prune: z.coerce.boolean().default(false),
 });
 
 const allForgetArgs = z.object({
@@ -40,7 +42,7 @@ const allForgetArgs = z.object({
   keepWithinMonthly: z.string().optional(),
   keepWithinYearly: z.string().optional(),
   keepTag: z.string().array().default([]),
-  unsafeAllowRemoveAll: z.coerce.boolean(),
+  unsafeAllowRemoveAll: z.coerce.boolean().default(false),
 });
 
 class ForgetArgumentBuilder<T> extends RepositoryArgumentBuilder<T, T> {
@@ -64,11 +66,15 @@ class ForgetArgumentBuilder<T> extends RepositoryArgumentBuilder<T, T> {
   }
 
   format(): 'jsonlines' | 'jsonlines-no-log' | 'json' | 'string' | 'binary' | 'none' {
-    return this.#snapshots.length > 0 ? 'none' : 'json';
+    return this.#snapshots.length > 0 ? 'none' : 'jsonlines-no-log';
   }
 
   parse(data: T): T {
     return forgetMessage.parse(data) as T;
+  }
+
+  setFilter(data: string): boolean {
+    return data.startsWith('[{');
   }
 }
 
@@ -90,20 +96,22 @@ export function forget() {
   >;
 }
 
-const keepReasons = z.array(
-  z.object({
-    snapshot,
-    matches: z.string().array(),
-  }),
-);
+const keepReasons = z
+  .array(
+    z.object({
+      snapshot,
+      matches: z.string().array().nullable(),
+    }),
+  )
+  .nullable();
 
 const forgetMessage = z.array(
   z.object({
     tags: z.string().array().nullable(),
     host: z.string(),
-    paths: z.string().array(),
-    keep: snapshot.array(),
-    remove: snapshot.array(),
+    paths: z.string().array().nullable(),
+    keep: snapshot.array().nullable(),
+    remove: snapshot.array().nullable(),
     reasons: keepReasons,
   }),
 );

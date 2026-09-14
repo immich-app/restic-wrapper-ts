@@ -1,14 +1,36 @@
 { pkgs ? import (fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs/archive/a07d4ce6bee67d7c838a8a5796e75dff9caa21ef.tar.gz";
-    sha256 = "0f6zni3jn6ji5icwbidbpmcgxdal2qnjszp7ragdcy0857hvq3c5";
+    url = "https://github.com/NixOS/nixpkgs/archive/e8be7818e19ada32105a8af937a6a473b38167ca.tar.gz";
+    sha256 = "06sil8mb0psrx1x49yfrxxr7sd6fqjz77amyx7bhr7rp3216gpyh";
   }) {},
 }:
 
-pkgs.mkShell {
+let
+  nix-ld-libs = pkgs.buildEnv {
+    name = "nix-ld-libs";
+    paths = with pkgs; [
+      stdenv.cc.cc.lib
+      zlib
+      openssl
+    ];
+  };
+
+in pkgs.mkShell {
   packages = with pkgs; [
     mise
+    lsof
+    pkg-config
+    openssl.dev
+    python3
     (writeShellScriptBin "fish" ''
-      exec ${pkgs.fish}/bin/fish -C 'mise activate fish | source' "$@"
+      exec ${pkgs.fish}/bin/fish -C '${pkgs.mise}/bin/mise activate fish | source' "$@"
     '')
   ];
+
+  shellHook = ''
+    export NIX_LD="${pkgs.stdenv.cc.libc}/lib/ld-linux-x86-64.so.2"
+    export NIX_LD_LIBRARY_PATH="${nix-ld-libs}/lib"
+
+    export MISE_NODE_COMPILE=false
+    eval "$(${pkgs.mise}/bin/mise activate bash)"
+  '';
 }

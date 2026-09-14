@@ -7,7 +7,7 @@ const initArgs = z.object({
   /**
    * Copy chunker parameters from secondary repository
    */
-  copyChunkerParams: z.coerce.boolean(),
+  copyChunkerParams: z.coerce.boolean().default(false),
   /**
    * Repository format version to use
    *

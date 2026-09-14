@@ -28,10 +28,10 @@ describe('RepositoryArgumentBuilder', () => {
     string: z.string().optional(),
     multiple: z.string().array().default([]),
     number: z.number().optional(),
-    toggle: z.coerce.boolean(),
-    toggle2: z.coerce.boolean(),
+    toggle: z.coerce.boolean().default(false),
+    toggle2: z.coerce.boolean().default(false),
     date: z.coerce.date().array().default([]),
-    skipped: z.undefined(),
+    skipped: z.undefined().optional(),
     unsupportedArg: z.object().optional(),
   });
 

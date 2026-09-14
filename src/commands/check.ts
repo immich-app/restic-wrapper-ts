@@ -1,12 +1,13 @@
 import * as z from 'zod';
-import { baseArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
+import { baseArgs, commonFilterArgs, RepositoryArgumentBuilder, type DynamicBuilder } from '../utils/args';
 
 const checkArgs = z.object({
   ...baseArgs.shape,
+  ...commonFilterArgs.shape,
   /**
    * Read all data blobs
    */
-  readData: z.coerce.boolean(),
+  readData: z.coerce.boolean().default(false),
   /**
    * Read a subset of data packs
    *
@@ -18,7 +19,7 @@ const checkArgs = z.object({
   /**
    * Use existing cache (only read uncached from repository)
    */
-  withCache: z.coerce.boolean(),
+  withCache: z.coerce.boolean().default(false),
 });
 
 class CheckArgumentBuilder extends RepositoryArgumentBuilder<
@@ -29,8 +30,22 @@ class CheckArgumentBuilder extends RepositoryArgumentBuilder<
     super(checkArgs);
   }
 
+  #snapshots: string[] = [];
+
+  /**
+   * Restrict the check to the given snapshot(s)
+   */
+  snapshot(...snapshots: string[]) {
+    this.#snapshots.push(...snapshots);
+    return this;
+  }
+
   command(): string {
     return 'check';
+  }
+
+  toArgs(): string[] {
+    return [...super.toArgs(), ...this.#snapshots];
   }
 
   parse(data: z.infer<typeof checkMessage>): z.infer<typeof checkMessage> {
@@ -56,6 +71,6 @@ const checkMessage = z.object({
   message_type: z.literal('summary'),
   num_errors: z.number().int().nonnegative(),
   broken_packs: z.string().array().nullable(),
-  suggest_repair_index: z.coerce.boolean(),
-  suggest_prune: z.coerce.boolean(),
+  suggest_repair_index: z.coerce.boolean().default(false),
+  suggest_prune: z.coerce.boolean().default(false),
 });
