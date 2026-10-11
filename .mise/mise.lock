@@ -129,43 +129,43 @@ checksum = "sha256:5a5fcd17bc7567645c85b016cd428e4cd9e54796994651be3f3709768714e
 url = "https://nodejs.org/dist/v25.4.0/node-v25.4.0-win-x64.zip"
 
 [[tools.pnpm]]
-version = "10.29.2"
+version = "10.34.6"
 backend = "aqua:pnpm/pnpm"
 
 [tools.pnpm."platforms.linux-arm64"]
-checksum = "sha256:8bbbbf60e08b72df246e70c18ef2a515d4f7ce999c172e85f0b6972c3cd61a8c"
-url = "https://github.com/pnpm/pnpm/releases/download/v10.29.2/pnpm-linux-arm64"
-url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/352833314"
+checksum = "sha256:5e18e460aec11c0d39b345a732fbbdee0811354f6f384e2da230c6438ae2137c"
+url = "https://github.com/pnpm/pnpm/releases/download/v10.34.6/pnpm-linux-arm64"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/596100723"
 
 [tools.pnpm."platforms.linux-arm64-musl"]
-checksum = "sha256:8bbbbf60e08b72df246e70c18ef2a515d4f7ce999c172e85f0b6972c3cd61a8c"
-url = "https://github.com/pnpm/pnpm/releases/download/v10.29.2/pnpm-linux-arm64"
-url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/352833314"
+checksum = "sha256:5e18e460aec11c0d39b345a732fbbdee0811354f6f384e2da230c6438ae2137c"
+url = "https://github.com/pnpm/pnpm/releases/download/v10.34.6/pnpm-linux-arm64"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/596100723"
 
 [tools.pnpm."platforms.linux-x64"]
-checksum = "sha256:f9a8e1652b83884da6a3c174f504220015001144cee8733c07df68c598d4c43a"
-url = "https://github.com/pnpm/pnpm/releases/download/v10.29.2/pnpm-linux-x64"
-url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/352833316"
+checksum = "sha256:1bdfa04c3acbbf019befa4cf51f73f1de2729f4a513f737d1295905277f3b9cf"
+url = "https://github.com/pnpm/pnpm/releases/download/v10.34.6/pnpm-linux-x64"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/596100726"
 
 [tools.pnpm."platforms.linux-x64-musl"]
-checksum = "sha256:f9a8e1652b83884da6a3c174f504220015001144cee8733c07df68c598d4c43a"
-url = "https://github.com/pnpm/pnpm/releases/download/v10.29.2/pnpm-linux-x64"
-url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/352833316"
+checksum = "sha256:1bdfa04c3acbbf019befa4cf51f73f1de2729f4a513f737d1295905277f3b9cf"
+url = "https://github.com/pnpm/pnpm/releases/download/v10.34.6/pnpm-linux-x64"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/596100726"
 
 [tools.pnpm."platforms.macos-arm64"]
-checksum = "sha256:3f9ef4f665186181473db6e483d905e339259db30a33ee4f2093f04cf8e55991"
-url = "https://github.com/pnpm/pnpm/releases/download/v10.29.2/pnpm-macos-arm64"
-url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/352833309"
+checksum = "sha256:62f067df42ba26d3ffbe8b42b8c92a251eb3a69bfa32a8a3a98623a4958e8ca4"
+url = "https://github.com/pnpm/pnpm/releases/download/v10.34.6/pnpm-macos-arm64"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/596100724"
 
 [tools.pnpm."platforms.macos-x64"]
-checksum = "sha256:e2fd88f4681624d52f3830a95a777a71bde8808db5f485f5b96b0ab0a4aa982a"
-url = "https://github.com/pnpm/pnpm/releases/download/v10.29.2/pnpm-macos-x64"
-url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/352833313"
+checksum = "sha256:19f10bac54678ac70319031f7bbb653bb6ab2e8ed12264a0454f265bede8304b"
+url = "https://github.com/pnpm/pnpm/releases/download/v10.34.6/pnpm-macos-x64"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/596100727"
 
 [tools.pnpm."platforms.windows-x64"]
-checksum = "sha256:99db93e9741adee51a9fc8288476477b47ea2adb68f30058ed0c6c9d25fb0049"
-url = "https://github.com/pnpm/pnpm/releases/download/v10.29.2/pnpm-win-x64.exe"
-url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/352833308"
+checksum = "sha256:fc8ee2811c49ad5175efcf7fa87c273d3c5d933aae54230f923a0f0fa63fa07f"
+url = "https://github.com/pnpm/pnpm/releases/download/v10.34.6/pnpm-win-x64.exe"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/596100720"
 
 [[tools.restic]]
 version = "0.19.1"
