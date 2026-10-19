@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.4.2...restic-wrapper-v1.5.0) (2026-10-19)
+
+
+### Features
+
+* export message types ([#40](https://github.com/immich-app/restic-wrapper-ts/issues/40)) ([d002d27](https://github.com/immich-app/restic-wrapper-ts/commit/d002d27d575df7046384e480ba0f0265d3ceb99e))
+
 ## [1.4.2](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.4.1...restic-wrapper-v1.4.2) (2026-09-14)
 
 
