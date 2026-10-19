@@ -234,3 +234,4 @@ const backupSummaryMessage = z.object({
 });
 
 const backupMessage = z.union([backupStatusMessage, backupVerboseStatusMessage, backupSummaryMessage]);
+export type BackupMessage = z.infer<typeof backupMessage>;
