@@ -48,6 +48,12 @@ describe('backup', () => {
     );
   });
 
+  it('passes the walk concurrency to restic', () => {
+    const args = backup().walkConcurrency(16).addFile(join(dir, 'test-file')).toArgs();
+
+    expect(args[args.indexOf('--walk-concurrency') + 1]).toBe('16');
+  });
+
   it('refuses to continue with no files', () => {
     expect(() => backup().repository(join(dir, 'repository')).password('password').validate()).toThrowError(
       new MissingFilesError(),
