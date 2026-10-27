@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.5.0...restic-wrapper-v1.6.0) (2026-10-27)
+
+
+### Features
+
+* accept a verbosity level for --verbose ([#43](https://github.com/immich-app/restic-wrapper-ts/issues/43)) ([209761b](https://github.com/immich-app/restic-wrapper-ts/commit/209761b49f6087a462a5a241d2b8c61a30a62c8a))
+
 ## [1.5.0](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.4.2...restic-wrapper-v1.5.0) (2026-10-19)
 
 
