@@ -53,6 +53,25 @@ describe('restore', () => {
     await stat(join(dir, 'target', dir.slice(1), 'test-file'));
   });
 
+  it('reports every restored file at verbosity level 2', async () => {
+    const event = vi.fn();
+    await restore()
+      .repository(join(dir, 'repository'))
+      .password('password')
+      .snapshot(snapshotId)
+      .target(join(dir, 'target'))
+      .verbose(2)
+      .on('event', event)
+      .run();
+
+    expect(event).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message_type: 'verbose_status',
+        action: 'restored',
+      }),
+    );
+  });
+
   it('throws without snapshot specified', () => {
     expect(() =>
       restore().repository(join(dir, 'repository')).password('password').target('target').validate(),
