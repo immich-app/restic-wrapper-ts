@@ -119,6 +119,13 @@ export const backupArgs = z.object({
    */
   time: z.date().optional(),
   /**
+   * Inspect n directory entries concurrently, which needs a restic build with
+   * --walk-concurrency such as futo-org/restic
+   *
+   * @default 1
+   */
+  walkConcurrency: z.number().optional(),
+  /**
    * Store the atime for all files and directories
    */
   withAtime: z.coerce.boolean().default(false),
