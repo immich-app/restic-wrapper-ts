@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.6.0...restic-wrapper-v1.7.0) (2026-10-27)
+
+
+### Features
+
+* accept --walk-concurrency for backup ([#46](https://github.com/immich-app/restic-wrapper-ts/issues/46)) ([7e89110](https://github.com/immich-app/restic-wrapper-ts/commit/7e89110aad362f8f91e7924e91ba5c203cd22078))
+
 ## [1.6.0](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.5.0...restic-wrapper-v1.6.0) (2026-10-27)
 
 
