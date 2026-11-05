@@ -4,7 +4,6 @@ pnpm = "10.29.2"
 restic = "0.19.1"
 
 gh = "2.88.1"
-"github:git-town/git-town" = "22.5.0"
 
 [tasks.check]
 description = "Run all checks including build"
