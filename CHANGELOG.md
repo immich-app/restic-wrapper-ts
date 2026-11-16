@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.8.0...restic-wrapper-v1.9.0) (2026-11-16)
+
+
+### Features
+
+* typed obj arg for --iexclude-scoped-glob ([#58](https://github.com/immich-app/restic-wrapper-ts/issues/58)) ([6941aa7](https://github.com/immich-app/restic-wrapper-ts/commit/6941aa7a84a018d5fd51f9e427f00949f844928f))
+
 ## [1.8.0](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.7.0...restic-wrapper-v1.8.0) (2026-11-16)
 
 
