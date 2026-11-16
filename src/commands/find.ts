@@ -147,7 +147,7 @@ const match = z.object({
   ctime: z.coerce.date().optional(),
   user: z.string().optional(),
   group: z.string().optional(),
-  inode: z.number().int().nonnegative().optional(),
+  inode: z.number().nonnegative().refine(Number.isInteger).optional(),
   mode: z.number().int().nonnegative().optional(),
   device_id: z.number().int().nonnegative().optional(),
   links: z.number().int().nonnegative().optional(),

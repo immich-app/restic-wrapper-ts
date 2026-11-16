@@ -137,7 +137,7 @@ const nodeMessage = z.object({
   atime: z.coerce.date().optional(),
   mtime: z.coerce.date().optional(),
   ctime: z.coerce.date().optional(),
-  inode: z.number().int().nonnegative().optional(),
+  inode: z.number().nonnegative().refine(Number.isInteger).optional(),
 });
 
 const lsMessage = z.union([snapshotMessage, nodeMessage]);

@@ -118,4 +118,12 @@ describe('ls', () => {
       new MissingSnapshotError(),
     );
   });
+
+  it('accepts an inode above the safe integer range', () => {
+    const line = JSON.parse(
+      '{"message_type":"node","struct_type":"node","name":"file","type":"file","path":"/file","uid":0,"gid":0,"inode":18446744073709551615}',
+    );
+
+    expect(ls().parse(line)).toEqual(expect.objectContaining({ inode: 2 ** 64 }));
+  });
 });

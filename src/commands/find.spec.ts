@@ -50,4 +50,14 @@ describe('find', () => {
       new MissingMatchError(),
     );
   });
+
+  it('accepts an inode above the safe integer range', () => {
+    const line = JSON.parse(
+      '[{"hits":1,"snapshot":"abc","matches":[{"type":"file","uid":0,"gid":0,"inode":18446744073709551615}]}]',
+    );
+
+    expect(find().object().parse(line)).toEqual([
+      expect.objectContaining({ matches: [expect.objectContaining({ inode: 2 ** 64 })] }),
+    ]);
+  });
 });
