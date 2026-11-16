@@ -26,3 +26,13 @@ jobs:
 
       - run: mise install:frozen
       - run: mise check
+
+      - name: Install futo-org/restic into restic-futo
+        run: |
+          mkdir -p "$RUNNER_TEMP/restic-futo"
+          id=$(docker create ghcr.io/futo-org/restic:0.19.1-futo.2@sha256:72a88670ee0bbb5485c74bd9a7fb3f36d46bf3f8e29c6d0886cd6039077a3184)
+          docker cp "$id:/usr/bin/restic" "$RUNNER_TEMP/restic-futo/restic"
+          docker rm "$id"
+
+      - name: Test against futo-org/restic
+        run: mise exec -- sh -c 'PATH="$RUNNER_TEMP/restic-futo:$PATH" pnpm test'
