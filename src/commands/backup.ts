@@ -74,6 +74,13 @@ export const backupArgs = z.object({
    */
   iexcludeFile: z.coerce.string().array().default([]),
   /**
+   * Exclude items under one of a scope's paths that match one of its
+   * case-insensitive globset patterns, given as JSON
+   * {"paths":[...],"patterns":[...]}, which needs a restic build with
+   * --iexclude-scoped-glob such as futo-org/restic
+   */
+  iexcludeScopedGlob: z.string().array().default([]),
+  /**
    * Ignore ctime changes when checking for modified files
    */
   ignoreCtime: z.coerce.boolean().default(false),
