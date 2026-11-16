@@ -32,7 +32,8 @@ describe('RepositoryArgumentBuilder', () => {
     toggle2: z.coerce.boolean().default(false),
     date: z.coerce.date().array().default([]),
     skipped: z.undefined().optional(),
-    unsupportedArg: z.object().optional(),
+    object: z.object({ hello: z.string() }).optional(),
+    unsupportedArg: z.bigint().optional(),
   });
 
   class DummyArguments extends RepositoryArgumentBuilder<null, null> {
@@ -76,7 +77,8 @@ describe('RepositoryArgumentBuilder', () => {
         .date('2025-01-01')
         .date(+new Date('2025-01-01'))
         .skipped()
-        .unsupportedArg({ hello: 'world!' } as never /* hit the else-case for args. */)
+        .object({ hello: 'world!' })
+        .unsupportedArg(1n as never /* hit the else-case for args. */)
         .toArgs(),
     ).toMatchInlineSnapshot(`
       [
@@ -99,6 +101,8 @@ describe('RepositoryArgumentBuilder', () => {
         "2025-01-01T00:00:00.000Z",
         "--date",
         "2025-01-01T00:00:00.000Z",
+        "--object",
+        "{"hello":"world!"}",
       ]
     `);
   });

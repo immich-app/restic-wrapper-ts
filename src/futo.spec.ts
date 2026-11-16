@@ -41,7 +41,7 @@ describe('futo-org/restic', () => {
       .verbose()
       .repository(join(dir, 'repository'))
       .password('password')
-      .iexcludeScopedGlob(JSON.stringify({ paths: [photos], patterns: ['**/@EADIR'] }))
+      .iexcludeScopedGlob({ paths: [photos], patterns: ['**/@EADIR'] })
       .addFile(photos, other)
       .on('event', (event) => {
         if (event.message_type === 'verbose_status' && event.action === 'new') {
@@ -60,7 +60,7 @@ describe('futo-org/restic', () => {
       backup()
         .repository(join(dir, 'repository'))
         .password('password')
-        .iexcludeScopedGlob(JSON.stringify({ paths: [dir], patterns: ['['] }))
+        .iexcludeScopedGlob({ paths: [dir], patterns: ['['] })
         .addFile(join(dir, 'test-file'))
         .run(),
     ).rejects.toThrow();

@@ -323,6 +323,8 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
           default: {
             if (value instanceof Date) {
               args.push(`--${realKey}`, value.toISOString());
+            } else if (typeof value === 'object' && value !== null) {
+              args.push(`--${realKey}`, JSON.stringify(value));
             } else {
               console.warn(`Not sure how to handle ${key} = ${value} of type ${typeof value}`);
             }
