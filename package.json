@@ -49,23 +49,23 @@
     "node": ">=20"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.1",
+    "@eslint/js": "^9.39.5",
     "@size-limit/preset-small-lib": "^8.2.4",
     "@types/node": "^22.18.1",
-    "@vitest/coverage-istanbul": "3.2.4",
-    "@vitest/ui": "3.2.4",
-    "eslint": "^9.39.1",
+    "@vitest/coverage-istanbul": "4.1.12",
+    "@vitest/ui": "4.1.12",
+    "eslint": "^9.39.5",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-prettier": "^5.5.7",
     "eslint-plugin-unicorn": "^62.0.0",
-    "node-stream-zip": "^1.15.0",
-    "prettier": "^3.6.2",
+    "node-stream-zip": "^1.16.0",
+    "prettier": "^3.10.1",
     "prettier-plugin-organize-imports": "^4.3.0",
     "tar": "^7.5.4",
-    "tsdown": "^0.23.0",
-    "typescript": "^5.9.2",
-    "typescript-eslint": "^8.47.0",
-    "vitest": "^3.2.4"
+    "tsdown": "^0.23.7",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.72.2",
+    "vitest": "^4.1.12"
   },
   "dependencies": {
     "zod": "^4.1.12"
