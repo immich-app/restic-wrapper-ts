@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.8.0](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.7.0...restic-wrapper-v1.8.0) (2026-11-16)
+
+
+### Features
+
+* futo-org/restic feature helper ([#51](https://github.com/immich-app/restic-wrapper-ts/issues/51)) ([53734f3](https://github.com/immich-app/restic-wrapper-ts/commit/53734f388d8c9f2ca7279b131a135a648cd12c9b))
+
+
+### Bug Fixes
+
+* accept inodes above Number.MAX_SAFE_INTEGER in ls and find ([#56](https://github.com/immich-app/restic-wrapper-ts/issues/56)) ([0487309](https://github.com/immich-app/restic-wrapper-ts/commit/0487309697dcd9578610053c4b1e7c6380045159)), closes [#49](https://github.com/immich-app/restic-wrapper-ts/issues/49)
+* reject the command when a jsonlines line fails validation ([#53](https://github.com/immich-app/restic-wrapper-ts/issues/53)) ([a23fc46](https://github.com/immich-app/restic-wrapper-ts/commit/a23fc46062b44f3c6b66da062f49fe3664f64418)), closes [#50](https://github.com/immich-app/restic-wrapper-ts/issues/50)
+
 ## [1.7.0](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.6.0...restic-wrapper-v1.7.0) (2026-10-27)
 
 
