@@ -64,10 +64,7 @@ describe('stats', () => {
       .password('password')
       [
         `mode${mode[0].toUpperCase()}${mode.slice(1)}` as
-          | 'modeRestoreSize'
-          | 'modeFilesByContents'
-          | 'modeBlobsPerFile'
-          | 'modeRawData'
+          'modeRestoreSize' | 'modeFilesByContents' | 'modeBlobsPerFile' | 'modeRawData'
       ]()
       .run();
   });
