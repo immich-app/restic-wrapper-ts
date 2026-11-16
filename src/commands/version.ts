@@ -26,6 +26,19 @@ export async function version(): Promise<z.infer<typeof versionMessage>> {
   return await new VersionArgumentBuilder().run();
 }
 
+export function features({ version }: Pick<z.infer<typeof versionMessage>, 'version'>) {
+  const counter = /\+futo\.(\d{1,6})(?:\.|$)/.exec(version);
+  let revision = counter ? Number(counter[1]) : 0;
+  if (!counter && version.includes('+futo.')) {
+    revision = 1;
+  }
+
+  return {
+    walkConcurrency: revision >= 1,
+    iexcludeScopedGlob: revision >= 2,
+  };
+}
+
 export const versionMessage = z.object({
   message_type: z.literal('version'),
   version: z.string(),

@@ -24,4 +24,4 @@ export { snapshots } from './snapshots';
 export { stats } from './stats';
 export { tag } from './tag';
 export { unlock } from './unlock';
-export { version } from './version';
+export { features, version } from './version';
