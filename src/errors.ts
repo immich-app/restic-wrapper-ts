@@ -97,7 +97,9 @@ const errorMessage = z.union([
   }),
 ]);
 
-class TryParseError extends Error {
+export type ErrorMessage = z.infer<typeof errorMessage>;
+
+export class TryParseError extends Error {
   error: z.infer<typeof errorMessage>[] | string;
 
   constructor(message: string) {

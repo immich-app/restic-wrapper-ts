@@ -165,3 +165,4 @@ const restoreSummaryMessage = z.object({
 });
 
 const restoreMessage = z.union([restoreStatusMessage, restoreVerboseStatusMessage, restoreSummaryMessage]);
+export type RestoreMessage = z.infer<typeof restoreMessage>;

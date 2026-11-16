@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { MissingPasswordError, MissingRepositoryError } from '../errors';
-import { commonFilterArgs, RepositoryArgumentBuilder, type DynamicBuilder } from './args';
+import { baseArgs, commonFilterArgs, RepositoryArgumentBuilder, type DynamicBuilder } from './args';
 
 import * as z from 'zod';
 
@@ -101,5 +101,26 @@ describe('RepositoryArgumentBuilder', () => {
         "2025-01-01T00:00:00.000Z",
       ]
     `);
+  });
+
+  it('passes verbosity levels in the form restic counts', () => {
+    class BaseArguments extends RepositoryArgumentBuilder<null, null> {
+      command(): string {
+        return 'command';
+      }
+
+      parse(_data: null): null {
+        throw new Error('Method not implemented.');
+      }
+    }
+
+    const args = (level?: boolean | number) =>
+      (new BaseArguments() as DynamicBuilder<z.infer<typeof baseArgs>, BaseArguments>).verbose(level).toArgs();
+
+    expect(args()).toEqual(['command', '--json', '--verbose']);
+    expect(args(true)).toEqual(['command', '--json', '--verbose']);
+    expect(args(false)).toEqual(['command', '--json']);
+    expect(args(2)).toEqual(['command', '--json', '--verbose=2']);
+    expect(() => args(3)).toThrow();
   });
 });

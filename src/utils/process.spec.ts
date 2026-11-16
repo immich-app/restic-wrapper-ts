@@ -71,6 +71,20 @@ describe('wrapper', () => {
     await expect(restic(new VersionCommand())).rejects.toThrowError(new Error('dummy error'));
   });
 
+  it('rejects when a jsonlines line fails validation', async () => {
+    class VersionCommand extends ArgumentBuilder<Data, Data> {
+      command(): string {
+        return 'version';
+      }
+
+      parse(): Data {
+        throw new Error('dummy error');
+      }
+    }
+
+    await expect(restic(new VersionCommand())).rejects.toThrowError(new Error('dummy error'));
+  });
+
   it('surfaces wrong password or no key found error', async () => {
     const dir = await createTempDir();
     await initRepository(join(dir, 'repository'));

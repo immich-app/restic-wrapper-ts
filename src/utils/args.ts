@@ -32,9 +32,9 @@ export const baseArgs = z.object({
   stuckRequestTimeout: z.string().optional(),
   tlsClientCert: z.string().optional(),
   /**
-   * be verbose
+   * be verbose, optionally at a given level (max 2)
    */
-  verbose: z.coerce.boolean().default(false),
+  verbose: z.union([z.boolean(), z.int().min(0).max(2)]).optional(),
 });
 
 export const commonFromRepositoryArgs = z.object({
@@ -132,6 +132,16 @@ export const commonRepackArgs = z.object({
     .optional(),
 });
 
+// restic's count flags only read a level written as `--flag=N`; `--flag N` leaves N as a positional argument
+const countArgs = new Set(['verbose']);
+
+function acceptsBoolean(validator: unknown): boolean {
+  return (
+    validator instanceof z.ZodBoolean ||
+    (validator instanceof z.ZodUnion && validator.options.some((option) => option instanceof z.ZodBoolean))
+  );
+}
+
 type Extend<T> = T extends Date ? T | string | number : T;
 
 export type DynamicBuilder<T, C> = C & {
@@ -167,7 +177,7 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
           }
 
           this.#dynamicArgs[key].push(...validator.parse(args));
-        } else if (args[0] === undefined && actualValidator instanceof z.ZodBoolean) {
+        } else if (args[0] === undefined && acceptsBoolean(actualValidator)) {
           this.#dynamicArgs[key] = true;
         } else {
           this.#dynamicArgs[key] = validator.parse(args[0]);
@@ -299,6 +309,11 @@ export abstract class ArgumentBuilder<T, Output> extends EventEmitter {
             break;
           }
           case 'number': {
+            if (countArgs.has(key)) {
+              args.push(`--${realKey}=${value}`);
+              break;
+            }
+
             args.push(`--${realKey}`, (value as number).toString());
             break;
           }

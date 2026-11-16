@@ -115,3 +115,5 @@ const forgetMessage = z.array(
     reasons: keepReasons,
   }),
 );
+
+export type ForgetMessage = z.infer<typeof forgetMessage>;

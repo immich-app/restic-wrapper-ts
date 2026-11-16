@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.7.0](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.6.0...restic-wrapper-v1.7.0) (2026-10-27)
+
+
+### Features
+
+* accept --walk-concurrency for backup ([#46](https://github.com/immich-app/restic-wrapper-ts/issues/46)) ([7e89110](https://github.com/immich-app/restic-wrapper-ts/commit/7e89110aad362f8f91e7924e91ba5c203cd22078))
+
+## [1.6.0](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.5.0...restic-wrapper-v1.6.0) (2026-10-27)
+
+
+### Features
+
+* accept a verbosity level for --verbose ([#43](https://github.com/immich-app/restic-wrapper-ts/issues/43)) ([209761b](https://github.com/immich-app/restic-wrapper-ts/commit/209761b49f6087a462a5a241d2b8c61a30a62c8a))
+
+## [1.5.0](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.4.2...restic-wrapper-v1.5.0) (2026-10-19)
+
+
+### Features
+
+* export message types ([#40](https://github.com/immich-app/restic-wrapper-ts/issues/40)) ([d002d27](https://github.com/immich-app/restic-wrapper-ts/commit/d002d27d575df7046384e480ba0f0265d3ceb99e))
+
 ## [1.4.2](https://github.com/immich-app/restic-wrapper-ts/compare/restic-wrapper-v1.4.1...restic-wrapper-v1.4.2) (2026-09-14)
 
 

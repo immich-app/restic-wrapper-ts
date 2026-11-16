@@ -46,53 +46,6 @@ url = "https://github.com/cli/cli/releases/download/v2.88.1/gh_2.88.1_windows_am
 url_api = "https://api.github.com/repos/cli/cli/releases/assets/372317959"
 provenance = "github-attestations"
 
-[[tools."github:git-town/git-town"]]
-version = "22.5.0"
-backend = "github:git-town/git-town"
-
-[tools."github:git-town/git-town"."platforms.linux-arm64"]
-checksum = "sha256:535229db89dad05f3df21ac2e1db2a1cc9fb23c92bfad720a3c56483254901cb"
-url = "https://github.com/git-town/git-town/releases/download/v22.5.0/git-town_linux_arm_64.tar.gz"
-url_api = "https://api.github.com/repos/git-town/git-town/releases/assets/346274733"
-provenance = "github-attestations"
-
-[tools."github:git-town/git-town"."platforms.linux-arm64-musl"]
-checksum = "sha256:535229db89dad05f3df21ac2e1db2a1cc9fb23c92bfad720a3c56483254901cb"
-url = "https://github.com/git-town/git-town/releases/download/v22.5.0/git-town_linux_arm_64.tar.gz"
-url_api = "https://api.github.com/repos/git-town/git-town/releases/assets/346274733"
-provenance = "github-attestations"
-
-[tools."github:git-town/git-town"."platforms.linux-x64"]
-checksum = "sha256:22cac746762f770400a50c49bb79150a2f062dd4bf42a5026d046e5d2ac977c6"
-url = "https://github.com/git-town/git-town/releases/download/v22.5.0/git-town_linux_intel_64.tar.gz"
-url_api = "https://api.github.com/repos/git-town/git-town/releases/assets/346274734"
-provenance = "github-attestations"
-provenance_verified = true
-
-[tools."github:git-town/git-town"."platforms.linux-x64-musl"]
-checksum = "sha256:22cac746762f770400a50c49bb79150a2f062dd4bf42a5026d046e5d2ac977c6"
-url = "https://github.com/git-town/git-town/releases/download/v22.5.0/git-town_linux_intel_64.tar.gz"
-url_api = "https://api.github.com/repos/git-town/git-town/releases/assets/346274734"
-provenance = "github-attestations"
-
-[tools."github:git-town/git-town"."platforms.macos-arm64"]
-checksum = "sha256:f521eeb34dee4654127fa489b345f62383cbd80286aa8b73692fe41488317bef"
-url = "https://github.com/git-town/git-town/releases/download/v22.5.0/git-town_macos_arm_64.tar.gz"
-url_api = "https://api.github.com/repos/git-town/git-town/releases/assets/346274779"
-provenance = "github-attestations"
-
-[tools."github:git-town/git-town"."platforms.macos-x64"]
-checksum = "sha256:cc7e0422fc71df3f17aeb887a9b5d7cc1a06f071575895437bf3968c02f1678d"
-url = "https://github.com/git-town/git-town/releases/download/v22.5.0/git-town_macos_intel_64.tar.gz"
-url_api = "https://api.github.com/repos/git-town/git-town/releases/assets/346274776"
-provenance = "github-attestations"
-
-[tools."github:git-town/git-town"."platforms.windows-x64"]
-checksum = "sha256:0b3b9d937a6a917daadc05cbba4020d900b0776beefec43fbe30615182c212ec"
-url = "https://github.com/git-town/git-town/releases/download/v22.5.0/git-town_windows_intel_64.zip"
-url_api = "https://api.github.com/repos/git-town/git-town/releases/assets/346274775"
-provenance = "github-attestations"
-
 [[tools.node]]
 version = "25.4.0"
 backend = "core:node"

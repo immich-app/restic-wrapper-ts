@@ -38,7 +38,7 @@ export async function restic<T, Output>(argsBuilder: ArgumentBuilder<T, Output>)
 }
 
 function processOutput<T, Output>(argsBuilder: ArgumentBuilder<T, Output>, process: ChildProcessWithoutNullStreams) {
-  return new Promise<() => T | T[] | undefined>((resolve) => {
+  return new Promise<() => T | T[] | undefined>((resolve, reject) => {
     let data: T | T[] | undefined = [];
 
     if (argsBuilder.format() === 'none') {
@@ -82,6 +82,10 @@ function processOutput<T, Output>(argsBuilder: ArgumentBuilder<T, Output>, proce
       );
 
       process.stdout.pipe(jsonLinesReader);
+      jsonLinesReader.on('error', (error) => {
+        process.kill();
+        reject(error);
+      });
       jsonLinesReader.on('close', () => resolve(() => data));
     }
   });
