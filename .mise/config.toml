@@ -3,7 +3,7 @@ node = "25.4.0"
 pnpm = "10.34.9"
 restic = "0.19.1"
 
-gh = "2.88.1"
+gh = "2.104.0"
 
 [tasks.check]
 description = "Run all checks including build"
