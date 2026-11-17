@@ -49,12 +49,12 @@
     "node": ">=20"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.5",
+    "@eslint/js": "^10.0.0",
     "@size-limit/preset-small-lib": "^8.2.4",
     "@types/node": "^22.18.1",
     "@vitest/coverage-istanbul": "4.1.12",
     "@vitest/ui": "4.1.12",
-    "eslint": "^9.39.5",
+    "eslint": "^10.0.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.7",
     "eslint-plugin-unicorn": "^62.0.0",
