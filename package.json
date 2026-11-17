@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
-    "@size-limit/preset-small-lib": "^8.2.4",
+    "@size-limit/preset-small-lib": "^14.0.0",
     "@types/node": "^22.18.1",
     "@vitest/coverage-istanbul": "4.1.12",
     "@vitest/ui": "4.1.12",
