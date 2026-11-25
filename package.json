@@ -57,7 +57,7 @@
     "eslint": "^9.39.5",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.7",
-    "eslint-plugin-unicorn": "^62.0.0",
+    "eslint-plugin-unicorn": "^80.0.0",
     "node-stream-zip": "^1.16.0",
     "prettier": "^3.10.1",
     "prettier-plugin-organize-imports": "^4.3.0",
